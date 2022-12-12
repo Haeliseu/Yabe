@@ -21,7 +21,7 @@ public class ServletListeEncheres extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// TODO VERIF CONNEXION
+		// TODO BOUTON RECHERCHER
 		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/listeEncheres.jsp");
