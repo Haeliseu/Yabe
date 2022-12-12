@@ -19,7 +19,7 @@ public class ServletConnection extends HttpServlet {
 		// TODO VOIR POUR VERIFIER LA CONNEXION
 		
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/header.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		rd.forward(request, response);
 	}
 
