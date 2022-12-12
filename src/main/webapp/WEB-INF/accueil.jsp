@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<<<<<<< HEAD
 <%@include file="header.jsp" %>
 	
 	
@@ -77,5 +78,7 @@
 <%} %>
 	
 	
+=======
+>>>>>>> branch 'main' of https://github.com/Haeliseu/Yabe.git
 </body>
 </html>
