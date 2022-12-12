@@ -102,6 +102,19 @@ public class UserAccount {
 		this.credit = credit;
 		this.administrateur = administrateur;
 	}
+	public UserAccount(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String code_postal, String ville) {
+		super();
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.code_postal = code_postal;
+		this.ville = ville;
+	}
+	
 	
 	
 }
