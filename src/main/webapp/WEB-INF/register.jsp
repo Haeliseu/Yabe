@@ -33,7 +33,7 @@
  
  	  <div class="col-lg-6 col-md-6">
          <label for="inputEmail" class="form-label">Email :</label>
-         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="identifiant" value="" required>
+         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="" required>
        </div>
        
     </div>
@@ -52,7 +52,7 @@
  	<div class="row">
        <div class="col-lg-6 col-md-6">
          <label for="prenom" class="form-label">Code Postal :</label>
-         <input type="text" class="form-control" id="Code Postal"  name="Code Postal" value="" required>
+         <input type="text" class="form-control" id="code_postal"  name="code_postal" value="" required>
        </div>
        
        <div class="col-lg-6 col-md-6">
