@@ -10,7 +10,7 @@
 </head>
 
 <header>
-	<jsp:include page="header.jsp"></jsp:include>
+	<!--  <jsp:include page="/WEB-INF/old/header.jsp"></jsp:include> -->
 </header>
 
 <body>

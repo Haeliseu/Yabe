@@ -1,4 +1,4 @@
-package fr.eni.javaee.servlets;
+package fr.eni.javaee.old;
 
 import java.io.IOException;
 
