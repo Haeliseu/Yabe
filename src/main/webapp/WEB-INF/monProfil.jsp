@@ -15,16 +15,15 @@
 	<ul style="text-align: center">
 		<li>Pseudo : ${requestScope.userAccount.pseudo }</li>
 		<li>Nom : ${requestScope.userAccount.nom }</li>
-		<li>Prenom : ${requestScope.userAccount.prnom }</li>
+		<li>Prenom : ${requestScope.userAccount.prenom }</li>
 		<li>Email : ${requestScope.userAccount.email }</li>
 		<li>Telèphone : ${requestScope.userAccount.telephone }</li>
 		<li>Rue : ${requestScope.userAccount.rue }</li>
-		<li>Code postal : ${requestScope.userAccount.codePostal }</li>
+		<li>Code postal : ${requestScope.userAccount.code_postal }</li>
 		<li>Ville : ${requestScope.userAccount.ville }</li>
-
 	</ul>
 		
-		<a href="<%=request.getContextPath() %>/ServletModificationProfil" >Modifer</a>
+		<a href="<%=request.getContextPath() %>/ServletModificationProfil" >Modifier</a>
 
 </body>
 </html>

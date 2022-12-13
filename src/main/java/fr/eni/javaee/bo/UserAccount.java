@@ -150,6 +150,14 @@ public class UserAccount {
 
 
 
+	public UserAccount(String pseudo, String email) {
+		
+		this.pseudo = pseudo;
+		this.email = email;
+	}
+
+
+
 	public UserAccount() {
 		
 	}

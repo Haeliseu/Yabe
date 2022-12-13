@@ -13,19 +13,8 @@
 
 <form action="" method="post"></form>
 
-<h3 style="margin-bottom:.5em;">Nom:</h3>
-                <input type="text" class="form-control" name="nom" style="margin-bottom:1em;"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default">
-
-
-<h3 style="margin-bottom:.5em;">Prenom:</h3>
-                <input type="text" class="form-control" name="prenom"  style="margin-bottom:1em;"
-                    aria-label="Sizing example input"
-                    aria-describedby="inputGroup-sizing-default">
-                    
-<h3 style="margin-bottom:.5em;">Telèphone:</h3>
-                <input type="tel" class="form-control" name="telephone" pattern=[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}.[0-9]{2}. style="margin-bottom:1em;"
+<h3 style="margin-bottom:.5em;">Pseudo:</h3>
+                <input type="email" class="form-control" name="pseudo" style="margin-bottom:1em;"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default">
                     

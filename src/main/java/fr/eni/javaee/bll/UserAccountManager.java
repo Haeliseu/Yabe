@@ -1,10 +1,12 @@
 package fr.eni.javaee.bll;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bo.UserAccount;
 import fr.eni.javaee.dal.DAOFactory;
+
 
 public class UserAccountManager {
 	
@@ -44,5 +46,9 @@ public class UserAccountManager {
 		// TODO Auto-generated method stub
 		
 	}
+	public UserAccount selectUser() {
+		return DAOFactory.getUserAccountDAO().selectUser();
+	}
+	
 
 }

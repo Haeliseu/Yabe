@@ -7,5 +7,8 @@ import fr.eni.javaee.bo.UserAccount;
 
 public interface UserAccountDAO {
 
-		void inserer(UserAccount useraccount) throws BusinessException, SQLException;
+		void inserer(UserAccount userAccount) throws BusinessException, SQLException;
+		public UserAccount selectUser();
+		public void supprimer (UserAccount userAccount)throws SQLException;
+		public UserAccount oublieMotDePasse ();
 }

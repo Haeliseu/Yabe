@@ -11,7 +11,7 @@ import fr.eni.javaee.bo.UserAccount;
 public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	// select pour affichage
-	private final static String SELECT_USER = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEUR "
+	private final static String SELECT_USER = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEURS "
 			+ "WHERE no_utilisateur =?;";
 //
 	private final static String ADD_USER = "INSERT INTO utilisateurs"
@@ -30,10 +30,10 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_USER);
+			pstmt.setInt(1, 1);
+			ResultSet rs = pstmt.executeQuery();
 
-			ResultSet rs = pstmt.executeQuery(SELECT_USER);
-
-			if (rs.next()) {
+			while (rs.next()) {
 				String pseudo = rs.getString("pseudo");
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
@@ -99,15 +99,11 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			PreparedStatement pstmt=cnx.prepareStatement(MDP_OUBLIE);			
 			ResultSet rs =pstmt.executeQuery();
 			
-			if (rs.next()) {
-			
-			int noUtilisateur = rs.getInt("no_utilisateur");
-			String pseudo = rs.getString("pseudo");
-			String nom = rs.getString("nom");
-			String prenom = rs.getString("prenom");
+			if (rs.next()) {			
+			String pseudo = rs.getString("pseudo");			
 			String email = rs.getString("email");
-			String telephone = rs.getString("telephone");
-			userAccount = new UserAccount(noUtilisateur,pseudo, nom, prenom, email, telephone);
+			
+			userAccount = new UserAccount(pseudo, email );
 			}
 		}catch(SQLException e){
 				e.printStackTrace();
