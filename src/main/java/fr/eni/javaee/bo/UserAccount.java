@@ -1,10 +1,13 @@
 package fr.eni.javaee.bo;
 
-public class UserAccount {
+public class UserAccount {	
+	
+	public int noUtilisateur;
 	public String pseudo;
 	public String nom;
 	public String prenom;
 	public String email;
+	
 	public String telephone;
 	public String rue;
 	public String code_postal;
@@ -13,6 +16,27 @@ public class UserAccount {
 	public Integer credit;
 	public boolean administrateur;
 	
+	
+	
+	public UserAccount(int noUtilisateur) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+	}
+	
+	
+	
+	public int getNoUtilisateur() {
+		return noUtilisateur;
+	}
+
+
+
+	public void setNoUtilisateur(int noUtilisateur) {
+		this.noUtilisateur = noUtilisateur;
+	}
+
+
+
 	public String getPseudo() {
 		return pseudo;
 	}

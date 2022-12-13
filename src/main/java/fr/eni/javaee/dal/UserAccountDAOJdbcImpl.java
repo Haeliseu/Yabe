@@ -75,5 +75,17 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		}
 		
 	}
-
+	public void supprimer (UserAccount userAccount) throws SQLException {
+		
+		try(Connection cnx= ConnectionProvider.getConnection()){
+			
+			PreparedStatement pstmt=cnx.prepareStatement(DELETE_USER);
+			pstmt.setInt(1, userAccount.getNoUtilisateur());
+			pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
