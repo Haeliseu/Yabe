@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Se connecter</title>
 </head>
 <body>
 <header>
 <jsp:include page="header.jsp" />
 </header>
-<div class="container h-100">
- <div class="row align-items-center h-100">
+<div class="row" style="margin-top: 12%;"></div>
+<div class="container">
+ <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
          <div class="card" style="width: auto; box-shadow: 10px 5px 5px gray;">
@@ -36,12 +37,12 @@
                   <div class="col"> 
                   </div>
 			      <div class="col"> 
-                  <a id="mot_de_passe_oublié class="text-forgot-password" href="">Mot de passe oublié</a>
+                  <a id="mot_de_passe_oubliÃ© class="text-forgot-password" href="">Mot de passe oubliÃ©</a>
                   </div>
                   </div>
                   <br>
 				  <div class="col"> 
-                  <input class="btn btn-primary" type="submit" name="formconnexion" value="Créer un compte"/>
+                  <input class="btn btn-primary" type="submit" name="formconnexion" value="CrÃ©er un compte"/>
                   </div>
                   </form>
                   </div>
