@@ -21,6 +21,8 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	
 	private final static String DELETE_USER = "DELETE FROM utilisateurs WHERE no_utilisateur = ?;";
 			
+	private final static String MOT_DE_PASSE= "UPDATE utilisateurs SET mot_de_passe = ? WHERE no_utilisateur = ?;";
+	
 	
 	public UserAccount selectUser() {
 		UserAccount userAccount = null;
@@ -87,5 +89,20 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			e.printStackTrace();
 		}
 	}
+
+	
+	public void oublieMotDePasse (UserAccount userAccount) {
+		
+		try(Connection cnx= ConnectionProvider.getConnection()){
+			PreparedStatement pstmt=cnx.prepareStatement(MOT_DE_PASSE);
+		
+				
+		
+		}catch{
+				
+		}		
+				
+				
+	
 	
 }
