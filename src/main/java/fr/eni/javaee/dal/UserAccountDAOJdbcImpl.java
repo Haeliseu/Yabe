@@ -14,9 +14,9 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	private final static String SELECT_USER = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEUR "
 			+ "WHERE no_utilisateur =?;";
 //
-	private final static String ADD_USER = "INSERT INTO utilisateurs \r\n"
-			+ "(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)\r\n"
-			+ "VALUES\r\n"
+	private final static String ADD_USER = "INSERT INTO utilisateurs "
+			+ "(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)"
+			+ "VALUES"
 			+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	
 	private final static String DELETE_USER = "DELETE FROM utilisateurs WHERE no_utilisateur = ?;";
@@ -67,8 +67,11 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			pstmt.setString(6,userAccount.getRue());
 			pstmt.setString(7,userAccount.getCode_postal());
 			pstmt.setString(8,userAccount.getVille());
-			pstmt.setInt(9,userAccount.getCredit());
-			pstmt.setBoolean(10, userAccount.isAdministrateur());
+			pstmt.setString(9, userAccount.getMot_de_passe());
+			pstmt.setInt(10,0);
+			pstmt.setBoolean(11, false);
+			
+
 		// Verifier éxections dans la catch
 			pstmt.executeUpdate();
 		
@@ -91,7 +94,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	}
 
 	
-	public void oublieMotDePasse (UserAccount userAccount) {
+	/*public void oublieMotDePasse (UserAccount userAccount) {
 		
 		try(Connection cnx= ConnectionProvider.getConnection()){
 			PreparedStatement pstmt=cnx.prepareStatement(MOT_DE_PASSE);
@@ -100,7 +103,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		
 		}catch{
 				
-		}		
+		}	*/	
 				
 				
 	

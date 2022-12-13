@@ -42,7 +42,7 @@ public class ServletRegister extends HttpServlet {
 			String email = request.getParameter("email");
 			String telephone = request.getParameter("telephone");
 			String rue = request.getParameter("rue");
-			String code_postal = request.getParameter("code_pôstal");
+			String code_postal = request.getParameter("code_postal");
 			String ville = request.getParameter("ville");
 			String mot_de_passe = request.getParameter("mot_de_passe");
 			String confirmation = request.getParameter("confirmation");
@@ -53,11 +53,11 @@ public class ServletRegister extends HttpServlet {
 					request.setAttribute("useraccount", useraccount);
 	 
 			} catch (SQLException e){
-				BusinessException be = new BusinessException();
-				be.ajouterErreur(CodesResultatServlets.FORMAT_EMAIL_ERREUR);
-				request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
+				//BusinessException be = new BusinessException();
+				//be.ajouterErreur(CodesResultatServlets.FORMAT_EMAIL_ERREUR);
+				//request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
 			}catch (BusinessException e){
-				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());				
+				//request.setAttribute("listeCodesErreur", e.getListeCodesErreur());				
 			}
 	 
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/register.jsp");

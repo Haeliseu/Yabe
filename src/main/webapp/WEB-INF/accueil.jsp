@@ -44,11 +44,11 @@
 								<label class="form-check-label" for="flexRadioDefault1">
 									Achats </label>
 							</div>
-
+							
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value=""
 									id="encheresOuvertes" checked> <label
-									class="form-check-label" for="encheresOuvertes">
+									class="form-check-label" for="encheresOuvertes" >
 									enchères ouvertes </label>
 							</div>
 							<div class="form-check">
@@ -108,13 +108,13 @@
 
 			<!-- FAIRE LA BOUCLE D AFFICHAGE DES CARTES D ARTICLES -->
 
-			<div class="card container col-md-12" style="width: 18rem;">
+			<div class="card container col-lg-12" style="width: 30rem;">
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-lg-4">
 						<img class="card-img-left" src="..." alt="test">
 						<!-- INSERTION DES IMAGES -->
 					</div>
-					<div class="col-md-8">
+					<div class="col-lg-8">
 						<div class="card-body">
 							<h5 class="card-title">article.getNom</h5>
 							<p class="card-text">Prix : "article.getPrix()"</p>
@@ -128,13 +128,13 @@
 				</div>
 			</div>
 
-			<div class="card container col-md-6" style="width: 18rem;">
+			<div class="card container col-lg-12" style="width: 30rem;">
 				<div class="row">
-					<div class="col-md-2">
+					<div class="col-lg-4">
 						<img class="card-img-left" src="..." alt="test">
 						<!-- INSERTION DES IMAGES -->
 					</div>
-					<div class="col-md-4">
+					<div class="col-lg-8">
 						<div class="card-body">
 							<h5 class="card-title">article.getNom</h5>
 							<p class="card-text">Prix : "article.getPrix()"</p>
