@@ -16,8 +16,8 @@
     <div class="row">
 
         <div class="col-lg-6 col-md-6">
-         <label for="prenom" class="form-label">Pseudo :</label>
-         <input type="text" class="form-control" id="prenom"  name="prenom" value="" required>
+         <label for="pseudo" class="form-label">Pseudo :</label>
+         <input type="text" class="form-control" id="pseudo"  name="pseudo" value="" required>
        </div>
  
        <div class="col-lg-6 col-md-6">

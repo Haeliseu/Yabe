@@ -40,15 +40,17 @@
                   <a id="mot_de_passe_oublié class="text-forgot-password" href="">Mot de passe oublié</a>
                   </div>
                   </div>
+                  </form>
                   <br>
-				  <div class="col"> 
+                  <div class="col-md-3"></div>
+				  <div class="col-md-6"> 
                   <input class="btn btn-primary" type="submit" name="formconnexion" value="Créer un compte"/>
                   </div>
-                  </form>
                   </div>
             </div>
          </div>
       </div>
 </div>
 </body>
+<footer><jsp:include page="footer.jsp" /></footer>
 </html>
