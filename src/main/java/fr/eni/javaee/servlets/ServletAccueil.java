@@ -17,11 +17,16 @@ public class ServletAccueil extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if (achats == true) {
-			achats = false;
-		}else {
-			achats = true;
+		if(request.getParameter("rechercher")!=null) {
+			
+			if (achats == true) {
+				achats = false;
+			}else {
+				achats = true;
+			}
+			
 		}
+		
 		request.setAttribute("achats", achats);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
