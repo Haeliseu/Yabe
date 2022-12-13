@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>S'inscrire</title>
 </head>
 <body>
@@ -39,7 +39,7 @@
     </div>
  	<div class="row">
        <div class="col-lg-6 col-md-6">
-         <label for="tel" class="form-label">Téléphone :</label>
+         <label for="tel" class="form-label">TÃ©lÃ©phone :</label>
          <input type="tel" class="form-control" id="tel"  name="tel" value="" required>
        </div>
        
@@ -74,7 +74,7 @@
  	<div class="row">
        <br>
        <div>
-       <button type="submit" class="btn btn-primary" name="Inscription" value="Créer">Créer</button>
+       <button type="submit" class="btn btn-primary" name="Inscription" value="CrÃ©er">CrÃ©er</button>
        <button type="reset" class="btn btn-secondary" name="reset" value="annuler">Annuler</button>
        </div>
      </div>
