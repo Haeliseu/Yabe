@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bo.UserAccount;
 
 public class UserAccountDAOJdbcImpl implements UserAccountDAO {
@@ -24,6 +25,8 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	// Select mot de passe oublié
 	private final static String MDP_OUBLIE = "SELECT no_utilisateur, nom, prenom, email, telephone FROM utilisateurs WHERE email=?;";
+	
+	private final static String CONNECT = " ";
 
 	public UserAccount selectUser() {
 		UserAccount userAccount = null;
@@ -109,5 +112,15 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 				e.printStackTrace();
 		}		
 			return userAccount;	
+		}
+
+		@Override
+		public void connect(UserAccount newConnectUserAccount) throws SQLException {
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+				PreparedStatement pstmt = cnx.prepareStatement(CONNECT);
+				pstmt.setString(1, newConnectUserAccount.getPseudo());
+				pstmt.setString(2, newConnectUserAccount.getEmail());
+				pstmt.setString(3, newConnectUserAccount.getMot_de_passe());
+		}
 		}
 }

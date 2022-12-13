@@ -45,7 +45,6 @@ public class ServletRegister extends HttpServlet {
 			String code_postal = request.getParameter("code_postal");
 			String ville = request.getParameter("ville");
 			String mot_de_passe = request.getParameter("mot_de_passe");
-			String confirmation = request.getParameter("confirmation");
 			try {	
 					UserAccountManager userAccountManager = null;
 					UserAccount useraccount =  UserAccountManager.getInstance().inserer(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
@@ -66,6 +65,5 @@ public class ServletRegister extends HttpServlet {
 	}
 		
 }
-
 
 

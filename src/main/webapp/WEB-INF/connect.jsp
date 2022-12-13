@@ -19,7 +19,7 @@
             <div class="card-body">
                <form method="POST" action="" style="text-align: center;">
                <label for="pseudo">Identifiant :</label>
-                  <input type="text" name="identifiant" id="identifiant" class="form-control" required/>
+                  <input type="text" name="pseudo" id="pseudo" class="form-control" required/>
                   <br>
                   <br>
                   <label for="mot_de_passe">Mot de passe :</label>

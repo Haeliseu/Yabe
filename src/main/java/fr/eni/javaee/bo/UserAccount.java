@@ -164,6 +164,15 @@ public class UserAccount {
 
 
 
+	public UserAccount(String pseudo, String email, String mot_de_passe) {
+		
+		this.pseudo = pseudo;
+		this.email = email;
+		this.mot_de_passe = mot_de_passe;
+	}
+
+
+
 	
 	
 	

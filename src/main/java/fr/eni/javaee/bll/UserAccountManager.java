@@ -36,6 +36,22 @@ public class UserAccountManager {
 		
 		return newUserAccount;
 	}
+	
+	public UserAccount connect(String pseudo, String email, String mot_de_passe) throws BusinessException, SQLException {
+		//1. vérification des données
+		BusinessException be = new BusinessException();
+		validerMdp(mot_de_passe, be);
+		validerMail(email, be);
+		if(be.hasErreurs()) { //s'il y a un problème, on lève l'exception
+			throw be;
+		}
+		//2. si on arrive ici, c'est que tout va bien
+		UserAccount newConnectUserAccount = new UserAccount(pseudo, email, mot_de_passe);
+		DAOFactory.getUserAccountDAO().connect(newConnectUserAccount);
+				
+		return newConnectUserAccount;
+	}
+
 
 	private void validerMail(String email, BusinessException be) {
 		// TODO Auto-generated method stub
