@@ -1,8 +1,10 @@
 package fr.eni.javaee.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.javaee.dal.ConnectionProvider;
 
 @WebServlet("/ServletRegister")
 public class ServletRegister extends HttpServlet {
@@ -39,24 +43,15 @@ public class ServletRegister extends HttpServlet {
 			String ville = request.getParameter("ville");
 			String mot_de_passe = request.getParameter("mot_de_passe");
 			String confirmation = request.getParameter("confirmation");
-			String url = "jdbc:sqlserver://localhost;databasename=BDD_YABE;IntegratedSecurity=false;encrypt=false;trustServerCertificate=false";
-			String login = "utilisateurBDD";
-			String passwd = "Pa$$w0rd";
-			java.sql.Connection cnx = null;
-			java.sql.Statement stmt = null;
 	 
 			if (pseudo!="" && nom!="" && prenom!="" && email!="" && telephone!="" && rue!="" && code_postal!="" && ville!="" && mot_de_passe!="" && confirmation!=""){
 	 
 	 
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-					cnx = DriverManager.getConnection(url, login, passwd);
-					stmt = cnx.createStatement();
+				try (Connection cnx = ConnectionProvider.getConnection()){
+
+					stmt = cnx.createStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS);
 					
-					String sql = "INSERT INTO utilisateurs"
-							+ "(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)\r\n"
-							+ "VALUES"
-							+ "(?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0);";
+					String sql = ;
 					stmt.executeUpdate(sql);
 	 
 				} catch (SQLException e)
@@ -65,14 +60,6 @@ public class ServletRegister extends HttpServlet {
 				}catch (ClassNotFoundException e)
 				{
 					e.printStackTrace();				
-				}finally {
-					try {
-						cnx.close();
-						stmt.close();
-						}catch (SQLException e)
-						{
-							e.printStackTrace();
-						}
 				}
 	 
 				response.sendRedirect("");
