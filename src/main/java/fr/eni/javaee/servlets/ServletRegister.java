@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.javaee.BusinessException;
+import fr.eni.javaee.bll.UserAccountManager;
+import fr.eni.javaee.bo.UserAccount;
 import fr.eni.javaee.dal.ConnectionProvider;
 
 @WebServlet("/ServletRegister")
@@ -43,36 +46,26 @@ public class ServletRegister extends HttpServlet {
 			String ville = request.getParameter("ville");
 			String mot_de_passe = request.getParameter("mot_de_passe");
 			String confirmation = request.getParameter("confirmation");
+			try {	
+					UserAccountManager userAccountManager = null;
+					UserAccount useraccount =  UserAccountManager.getInstance().inserer(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe);
+				
+					request.setAttribute("useraccount", useraccount);
 	 
-			if (pseudo!="" && nom!="" && prenom!="" && email!="" && telephone!="" && rue!="" && code_postal!="" && ville!="" && mot_de_passe!="" && confirmation!=""){
+			} catch (SQLException e){
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatServlets.FORMAT_EMAIL_ERREUR);
+				request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
+			}catch (BusinessException e){
+				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());				
+			}
 	 
-	 
-				try (Connection cnx = ConnectionProvider.getConnection()){
-
-					stmt = cnx.createStatement(ADD_USER, Statement.RETURN_GENERATED_KEYS);
-					
-					String sql = ;
-					stmt.executeUpdate(sql);
-	 
-				} catch (SQLException e)
-				{
-					e.printStackTrace();
-				}catch (ClassNotFoundException e)
-				{
-					e.printStackTrace();				
-				}
-	 
-				response.sendRedirect("");
-	 
-	 
-		}
-			else 
-			{
-				response.sendRedirect("register.jsp");
-	}
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/register.jsp");
+			rd.forward(request, response);
+			
 	}
 		
-	}
+}
 
 
 
