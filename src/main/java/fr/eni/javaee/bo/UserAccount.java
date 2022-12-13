@@ -19,24 +19,12 @@ public class UserAccount {
 	
 	
 	public UserAccount(int noUtilisateur) {
-		super();
+	
 		this.noUtilisateur = noUtilisateur;
 	}
 	
 	
 	
-	public int getNoUtilisateur() {
-		return noUtilisateur;
-	}
-
-
-
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
-	}
-
-
-
 	public String getPseudo() {
 		return pseudo;
 	}
@@ -107,6 +95,12 @@ public class UserAccount {
 	
 	
 	
+	public int getNoUtilisateur() {
+		return noUtilisateur;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "UserAccount [pseudo=" + pseudo + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
@@ -141,6 +135,27 @@ public class UserAccount {
 		this.code_postal = code_postal;
 		this.ville = ville;
 	}
+
+
+
+	public UserAccount(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone) {
+		
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+	}
+
+
+
+	public UserAccount() {
+		
+	}
+
+
+
 	
 	
 	

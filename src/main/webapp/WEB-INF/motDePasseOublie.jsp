@@ -36,7 +36,7 @@
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default">
 
-<a href=""><button type="button" class="btn btn-primary btn-lg">Validez</button></a>
+<a href="/ServletMotDePasseOublie"><button type="button" class="btn btn-primary btn-lg">Validez</button></a>
 
 </body>
 </html>
