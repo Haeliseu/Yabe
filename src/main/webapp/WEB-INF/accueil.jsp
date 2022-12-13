@@ -10,19 +10,21 @@
 
 	<%@include file="header.jsp"%>
 
-	<h2 class="text-center" style="margin-bottom:1em;">Liste des enchères</h2>
+	<h2 class="text-center" style="margin-bottom: 1em;">Liste des
+		enchères</h2>
 
-	<div class="container" style="margin-bottom:2em;">
+	<div class="container" style="margin-bottom: 2em;">
 		<div class="row align-items-center">
 
 			<div class="col">
-				<h3 style="margin-bottom:.5em;">Filtres :</h3>
-				<input type="text" class="form-control"  style="margin-bottom:1em;"
+				<h3 style="margin-bottom: .5em;">Filtres :</h3>
+				<input type="text" class="form-control" style="margin-bottom: 1em;"
 					aria-label="Sizing example input"
 					aria-describedby="inputGroup-sizing-default">
 
-				<h4 style="margin-bottom:.5em;">Catégorie :</h4>
-				<select class="form-select" aria-label="Default select example" style="margin-bottom:1em;">
+				<h4 style="margin-bottom: .5em;">Catégorie :</h4>
+				<select class="form-select" aria-label="Default select example"
+					style="margin-bottom: 1em;">
 					<option selected>Toutes</option>
 					<option value="1">Catégorie 1</option>
 					<option value="2">Catégorie 2</option>
@@ -31,25 +33,26 @@
 
 				<!-- TODO RECUPERATION DE LA VARIABLE DE CONNEXION -->
 
-				<%
-				if (checkConnect == true) {
-				%>
+				<%if (checkConnect == true) {%>
 				<!-- FILTRES DE RECHERCHE -->
+
+				<%boolean achats = (boolean)request.getAttribute("achats"); %>
+
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-6 col-md-6">
 							<div class="form-check">
-								<input class="form-check-input" type="radio"
-									name="flexRadioDefault" id="flexRadioDefault1" checked>
-								<label class="form-check-label" for="flexRadioDefault1">
+								<input  onclick="window.location.href='/ServletAccueil'" class="form-check-input" type="radio"
+									name="flexRadioDefault" id="flexRadioDefault1" checked> <label
+									class="form-check-label" for="flexRadioDefault1">
 									Achats </label>
 							</div>
-							
+
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value=""
-									id="encheresOuvertes" checked> <label
-									class="form-check-label" for="encheresOuvertes" >
-									enchères ouvertes </label>
+									id="encheresOuvertes" <%if(achats){%>disabled<%} %>> <label class="form-check-label"
+									for="encheresOuvertes"> enchères ouvertes </label>
+
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value=""
@@ -58,7 +61,7 @@
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="checkbox" value=""
-									id="encheresRemportees"> <label
+									id="encheresRemportees" > <label
 									class="form-check-label" for="encheresRemportees"> mes
 									enchères remportées </label>
 							</div>
