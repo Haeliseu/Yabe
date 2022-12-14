@@ -17,7 +17,7 @@
     <div class="col-md-6">
          <div class="card" style="width: auto; box-shadow: 10px 5px 5px gray;">
             <div class="card-body">
-               <form method="POST" action="" style="text-align: center;">
+               <form method="POST" action="/Yabe/ServletConnect" style="text-align: center;">
                <label for="pseudo">Identifiant :</label>
                   <input type="text" name="pseudo" id="pseudo" class="form-control" required/>
                   <br>

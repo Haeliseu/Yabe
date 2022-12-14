@@ -26,7 +26,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	// Select mot de passe oublié
 	private final static String MDP_OUBLIE = "SELECT no_utilisateur, nom, prenom, email, telephone FROM utilisateurs WHERE email=?;";
 	
-	private final static String CONNECT = " ";
+	private final static String CONNECT = "SELECT pseudo, email, mot_de_passe FROM UTILISATEURS";
 
 	public UserAccount selectUser() {
 		UserAccount userAccount = null;

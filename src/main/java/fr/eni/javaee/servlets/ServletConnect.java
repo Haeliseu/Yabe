@@ -38,25 +38,38 @@ public class ServletConnect extends HttpServlet {
 		String email = request.getParameter("email");
 		String mot_de_passe = request.getParameter("mot_de_passe");
 		
-		try {	
+			
 			UserAccountManager userAccountManager = null;
-			UserAccount useraccount =  UserAccountManager.getInstance().connect(pseudo, email, mot_de_passe);
-			if (pseudo.equals(useraccount.getPseudo())) {
+			UserAccount useraccount;
+			try {
+				useraccount = UserAccountManager.getInstance().connect(pseudo, email, mot_de_passe);
+			
+			if (request.getAttribute("pseudo").toString().equals(useraccount.getPseudo())
+	                && request.getAttribute("mot_de_passe").toString().equals(useraccount.getMot_de_passe())
+				||(request.getAttribute("email").equals(useraccount.getEmail())
+	    	        && request.getAttribute("mot_de_passe").equals(useraccount.getMot_de_passe()))){
 				
+				request.setAttribute("useraccount", useraccount);
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+		        rd.forward(request, response);
+			}else {
+				System.err.println("Identifiant ou mot de passe incorrect");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
+		        rd.include(request, response);
 			}
-			request.setAttribute("useraccount", useraccount);
-
-	} catch (SQLException e){
+			} catch (BusinessException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	/*} catch (SQLException e){
 		//BusinessException be = new BusinessException();
 		//be.ajouterErreur(CodesResultatServlets.FORMAT_EMAIL_ERREUR);
 		//request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
 	}catch (BusinessException e){
 		//request.setAttribute("listeCodesErreur", e.getListeCodesErreur());				
-	}
-           
-           RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
-           rd.forward(request, response);
-        }
-    }  
+	}*/
+  }
+}  
 
 		

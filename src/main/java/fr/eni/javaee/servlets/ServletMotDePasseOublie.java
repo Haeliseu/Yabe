@@ -23,7 +23,7 @@ public class ServletMotDePasseOublie extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if (request.getParameter("email"
+		/*if (request.getParameter("email"*/
 			
 			
 		}
