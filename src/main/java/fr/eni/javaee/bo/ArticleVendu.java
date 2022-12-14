@@ -11,64 +11,83 @@ public class ArticleVendu {
 	private LocalDate dateFinEncheres;
 	private int prixInitial;
 	private int prixVente;
-	private int idVendeur;
-	
+	private String pseudoVendeur;
+
 	// Constructors
-	private ArticleVendu() {}
-	
-	public ArticleVendu(String nomArticle, LocalDate dateFinEncheres, int prixInitial, int idVendeur) {
+	private ArticleVendu() {
+	}
+
+	public ArticleVendu(int idArticle, String nomArticle, LocalDate dateFinEncheres, int prixInitial,
+			String pseudoVendeur) {
+		this();
+		this.setIdArticle(idArticle);
 		this.setNomArticle(nomArticle);
 		this.setDateFinEncheres(dateFinEncheres);
 		this.setPrixInitial(prixInitial);
-		this.setIdVendeur(idVendeur);
+		this.setPseudoVendeur(pseudoVendeur);
 	}
-	
+
 	// Getters & Setters
-	public int getIdVendeur() {
-		return idVendeur;
+	public String getPseudoVendeur() {
+		return pseudoVendeur;
 	}
-	public void setIdVendeur(int idVendeur) {
-		this.idVendeur = idVendeur;
+
+	public void setPseudoVendeur(String pseudoVendeur) {
+		this.pseudoVendeur = pseudoVendeur;
 	}
+
 	public int getIdArticle() {
 		return idArticle;
 	}
+
 	public void setIdArticle(int idArticle) {
 		this.idArticle = idArticle;
 	}
+
 	public String getNomArticle() {
 		return nomArticle;
 	}
+
 	public void setNomArticle(String nomArticle) {
 		this.nomArticle = nomArticle;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public LocalDate getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
+
 	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
+
 	public LocalDate getDateFinEncheres() {
 		return dateFinEncheres;
 	}
+
 	public void setDateFinEncheres(LocalDate dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
+
 	public int getPrixInitial() {
 		return prixInitial;
 	}
+
 	public void setPrixInitial(int prixInitial) {
 		this.prixInitial = prixInitial;
 	}
+
 	public int getPrixVente() {
 		return prixVente;
 	}
+
 	public void setPrixVente(int prixVente) {
 		this.prixVente = prixVente;
 	}

@@ -1,16 +1,13 @@
 package fr.eni.javaee.dal;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.javaee.bo.ArticleVendu;
 
 public interface ArticlesVendusDAO {
-	
-	public List<ArticleVendu> encheresOuvertes();
-	public List<ArticleVendu> mesEncheresEnCours(int idUtilisateur);
-	public List<ArticleVendu> mesEncheresRemportees(int idUtilisateur);
-	
-	public List<ArticleVendu> mesVentesEnCours(int idUtilisateur);
-	public List<ArticleVendu> ventesNonDebutees();
-	public List<ArticleVendu> ventesTerminees();
+
+	public List<ArticleVendu> listeArticles(String[] motsClefs, String categorie, boolean achatsOuverts,
+			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
+			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException;
 }

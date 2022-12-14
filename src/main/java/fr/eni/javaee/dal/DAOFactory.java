@@ -6,4 +6,8 @@ public class DAOFactory {
 		return new UserAccountDAOJdbcImpl();
 	}
 	
+	public static ArticlesVendusDAO getArticleVenduDAO() {
+		return new ArticlesVendusDAOJdbcImpl();
+	}
+	
 }
