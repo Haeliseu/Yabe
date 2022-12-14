@@ -132,7 +132,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	}
 	
 	
-	public  newMdp(String motdepasse,String pseudo, String email) throws SQLException {
+	public  void newMdp(String motdepasse,String pseudo, String email) throws SQLException {
 		
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
