@@ -24,7 +24,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	private final static String MOT_DE_PASSE = "UPDATE utilisateurs SET mot_de_passe = ? WHERE no_utilisateur = ?;";
 
 	// Select mot de passe oublié
-	private final static String MDP_OUBLIE = "SELECT  email, pseudo FROM utilisateurs WHERE email=? and pseudo=?;";
+	private final static String MDP_OUBLIE = "SELECT  email, pseudo FROM utilisateurs WHERE pseudo=? and email=?;";
 
 	private final static String CONNECT = "SELECT * "
 			+ "FROM utilisateurs"
