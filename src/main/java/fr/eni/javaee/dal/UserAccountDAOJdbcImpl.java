@@ -12,7 +12,7 @@ import fr.eni.javaee.bo.UserAccount;
 public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	// select pour affichage
-	private final static String SELECT_USER = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM UTILISATEURS "
+	private final static String SELECT_USER = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville  FROM UTILISATEURS "
 			+ "WHERE no_utilisateur =?;";
 //
 	private final static String ADD_USER = "INSERT INTO utilisateurs"
