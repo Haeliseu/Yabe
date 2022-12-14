@@ -70,4 +70,7 @@ public class UserAccountManager {
 		return DAOFactory.getUserAccountDAO().oublieMotDePasse(pseudo, email);
 	}
 	
+	public void newMdp(String mot_de_passe,String pseudo, String email) throws SQLException{
+		
+	}
 }

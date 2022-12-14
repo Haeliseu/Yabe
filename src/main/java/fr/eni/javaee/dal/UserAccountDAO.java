@@ -17,5 +17,5 @@ public interface UserAccountDAO {
 		
 		void connect(UserAccount newConnectUserAccount)throws BusinessException, SQLException;
 		
-		public void newMdp(String motdepasse,String pseudo, String email) throws SQLException;
+		public void newMdp(String mot_de_passe,String pseudo, String email) throws SQLException;
 }
