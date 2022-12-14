@@ -24,8 +24,8 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	private final static String MOT_DE_PASSE = "UPDATE utilisateurs SET mot_de_passe = ? WHERE no_utilisateur = ?;";
 
 	// Select mot de passe oublié
-	private final static String MDP_OUBLIE = "SELECT no_utilisateur, nom, prenom, email, telephone FROM utilisateurs WHERE email=?;";
-	
+	private final static String MDP_OUBLIE = "SELECT  email, pseudo FROM utilisateurs WHERE email=? and pseudo=?;";
+
 	private final static String CONNECT = "SELECT pseudo, email, mot_de_passe FROM UTILISATEURS";
 
 	public UserAccount selectUser() {
@@ -81,48 +81,48 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	}
 
-	public void supprimer (UserAccount userAccount) throws SQLException {
-		
-		try(Connection cnx= ConnectionProvider.getConnection()){
-			
-			PreparedStatement pstmt=cnx.prepareStatement(DELETE_USER);
+	public void supprimer(UserAccount userAccount) throws SQLException {
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement(DELETE_USER);
 			pstmt.setInt(1, userAccount.getNoUtilisateur());
 			pstmt.executeUpdate();
-			
-		}catch (SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	
+
 	}
 
-		public UserAccount oublieMotDePasse (String pseudo, String email) {
-			UserAccount userAccount = null;
-		try(Connection cnx= ConnectionProvider.getConnection()){
-			
-			PreparedStatement pstmt=cnx.prepareStatement(MDP_OUBLIE);			
-			
+	public UserAccount oublieMotDePasse(String pseudo, String email) {
+		UserAccount userAccount = null;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement(MDP_OUBLIE);
+
 			pstmt.setString(1, pseudo);
 			pstmt.setString(2, email);
-			ResultSet rs =pstmt.executeQuery();
-			if (rs.next()) {			
-			String pseudoDql = rs.getString("pseudo");			
-			String emailDql = rs.getString("email");
-			
-			userAccount = new UserAccount(pseudo, email );
-			}
-		}catch(SQLException e){
-				e.printStackTrace();
-		}		
-			return userAccount;	
-		}
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				String pseudoDql = rs.getString("pseudo");
+				String emailDql = rs.getString("email");
 
-		@Override
-		public void connect(UserAccount newConnectUserAccount) throws SQLException {
-			try (Connection cnx = ConnectionProvider.getConnection()) {
-				PreparedStatement pstmt = cnx.prepareStatement(CONNECT);
-				pstmt.setString(1, newConnectUserAccount.getPseudo());
-				pstmt.setString(2, newConnectUserAccount.getEmail());
-				pstmt.setString(3, newConnectUserAccount.getMot_de_passe());
+				userAccount = new UserAccount(pseudo, email);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		return userAccount;
+	}
+
+	@Override
+	public void connect(UserAccount newConnectUserAccount) throws SQLException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(CONNECT);
+			pstmt.setString(1, newConnectUserAccount.getPseudo());
+			pstmt.setString(2, newConnectUserAccount.getEmail());
+			pstmt.setString(3, newConnectUserAccount.getMot_de_passe());
 		}
+	}
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.javaee.bll.UserAccountManager;
 import fr.eni.javaee.bo.UserAccount;
 
 /**
@@ -23,10 +24,27 @@ public class ServletMotDePasseOublie extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		/*if (request.getParameter("email"*/
+		UserAccount userAccount = null;
+		String pseudo = "pseudo1";//(String)request.getParameter("pseudo");
+		String email = "email1";//(String) request.getParameter("email");
+
+		userAccount = UserAccountManager.getInstance().oublieMotDePasse(pseudo, email);
+	
+		if (pseudo.equals(userAccount.getPseudo())	&& email.equals(userAccount.getEmail())) {							
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifMotDePasseOublie.jsp");
+			rd.forward(request, response);
+
+		} else {
+		
 			
 			
+			System.err.println("Username or Password incorrect");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/motDePasseOublie.jsp");
+			rs.include(request, response);
+
 		}
+
+	}
 			 
 			
 	

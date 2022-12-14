@@ -13,7 +13,7 @@ public interface UserAccountDAO {
 		
 		public void supprimer (UserAccount userAccount)throws SQLException;
 		
-		public UserAccount oublieMotDePasse ();
+		public UserAccount oublieMotDePasse (String pseudo,String email);
 		
 		void connect(UserAccount newConnectUserAccount)throws BusinessException, SQLException;
 }
