@@ -62,12 +62,12 @@ public class UserAccountManager {
 		// TODO Auto-generated method stub
 		
 	}
-	public UserAccount selectUser() {
-		return DAOFactory.getUserAccountDAO().selectUser();
+	public UserAccount selectUser(int noUtilisateur) {
+		return DAOFactory.getUserAccountDAO().selectUser(noUtilisateur);
 	}
 	
 	public UserAccount oublieMotDePasse (String pseudo, String email) {
 		return DAOFactory.getUserAccountDAO().oublieMotDePasse(pseudo, email);
 	}
-
+	
 }

@@ -9,11 +9,13 @@ public interface UserAccountDAO {
 
 		void inserer(UserAccount userAccount) throws BusinessException, SQLException;
 		
-		public UserAccount selectUser();
+		public UserAccount selectUser(int noUtilisateur);
 		
 		public void supprimer (UserAccount userAccount)throws SQLException;
 		
 		public UserAccount oublieMotDePasse (String pseudo,String email);
 		
 		void connect(UserAccount newConnectUserAccount)throws BusinessException, SQLException;
+		
+		public void newMdp(String motdepasse,String pseudo, String email) throws SQLException;
 }

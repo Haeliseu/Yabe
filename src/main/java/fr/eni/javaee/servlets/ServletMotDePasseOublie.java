@@ -25,15 +25,21 @@ public class ServletMotDePasseOublie extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		UserAccount userAccount = null;
-		String pseudo = "pseudo1";//(String)request.getParameter("pseudo");
-		String email = "email1";//(String) request.getParameter("email");
-
+		String pseudo = "pseudo1";// (String)request.getParameter("pseudo")   ;  a virer
+		String email = "email1";//(String) request.getParameter("email")     ; a virer
+		request.setAttribute("email", email);
+		request.setAttribute("pseudo", pseudo);
+		
 		userAccount = UserAccountManager.getInstance().oublieMotDePasse(pseudo, email);
 	
 		if (pseudo.equals(userAccount.getPseudo())	&& email.equals(userAccount.getEmail())) {							
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifMotDePasseOublie.jsp");
+			
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifMotDePasseOublie.jsp");			
 			rd.forward(request, response);
 
+			
+			
 		} else {
 		
 			
@@ -46,11 +52,6 @@ public class ServletMotDePasseOublie extends HttpServlet {
 
 	}
 			 
-			
-	
-		
-		
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
