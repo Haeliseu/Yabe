@@ -5,6 +5,48 @@
 <head>
 <meta charset="UTF-8">
 <title>Accueil</title>
+
+<script>
+function verifyAchats(){
+	var achats = document.getElementById('flexRadioDefault1').checked;
+	if(achats == false){
+		document.getElementById("encheresOuvertes").disabled = true;
+		document.getElementById("encheresEnCours").disabled = true;
+		document.getElementById("encheresRemportees").disabled = true;
+		document.getElementById("ventesEnCours").disabled = false;
+		document.getElementById("ventesNonDebutees").disabled = false;
+		document.getElementById("ventesTerminees").disabled = false;
+		
+		document.getElementById("encheresOuvertes").checked = false;
+		document.getElementById("encheresEnCours").checked = false;
+		document.getElementById("encheresRemportees").checked = false;
+		document.getElementById("ventesEnCours").checked = false;
+		document.getElementById("ventesNonDebutees").checked = false;
+		document.getElementById("ventesTerminees").checked = false;
+	}else{
+		document.getElementById("encheresOuvertes").disabled = false;
+		document.getElementById("encheresEnCours").disabled = false;
+		document.getElementById("encheresRemportees").disabled = false;
+		document.getElementById("ventesEnCours").disabled = true;
+		document.getElementById("ventesNonDebutees").disabled = true;
+		document.getElementById("ventesTerminees").disabled = true;
+		
+		document.getElementById("encheresOuvertes").checked = false;
+		document.getElementById("encheresEnCours").checked = false;
+		document.getElementById("encheresRemportees").checked = false;
+		document.getElementById("ventesEnCours").checked = false;
+		document.getElementById("ventesNonDebutees").checked = false;
+		document.getElementById("ventesTerminees").checked = false;
+	}
+}
+
+function verifyCheck(){
+	document.getElementById('flexRadioDefault1').checked = false;
+	document.getElementById('flexRadioDefault2').checked = false;
+}
+
+</script>
+
 </head>
 <body>
 
@@ -36,31 +78,29 @@
 				<%if (checkConnect == true) {%>
 				<!-- FILTRES DE RECHERCHE -->
 
-				<%boolean achats = (boolean)request.getAttribute("achats"); %>
-
-				<div class="container">
+				<div class="container align-items-center">
 					<div class="row">
 						<div class="col-lg-6 col-md-6">
 							<div class="form-check">
-								<input  onclick="window.location.href='/ServletAccueil'" class="form-check-input" type="radio"
-									name="flexRadioDefault" id="flexRadioDefault1" checked> <label
+								<input onclick="verifyAchats()" class="form-check-input" type="radio"
+									name="flexRadioDefault" id="flexRadioDefault1"> <label
 									class="form-check-label" for="flexRadioDefault1">
 									Achats </label>
 							</div>
-
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value=""
-									id="encheresOuvertes" <%if(achats){%>disabled<%} %>> <label class="form-check-label"
+							
+							<div class="form-check chAchats">
+								<input onclick="verifyCheck()" class="form-check-input" type="checkbox" value=""
+									id="encheresOuvertes"> <label class="form-check-label"
 									for="encheresOuvertes"> enchères ouvertes </label>
 
 							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value=""
+							<div class="form-check chAchats">
+								<input onclick="verifyCheck()" class="form-check-input" type="checkbox" value=""
 									id="encheresEnCours"> <label class="form-check-label"
 									for="encheresEnCours"> mes enchères en cours </label>
 							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value=""
+							<div class="form-check chAchats">
+								<input onclick="verifyCheck()" class="form-check-input" type="checkbox" value=""
 									id="encheresRemportees" > <label
 									class="form-check-label" for="encheresRemportees"> mes
 									enchères remportées </label>
@@ -69,24 +109,24 @@
 
 						<div class="col-lg-6 col-md-6">
 							<div class="form-check">
-								<input class="form-check-input" type="radio"
+								<input onclick="verifyAchats()" class="form-check-input" type="radio"
 									name="flexRadioDefault" id="flexRadioDefault2"> <label
 									class="form-check-label" for="flexRadioDefault2"> Mes
 									Ventes </label>
 							</div>
 
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value=""
+							<div class="form-check chVentes">
+								<input onclick="verifyCheck()" class="form-check-input" type="checkbox" value=""
 									id="ventesEnCours"> <label class="form-check-label"
 									for="ventesEnCours"> mes ventes en cours </label>
 							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value=""
+							<div class="form-check chVentes">
+								<input onclick="verifyCheck()" class="form-check-input" type="checkbox" value=""
 									id="ventesNonDebutees"> <label class="form-check-label"
 									for="ventesNonDebutees"> ventes non débutées </label>
 							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value=""
+							<div class="form-check chVentes">
+								<input onclick="verifyCheck()" class="form-check-input" type="checkbox" value=""
 									id="ventesTerminees"> <label class="form-check-label"
 									for="ventesTerminees"> ventes terminées </label>
 							</div>
@@ -99,7 +139,7 @@
 			</div>
 
 			<div class="col">
-				<a href=""><button type="button" class="btn btn-primary btn-lg">Rechercher</button></a>
+				<a href=""><button type="button" class="btn btn-primary btn-lg" name="rechercher">Rechercher</button></a>
 			</div>
 		</div>
 	</div>
