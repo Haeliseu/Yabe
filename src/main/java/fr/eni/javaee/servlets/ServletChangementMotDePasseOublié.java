@@ -50,7 +50,7 @@ public class ServletChangementMotDePasseOublié extends HttpServlet {
 		} else {
 			System.err.println("Confirmation de mot de passe incorrect");
 
-			RequestDispatcher rd = request.getRequestDispatcher("/ServletMotDePasseOublie");
+			RequestDispatcher rd = request.getRequestDispatcher("s/ServletMotDePasseOublie.java");
 			rd.include(request, response);
 
 		}

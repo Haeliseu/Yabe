@@ -132,12 +132,12 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	}
 	
 	
-	public  void newMdp(String motdepasse,String pseudo, String email) throws SQLException {
+	public  void newMdp(String mot_de_passe,String pseudo, String email) throws SQLException {
 		
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(NEW_MDP);
-			pstmt.setString(1,motdepasse);
+			pstmt.setString(1,mot_de_passe);
 			pstmt.setString(2, pseudo);
 			pstmt.setString(3,email);
 			pstmt.executeUpdate();
