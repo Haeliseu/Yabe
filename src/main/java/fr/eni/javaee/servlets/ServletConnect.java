@@ -43,10 +43,7 @@ public class ServletConnect extends HttpServlet {
 			UserAccount useraccount;
 			try {
 				useraccount = UserAccountManager.getInstance().connect(pseudo, email, mot_de_passe);
-				
-			System.out.println(useraccount.getPseudo());
-			System.out.println(pseudo);
-			
+
 			if ((pseudo.equals(useraccount.getPseudo())||(email.equals(useraccount.getEmail())))
 	                && mot_de_passe.equals(useraccount.getMot_de_passe())){
 
