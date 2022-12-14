@@ -66,8 +66,8 @@ public class UserAccountManager {
 		return DAOFactory.getUserAccountDAO().selectUser();
 	}
 	
-	public UserAccount oublieMotDePasse () {
-		return DAOFactory.getUserAccountDAO().oublieMotDePasse();
+	public UserAccount oublieMotDePasse (String pseudo, String email) {
+		return DAOFactory.getUserAccountDAO().oublieMotDePasse(pseudo, email);
 	}
 
 }

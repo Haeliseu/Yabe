@@ -95,16 +95,18 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	
 	}
 
-		public UserAccount oublieMotDePasse () {
+		public UserAccount oublieMotDePasse (String pseudo, String email) {
 			UserAccount userAccount = null;
 		try(Connection cnx= ConnectionProvider.getConnection()){
 			
 			PreparedStatement pstmt=cnx.prepareStatement(MDP_OUBLIE);			
-			ResultSet rs =pstmt.executeQuery();
 			
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, email);
+			ResultSet rs =pstmt.executeQuery();
 			if (rs.next()) {			
-			String pseudo = rs.getString("pseudo");			
-			String email = rs.getString("email");
+			String pseudoDql = rs.getString("pseudo");			
+			String emailDql = rs.getString("email");
 			
 			userAccount = new UserAccount(pseudo, email );
 			}
