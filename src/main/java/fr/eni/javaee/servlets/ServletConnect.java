@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.UserAccountManager;
@@ -43,16 +44,19 @@ public class ServletConnect extends HttpServlet {
 			UserAccount useraccount;
 			try {
 				useraccount = UserAccountManager.getInstance().connect(pseudo, email, mot_de_passe);
-
+			
 			if ((pseudo.equals(useraccount.getPseudo())||(email.equals(useraccount.getEmail())))
 	                && mot_de_passe.equals(useraccount.getMot_de_passe())){
-
-				request.setAttribute("useraccount", useraccount);
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("useraccount", useraccount);
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		        rd.forward(request, response);
+			
 			}else {
 				System.err.println("Identifiant ou mot de passe incorrect");
+				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
 		        rd.include(request, response);
 			}

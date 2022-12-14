@@ -39,7 +39,7 @@
             <a class="nav-link" href="#">Mon Profil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/ServletDisconnect">Déconnexion</a>
+            <a class="nav-link" href=" <%=request.getContextPath()%>/ServletDisconnect">Déconnexion</a>
           </li>
        
        <%}else {%>
