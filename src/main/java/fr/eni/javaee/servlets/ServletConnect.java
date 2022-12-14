@@ -43,12 +43,13 @@ public class ServletConnect extends HttpServlet {
 			UserAccount useraccount;
 			try {
 				useraccount = UserAccountManager.getInstance().connect(pseudo, email, mot_de_passe);
-			
-			if (request.getAttribute("pseudo").toString().equals(useraccount.getPseudo())
-	                && request.getAttribute("mot_de_passe").toString().equals(useraccount.getMot_de_passe())
-				||(request.getAttribute("email").equals(useraccount.getEmail())
-	    	        && request.getAttribute("mot_de_passe").equals(useraccount.getMot_de_passe()))){
 				
+			System.out.println(useraccount.getPseudo());
+			System.out.println(pseudo);
+			
+			if ((pseudo.equals(useraccount.getPseudo())||(email.equals(useraccount.getEmail())))
+	                && mot_de_passe.equals(useraccount.getMot_de_passe())){
+
 				request.setAttribute("useraccount", useraccount);
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
@@ -62,13 +63,6 @@ public class ServletConnect extends HttpServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	/*} catch (SQLException e){
-		//BusinessException be = new BusinessException();
-		//be.ajouterErreur(CodesResultatServlets.FORMAT_EMAIL_ERREUR);
-		//request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
-	}catch (BusinessException e){
-		//request.setAttribute("listeCodesErreur", e.getListeCodesErreur());				
-	}*/
   }
 }  
 
