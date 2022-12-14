@@ -71,6 +71,9 @@ public class UserAccountManager {
 	}
 	
 	public void newMdp(String mot_de_passe,String pseudo, String email) throws SQLException{
-		
+		DAOFactory.getUserAccountDAO().newMdp(mot_de_passe, pseudo, email);
 	}
+
+
+
 }

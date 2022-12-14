@@ -11,21 +11,23 @@
 		<jsp:include page="header.jsp" />
 	</header>
 
-<form action="" method="post"></form>
+<form action="<%=request.getContextPath() %>/ServletMotDePasseOublie" method="post">
 
 <h3 style="margin-bottom:.5em;">Pseudo:</h3>
-                <input type="email" class="form-control" name="pseudo" style="margin-bottom:1em;"
+                <input type="text" class="form-control" name="pseudo" style="margin-bottom:1em;"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default">
                     
 
 
 <h3 style="margin-bottom:.5em;">Email:</h3>
-                <input type="email" class="form-control" name="email" style="margin-bottom:1em;"
+                <input type="text" class="form-control" name="email" style="margin-bottom:1em;"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-default">
 
-<a href="/ServletMotDePasseOublie"><button type="button" class="btn btn-primary btn-lg">Validez</button></a>
 
+
+<input type="submit" class="btn btn-primary btn-lg"value ="Validez"/>
+</form>
 </body>
 </html>

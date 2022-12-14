@@ -32,6 +32,8 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	
 	private final static String NEW_MDP ="UPDATE utilisateurs SET mot_de_passe = ? WHERE pseudo=? and email=?;";
 
+	
+	
 	public UserAccount selectUser(int noUtilisateur) {
 		
 		UserAccount userAccount = null;

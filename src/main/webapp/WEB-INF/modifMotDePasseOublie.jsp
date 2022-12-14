@@ -16,6 +16,7 @@
 	String email = (String) request.getAttribute("email");
 	String pseudo = (String) request.getAttribute("pseudo");
 	%>
+	<form action="<%=request.getContextPath() %>/ServletChangementMotDePasseOublie" method="post">
 	<h3 style="margin-bottom: .5em;">Email:</h3>
 	<input type="text" class="form-control" name="email"
 		style="margin-bottom: 1em;" aria-label="Sizing example input"
@@ -41,7 +42,7 @@
 
 
 
-	<a href=""><button type="button" class="btn btn-primary btn-lg">Validez</button></a>
-
+	<input type="submit" class="btn btn-primary btn-lg"value="Validez">
+</form>
 </body>
 </html>

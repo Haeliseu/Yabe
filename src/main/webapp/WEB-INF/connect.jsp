@@ -37,7 +37,7 @@
                   <div class="col"> 
                   </div>
 			      <div class="col"> 
-                  <a id="mot_de_passe_oublié class="text-forgot-password" href="/WEB-INF/motDePasseOublie.jsp">Mot de passe oublié</a>
+                  <a id="mot_de_passe_oublie" class="text-forgot-password" href= "<%=request.getContextPath() %>/ServletMotDePasseOublie">Mot de passe oublié</a>
                   </div>
                   </div>
                   </form>
