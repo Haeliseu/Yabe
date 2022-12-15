@@ -15,7 +15,7 @@ public interface UserAccountDAO {
 		
 		public UserAccount oublieMotDePasse (String pseudo,String email);
 		
-		void connect(UserAccount newConnectUserAccount)throws BusinessException, SQLException;
+		public boolean verify(UserAccount userAccount) throws BusinessException;
 		
 		public void newMdp(String mot_de_passe,String pseudo, String email) throws SQLException;
 

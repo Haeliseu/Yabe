@@ -1,9 +1,9 @@
 package fr.eni.javaee.dal;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -206,13 +206,13 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			}
 
 			sbQuery.append(SQL_GROUP_BY);
+			
+			System.out.println(sbQuery.toString());
 
-			PreparedStatement pstmt = cnx.prepareStatement(sbQuery.toString());
-
-			pstmt.setString(1, sbQuery.toString());
+			Statement pstmt = cnx.createStatement();
 
 			// récupération du résultat et intégration des données dans une liste
-			ResultSet rs = pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery(sbQuery.toString());
 
 			while (rs.next()) {
 

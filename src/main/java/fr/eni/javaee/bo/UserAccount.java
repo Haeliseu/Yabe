@@ -37,6 +37,12 @@ public class UserAccount {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+	public void setNoUtilisateur(int noUtilisateur) {
+		this.noUtilisateur = noUtilisateur;
+	}
+
+
+
 	public String getPrenom() {
 		return prenom;
 	}

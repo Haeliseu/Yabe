@@ -36,17 +36,21 @@ public class ServletConnect extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String pseudo = request.getParameter("pseudo");
-		String email = request.getParameter("email");
+		String email = request.getParameter("pseudo");
 		String mot_de_passe = request.getParameter("mot_de_passe");
-		
-			
-			UserAccountManager userAccountManager = null;
-			UserAccount useraccount;
+			boolean login = false;
+			UserAccount useraccount = new UserAccount(pseudo, email, mot_de_passe);
+					
+	    	useraccount.setPseudo(pseudo);
+	    	useraccount.setEmail(email);
+	    	useraccount.setMot_de_passe(mot_de_passe);
+	    	System.out.println(useraccount.getPseudo());
+	    	System.out.println(useraccount.getEmail());
+	    	System.out.println(useraccount.getMot_de_passe());
 			try {
-				useraccount = UserAccountManager.getInstance().connect(pseudo, email, mot_de_passe);
+				login = UserAccountManager.getInstance().verify(useraccount);
 			
-			if ((pseudo.equals(useraccount.getPseudo())||(email.equals(useraccount.getEmail())))
-	                && mot_de_passe.equals(useraccount.getMot_de_passe())){
+			if (login == true){
 				
 				HttpSession session = request.getSession();
 				session.setAttribute("useraccount", useraccount);
@@ -58,9 +62,9 @@ public class ServletConnect extends HttpServlet {
 				System.err.println("Identifiant ou mot de passe incorrect");
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
-		        rd.include(request, response);
+		        rd.forward(request, response);
 			}
-			} catch (BusinessException | SQLException e) {
+			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

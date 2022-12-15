@@ -37,17 +37,18 @@ public class UserAccountManager {
 		return newUserAccount;
 	}
 	
-	public UserAccount connect(String pseudo, String email, String mot_de_passe) throws BusinessException, SQLException {
+	public boolean verify(UserAccount userAccount) throws BusinessException{
 		//1. vérification des données
 		BusinessException be = new BusinessException();
+		/*validerId(pseudo, email, be);
 		validerMdp(mot_de_passe, be);
 		validerMail(email, be);
+		validerConn(pseudo, email, mot_de_passe, be);*/
 		if(be.hasErreurs()) { //s'il y a un problème, on lève l'exception
 			throw be;
 		}
 		//2. si on arrive ici, c'est que tout va bien
-		UserAccount newConnectUserAccount = new UserAccount(pseudo, email, mot_de_passe);
-		DAOFactory.getUserAccountDAO().connect(newConnectUserAccount);
+		boolean newConnectUserAccount = DAOFactory.getUserAccountDAO().verify(userAccount);
 				
 		return newConnectUserAccount;
 	}

@@ -27,7 +27,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	private final static String MDP_OUBLIE = "SELECT  email, pseudo FROM utilisateurs WHERE pseudo=? and email=?;";
 
 	private final static String CONNECT = "SELECT * "
-			+ "FROM utilisateurs"
+			+ "FROM utilisateurs "
 			+ "WHERE (pseudo = ? OR email = ?) AND mot_de_passe = ?;";
 	
 	private final static String NEW_MDP ="UPDATE utilisateurs SET mot_de_passe = ? WHERE pseudo=? and email=?;";
@@ -123,14 +123,26 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		return userAccount;
 	}
 
-	@Override
-	public void connect(UserAccount newConnectUserAccount) throws SQLException {
+	public boolean verify(UserAccount userAccount) throws BusinessException{
+		boolean exist = false;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(CONNECT);
-			pstmt.setString(1, newConnectUserAccount.getPseudo());
-			pstmt.setString(2, newConnectUserAccount.getEmail());
-			pstmt.setString(3, newConnectUserAccount.getMot_de_passe());
-		}
+			pstmt.setString(1, userAccount.getPseudo());
+			pstmt.setString(2, userAccount.getEmail());
+			pstmt.setString(3, userAccount.getMot_de_passe());
+		
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                userAccount.setPseudo(rs.getString("pseudo"));
+                userAccount.setEmail(rs.getString("email"));
+                userAccount.setMot_de_passe(rs.getString("mot_de_passe"));
+                exist =  true;
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+        }
+		return exist;
 	}
 	
 	

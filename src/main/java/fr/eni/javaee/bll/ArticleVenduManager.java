@@ -19,7 +19,7 @@ public class ArticleVenduManager {
 	private ArticleVenduManager() {
 	}
 
-	public List<ArticleVendu> motClefs(String[] motsClefs, String categorie, boolean achatsOuverts,
+	public List<ArticleVendu> listeArticles(String[] motsClefs, String categorie, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
 			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException {
 
