@@ -56,98 +56,104 @@
 
 	<div class="container" style="margin-bottom: 2em;">
 		<div class="row align-items-center">
+			<form method="POST"
+				action="<%=request.getContextPath()%>/ServletAccueil">
+				<div class="col">
+					<h3 style="margin-bottom: .5em;">Filtres :</h3>
+					<input type="text" class="form-control" style="margin-bottom: 1em;"
+						aria-label="Sizing example input"
+						aria-describedby="inputGroup-sizing-default" name="motsClefs">
 
-			<div class="col">
-				<h3 style="margin-bottom: .5em;">Filtres :</h3>
-				<input type="text" class="form-control" style="margin-bottom: 1em;"
-					aria-label="Sizing example input"
-					aria-describedby="inputGroup-sizing-default" name="motsClefs">
+					<h4 style="margin-bottom: .5em;">Catégorie :</h4>
+					<select class="form-select" aria-label="Default select example"
+						style="margin-bottom: 1em;" name="categorie">
+						<option selected>Toutes</option>
+						<option value="1">Catégorie 1</option>
+						<option value="2">Catégorie 2</option>
+						<option value="3">Catégorie 3</option>
+					</select>
 
-				<h4 style="margin-bottom: .5em;">Catégorie :</h4>
-				<select class="form-select" aria-label="Default select example"
-					style="margin-bottom: 1em;" name="categorie">
-					<option selected>Toutes</option>
-					<option value="1">Catégorie 1</option>
-					<option value="2">Catégorie 2</option>
-					<option value="3">Catégorie 3</option>
-				</select>
+					<!-- TODO RECUPERATION DE LA VARIABLE DE CONNEXION -->
 
-				<!-- TODO RECUPERATION DE LA VARIABLE DE CONNEXION -->
+					<%
+					if (checkConnect == true) {
+					%>
+					<!-- FILTRES DE RECHERCHE -->
 
-				<%
-				if (checkConnect == true) {
-				%>
-				<!-- FILTRES DE RECHERCHE -->
+					<div class="container align-items-center">
+						<div class="row">
+							<div class="col-lg-6 col-md-6">
+								<div class="form-check">
+									<input onclick="verifyAchats()" class="form-check-input"
+										type="radio" name="radio" id="flexRadioDefault1"
+										value="achats"> <label
+										class="form-check-label" for="flexRadioDefault1">
+										Achats </label>
+								</div>
 
-				<div class="container align-items-center">
-					<div class="row">
-						<div class="col-lg-6 col-md-6">
-							<div class="form-check">
-								<input onclick="verifyAchats()" class="form-check-input"
-									type="radio" name="radtioAchats" id="flexRadioDefault1">
-								<label class="form-check-label" for="flexRadioDefault1">
-									Achats </label>
+								<div class="form-check chAchats">
+									<input onclick="verifyCheck()" class="form-check-input"
+										name="checkEncheresOuvertes" type="checkbox" value=""
+										id="encheresOuvertes" disabled> <label class="form-check-label"
+										for="encheresOuvertes"> enchères ouvertes </label>
+
+								</div>
+								<div class="form-check chAchats">
+									<input onclick="verifyCheck()" class="form-check-input"
+										name="checkEncheresEnCours" type="checkbox" value=""
+										id="encheresEnCours" disabled> <label class="form-check-label"
+										for="encheresEnCours"> mes enchères en cours </label>
+								</div>
+								<div class="form-check chAchats">
+									<input onclick="verifyCheck()" class="form-check-input"
+										name="checkEncheresRemportees" type="checkbox" value=""
+										id="encheresRemportees" disabled> <label
+										class="form-check-label" for="encheresRemportees"> mes
+										enchères remportées </label>
+								</div>
 							</div>
 
-							<div class="form-check chAchats">
-								<input onclick="verifyCheck()" class="form-check-input" name="checkEncheresOuvertes"
-									type="checkbox" value="" id="encheresOuvertes"> <label
-									class="form-check-label" for="encheresOuvertes">
-									enchères ouvertes </label>
+							<div class="col-lg-6 col-md-6">
+								<div class="form-check">
+									<input onclick="verifyAchats()" class="form-check-input"
+										type="radio" name="radio" id="flexRadioDefault2"
+										value="ventes"> <label class="form-check-label"
+										for="flexRadioDefault2"> Mes Ventes </label>
+								</div>
 
-							</div>
-							<div class="form-check chAchats">
-								<input onclick="verifyCheck()" class="form-check-input" name="checkEncheresEnCours"
-									type="checkbox" value="" id="encheresEnCours"> <label
-									class="form-check-label" for="encheresEnCours"> mes
-									enchères en cours </label>
-							</div>
-							<div class="form-check chAchats">
-								<input onclick="verifyCheck()" class="form-check-input" name="checkEncheresRemportees"
-									type="checkbox" value="" id="encheresRemportees"> <label
-									class="form-check-label" for="encheresRemportees"> mes
-									enchères remportées </label>
-							</div>
-						</div>
-
-						<div class="col-lg-6 col-md-6">
-							<div class="form-check">
-								<input onclick="verifyAchats()" class="form-check-input"
-									type="radio" name="radtioVentes" id="flexRadioDefault2">
-								<label class="form-check-label" for="flexRadioDefault2">
-									Mes Ventes </label>
-							</div>
-
-							<div class="form-check chVentes">
-								<input onclick="verifyCheck()" class="form-check-input" name="checkVentesEnCours"
-									type="checkbox" value="" id="ventesEnCours"> <label
-									class="form-check-label" for="ventesEnCours"> mes
-									ventes en cours </label>
-							</div>
-							<div class="form-check chVentes">
-								<input onclick="verifyCheck()" class="form-check-input" name="checkVentesNonDebutees"
-									type="checkbox" value="" id="ventesNonDebutees"> <label
-									class="form-check-label" for="ventesNonDebutees">
-									ventes non débutées </label>
-							</div>
-							<div class="form-check chVentes">
-								<input onclick="verifyCheck()" class="form-check-input" name="checkVentesTerminees"
-									type="checkbox" value="" id="ventesTerminees"> <label
-									class="form-check-label" for="ventesTerminees"> ventes
-									terminées </label>
+								<div class="form-check chVentes">
+									<input onclick="verifyCheck()" class="form-check-input"
+										name="checkVentesEnCours" type="checkbox" value=""
+										id="ventesEnCours" disabled> <label class="form-check-label"
+										for="ventesEnCours"> mes ventes en cours </label>
+								</div>
+								<div class="form-check chVentes">
+									<input onclick="verifyCheck()" class="form-check-input"
+										name="checkVentesNonDebutees" type="checkbox" value=""
+										id="ventesNonDebutees" disabled> <label
+										class="form-check-label" for="ventesNonDebutees">
+										ventes non débutées </label>
+								</div>
+								<div class="form-check chVentes">
+									<input onclick="verifyCheck()" class="form-check-input"
+										name="checkVentesTerminees" type="checkbox" value=""
+										id="ventesTerminees" disabled> <label class="form-check-label"
+										for="ventesTerminees"> ventes terminées </label>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<%
-				}
-				%>
-			</div>
+					<%
+					}
+					%>
 
-			<div class="col">
-				<a href=""><button type="button" class="btn btn-primary btn-lg"
-						name="rechercher">Rechercher</button></a>
-			</div>
+				</div>
+
+				<div class="col">
+					<input type="submit" class="btn btn-primary btn-lg"
+						name="rechercher" value="Rechercher">
+				</div>
+			</form>
 		</div>
 	</div>
 
