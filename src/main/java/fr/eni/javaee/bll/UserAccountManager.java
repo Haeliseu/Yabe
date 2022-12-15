@@ -75,6 +75,11 @@ public class UserAccountManager {
 		DAOFactory.getUserAccountDAO().newMdp(mot_de_passe, pseudo, email);
 	}
 
+	public UserAccount updateUser(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, int noUtilistaeur) throws SQLException {
+		return DAOFactory.getUserAccountDAO().updateUser(pseudo, nom, prenom,email, telephone, rue,
+			 codePostal, ville,  noUtilistaeur);
+	}
 
 
 }

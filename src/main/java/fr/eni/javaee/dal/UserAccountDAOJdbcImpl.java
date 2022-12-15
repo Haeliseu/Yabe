@@ -32,7 +32,8 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	
 	private final static String NEW_MDP ="UPDATE utilisateurs SET mot_de_passe = ? WHERE pseudo=? and email=?;";
 
-	
+	private final static String UPDATE_USER = "UPDATE SET pseudo= ?, nom= ?, prenom= ?, email= ?, telephone= ?, rue= ?, code_postal= ?, ville= ?  FROM UTILISATEURS "
+			+ "WHERE no_utilisateur= ?;";
 	
 	public UserAccount selectUser(int noUtilisateur) {
 		
@@ -158,6 +159,25 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 								
 		}
 	}
-	
+	public UserAccount updateUser(String pseudo,String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, int noUtilistaeur) throws SQLException {
+		//UPDATE pseudo, nom, prenom, email, telephone, rue, code_postal, ville  
+			
+			try (Connection cnx = ConnectionProvider.getConnection()) {
+
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_USER);
+				pstmt.setString(1, pseudo);
+				pstmt.setString(2, nom);
+				pstmt.setString(3, prenom);
+				pstmt.setString(4, email);
+				pstmt.setString(5, telephone);
+				pstmt.setString(6, rue);
+				pstmt.setString(7, codePostal);
+				pstmt.setString(8, ville);
+				pstmt.setInt(9, noUtilistaeur);
+				pstmt.executeUpdate();
+
+		
+	}
+	}
 }
 

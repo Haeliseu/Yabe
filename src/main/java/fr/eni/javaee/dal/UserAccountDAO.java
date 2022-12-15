@@ -19,5 +19,6 @@ public interface UserAccountDAO {
 		
 		public void newMdp(String mot_de_passe,String pseudo, String email) throws SQLException;
 
-	
+		UserAccount updateUser(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+				String codePostal, String ville, int noUtilistaeur) throws SQLException;
 }
