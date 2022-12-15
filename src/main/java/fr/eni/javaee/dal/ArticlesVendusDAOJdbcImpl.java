@@ -201,8 +201,6 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 			sbQuery.append(SQL_GROUP_BY);
 			
-			System.out.println(sbQuery.toString());
-
 			Statement pstmt = cnx.createStatement();
 
 			// récupération du résultat et intégration des données dans une liste

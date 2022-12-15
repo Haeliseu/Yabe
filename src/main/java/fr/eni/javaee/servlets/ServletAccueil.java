@@ -10,10 +10,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.ArticleVenduManager;
 import fr.eni.javaee.bo.ArticleVendu;
+import fr.eni.javaee.bo.UserAccount;
 import fr.eni.javaee.dal.DAOFactory;
 
 @WebServlet("/ServletAccueil")
@@ -39,9 +41,13 @@ public class ServletAccueil extends HttpServlet {
 		boolean ventesEnCours = false;
 		boolean ventesNonDebutees = false;
 		boolean ventesTerminees = false;
-		int idUser = 9;
-
-		// récupération des paramètres
+		int idUser;
+		
+		HttpSession session = request.getSession();
+		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
+		idUser = uA.getNoUtilisateur();
+		
+		// RECUPERATION DES PARAMETRES
 		motsClefs = (String) request.getParameter("motsClefs");
 		
 		if (request.getParameter("categorie").equals("Toutes")) {
@@ -89,6 +95,7 @@ public class ServletAccueil extends HttpServlet {
 		
 		radio = request.getParameter("radio");
 		
+		// 
 		ArticleVenduManager avManager = new ArticleVenduManager();
 		List<ArticleVendu> listeArticlesVendus = null;
 		try {
