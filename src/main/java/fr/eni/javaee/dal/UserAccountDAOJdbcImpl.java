@@ -135,9 +135,19 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()){
+            	userAccount.setNoUtilisateur(rs.getInt("no_utilisateur"));
                 userAccount.setPseudo(rs.getString("pseudo"));
+                userAccount.setNom(rs.getString("nom"));
+                userAccount.setPrenom(rs.getString("prenom"));
                 userAccount.setEmail(rs.getString("email"));
+                userAccount.setTelephone(rs.getString("telephone"));
+                userAccount.setRue(rs.getString("rue"));
+                userAccount.setCode_postal(rs.getString("code_postal"));
+                userAccount.setVille(rs.getString("ville"));
                 userAccount.setMot_de_passe(rs.getString("mot_de_passe"));
+                userAccount.setCredit(rs.getInt("credit"));
+                userAccount.setAdministrateur(rs.getBoolean("administrateur"));
+                
                 exist =  true;
             }
 		} catch (SQLException e) {
