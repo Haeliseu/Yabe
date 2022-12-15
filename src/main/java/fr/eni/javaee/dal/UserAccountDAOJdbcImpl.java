@@ -41,7 +41,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_USER);
-			pstmt.setInt(1, 1);
+			pstmt.setInt(1, noUtilisateur);
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {

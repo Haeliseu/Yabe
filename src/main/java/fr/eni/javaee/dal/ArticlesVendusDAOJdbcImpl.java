@@ -8,13 +8,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.javaee.bll.UserAccountManager;
 import fr.eni.javaee.bo.ArticleVendu;
+import fr.eni.javaee.bo.UserAccount;
 
 public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 	// Querys - Liste des requêtes SQL
 
-	private static final String SQL_SELECT = " SELECT articles_vendus.no_article, nom_article, MAX(montant_enchere) as montant_max_enchere, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur, pseudo ";
+	private static final String SQL_SELECT = " SELECT articles_vendus.no_article, nom_article, MAX(montant_enchere) as montant_max_enchere, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur ";
 	private static final String SQL_FROM = " FROM encheres "
 			+ " INNER JOIN articles_vendus ON encheres.no_article = articles_vendus.no_article "
 			+ " INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur "
@@ -33,7 +35,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	private static final String SQL_VENTES_NON_DEBUTEES = " articles_vendus.date_debut_encheres > getdate() ";
 	private static final String SQL_VENTES_TERMINEES = " articles_vendus.date_fin_encheres > getdate() ";
 
-	private static final String SQL_GROUP_BY = " GROUP BY articles_vendus.no_article, nom_article, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur, pseudo; ";
+	private static final String SQL_GROUP_BY = " GROUP BY articles_vendus.no_article, nom_article, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur; ";
 
 	/*
 	 * private static final String SQL_RECHERCHE_MOT_CLEFS = // = RECHERCHE PAR MOTS
@@ -145,7 +147,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			
 			System.out.println(motsClefs);
 			
-			if(motsClefs != null || categorie != null || radio != null || 
+			if(motsClefs != null || categorie != null ||
 					achatsOuverts != false || achatsEncheresEnCours != false || achatsEncheresRemportees != false ||
 					ventesEnCours != false || ventesNonDebutees != false || ventesTerminees!= false) {
 				sbQuery.append(SQL_WHERE);
@@ -221,6 +223,8 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			// récupération du résultat et intégration des données dans une liste
 			ResultSet rs = pstmt.executeQuery(sbQuery.toString());
 
+			UserAccount userAccount= null;
+			
 			while (rs.next()) {
 
 				int prix;
@@ -230,10 +234,14 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 				} else {
 					prix = rs.getInt("prix_initial");
 				}
-
+				
+				userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("no_utilisateur"));
+				System.out.println(rs.getInt("no_utilisateur"));
+				System.out.println(userAccount.pseudo);
+				
 				ArticleVendu article = new ArticleVendu((int) rs.getInt("no_article"),
 						(String) rs.getString("nom_article"), (LocalDate) rs.getDate("date_fin_encheres").toLocalDate(),
-						(int) prix, (String) rs.getString("pseudo"));
+						(int) prix, userAccount.pseudo);
 				articles.add(article);
 			}
 		} catch (SQLException e) {

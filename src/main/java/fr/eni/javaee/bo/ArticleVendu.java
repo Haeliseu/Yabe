@@ -17,6 +17,8 @@ public class ArticleVendu {
 	private ArticleVendu() {
 	}
 
+	
+	
 	public ArticleVendu(int idArticle, String nomArticle, LocalDate dateFinEncheres, int prix,
 			String pseudoVendeur) {
 		this();
