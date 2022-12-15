@@ -24,7 +24,8 @@ public class ServletAffichageProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserAccount userAccount= null;
-		userAccount = UserAccountManager.getInstance().selectUser(int noUtilisateur);
+		int noUtilisateur = 1;
+		userAccount = UserAccountManager.getInstance().selectUser(noUtilisateur);
 		request.setAttribute("userAccount", userAccount);
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/monProfil.jsp");
 		rd.forward(request, response);

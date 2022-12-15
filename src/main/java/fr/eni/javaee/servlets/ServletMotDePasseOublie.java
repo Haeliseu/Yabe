@@ -38,8 +38,8 @@ public class ServletMotDePasseOublie extends HttpServlet {
 			throws ServletException, IOException {
 
 		UserAccount userAccount = null;
-		String pseudo = (String) request.getParameter("pseudo");
-		String email = (String) request.getParameter("email");
+		String pseudo = request.getParameter("pseudo");
+		String email =  request.getParameter("email");
 		request.setAttribute("email", email);
 		request.setAttribute("pseudo", pseudo);
 
