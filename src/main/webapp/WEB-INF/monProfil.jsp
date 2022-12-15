@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Profil Utilisateur</title>
 </head>
-<body>
+<body style= "text-align : center">
 
 	<header>
 		<jsp:include page="header.jsp" />

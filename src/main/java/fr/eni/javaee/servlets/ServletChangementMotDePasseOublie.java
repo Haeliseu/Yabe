@@ -44,13 +44,13 @@ public class ServletChangementMotDePasseOublie extends HttpServlet {
 			throws ServletException, IOException {
 
 		String motdepasse = request.getParameter("nouveauMotDePasse");
-		System.out.println(motdepasse);
+		
 		String newMdp = request.getParameter("ConfirmationNouveauMotDePasse");
-		System.out.println(newMdp);
+		
 		String pseudo = request.getParameter("pseudo");
-		System.out.println(pseudo);
+		
 		String email = request.getParameter("email");
-		System.out.println(email);
+		
 		if (motdepasse.equals(newMdp)) {
 
 			try {

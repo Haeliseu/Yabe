@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.bll.UserAccountManager;
 import fr.eni.javaee.bo.UserAccount;
@@ -23,12 +24,40 @@ public class ServletAffichageProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
+		
 		UserAccount userAccount= null;
-		int noUtilisateur = 1;
-		userAccount = UserAccountManager.getInstance().selectUser(noUtilisateur);
-		request.setAttribute("userAccount", userAccount);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/monProfil.jsp");
-		rd.forward(request, response);
+		String pseudo = request.getParameter("pseudo");
+		int noUtilisateur ;
+		
+		HttpSession session = request.getSession();
+        UserAccount uA = (UserAccount) session.getAttribute("useraccount");
+        
+        
+        
+        if (uA.getPseudo().equals(pseudo)) {
+        	
+        	noUtilisateur = uA.getNoUtilisateur();
+	        userAccount = UserAccountManager.getInstance().selectUser(noUtilisateur);
+			request.setAttribute("userAccount", userAccount);
+        	
+    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/monProfil.jsp");
+    		rd.forward(request, response);
+        }else {
+            
+request.setAttribute("userAccount", userAccount);
+        	
+    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
+    		rd.forward(request, response);
+        	
+        }
+        
+		
+
+		
+		
 	}
 
 	/**

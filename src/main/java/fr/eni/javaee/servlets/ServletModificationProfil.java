@@ -21,26 +21,34 @@ import fr.eni.javaee.bo.UserAccount;
 public class ServletModificationProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
- 
-
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
 		rd.forward(request, response);
-		
-		
-		
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		UserAccount userAccount=null;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
+		UserAccount userAccount = null;
+		int noUtilisateur;
+		noUtilisateur = uA.getNoUtilisateur();
+
+		userAccount = UserAccountManager.getInstance().selectUser(noUtilisateur);
+		request.setAttribute("userAccount", userAccount);
+
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -50,19 +58,20 @@ public class ServletModificationProfil extends HttpServlet {
 		String codePostal = request.getParameter("code_postal");
 		String ville = request.getParameter("ville");
 		String mot_de_passe = request.getParameter("mot_de_passe");
-		
-		request.setAttribute("pseudo",pseudo);
+
+		request.setAttribute("pseudo", pseudo);
 		request.setAttribute("nom", nom);
 		request.setAttribute("prenom", prenom);
-		request.setAttribute("email",email);
-		request.setAttribute("telephone",telephone);
-		request.setAttribute("rue",rue);
-		request.setAttribute("code_postal",codePostal);
-		request.setAttribute("ville",ville);
-		request.setAttribute("mot_de_passe",mot_de_passe);
-		int noUtilisateur = 1;	
+		request.setAttribute("email", email);
+		request.setAttribute("telephone", telephone);
+		request.setAttribute("rue", rue);
+		request.setAttribute("code_postal", codePostal);
+		request.setAttribute("ville", ville);
+		request.setAttribute("mot_de_passe", mot_de_passe);
+
 		try {
-			userAccount = UserAccountManager.getInstance().updateUser(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, noUtilisateur);
+			userAccount = UserAccountManager.getInstance().updateUser(pseudo, nom, prenom, email, telephone, rue,
+					codePostal, ville, noUtilisateur);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
