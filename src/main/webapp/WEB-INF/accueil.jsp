@@ -77,7 +77,7 @@
 					<!-- TODO RECUPERATION DE LA VARIABLE DE CONNEXION -->
 
 					<%
-					if (checkConnect == true) {
+					if (session.getAttribute("useraccount") != null) {
 					%>
 					<!-- FILTRES DE RECHERCHE -->
 
@@ -174,7 +174,7 @@
 			<div class="card container col-lg-12" style="width: 30rem;">
 				<div class="row">
 					<div class="col-lg-4">
-						<img class="card-img-left" src="..." alt="test">
+						<img class="card-img-left" src="..." alt="">
 						<!-- INSERTION DES IMAGES -->
 					</div>
 					<div class="col-lg-8">

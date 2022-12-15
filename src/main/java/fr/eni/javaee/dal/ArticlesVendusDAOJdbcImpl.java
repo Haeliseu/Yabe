@@ -31,9 +31,9 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	private static final String SQL_ACHATS_MES_ENCHERES_EN_COURS = " articles_vendus.no_article IN (SELECT no_article FROM encheres WHERE ENCHERES.no_utilisateur = ";
 	private static final String SQL_ACHATS_MES_ENCHERES_REMPORTEES = " date_fin_encheres < getdate() AND articles_vendus.no_article IN (SELECT no_article FROM encheres WHERE ENCHERES.no_utilisateur = ";
 	private static final String SQL_MES_VENTES_EN_COURS = SQL_ACHATS_ENCHERES_OUVERTES
-			+ " articles_vendus.no_utilisateur = ";
-	private static final String SQL_VENTES_NON_DEBUTEES = " articles_vendus.date_debut_encheres > getdate() ";
-	private static final String SQL_VENTES_TERMINEES = " articles_vendus.date_fin_encheres > getdate() ";
+			+ " AND articles_vendus.no_article IN (SELECT no_article FROM articles_vendus WHERE articles_vendus.no_utilisateur = ";
+	private static final String SQL_VENTES_NON_DEBUTEES = " articles_vendus.no_article IN ( SELECT no_article FROM ARTICLES_VENDUS WHERE date_debut_encheres > getdate()) ";
+	private static final String SQL_VENTES_TERMINEES = " articles_vendus.date_fin_encheres < getdate() ";
 
 	private static final String SQL_GROUP_BY = " GROUP BY articles_vendus.no_article, nom_article, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur; ";
 
@@ -131,83 +131,78 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			int compteurConditions = 0;
 			sbQuery.append(SQL_SELECT);
 			sbQuery.append(SQL_FROM);
-						
-			if(motsClefs != null || categorie != null ||
-					achatsOuverts != false || achatsEncheresEnCours != false || achatsEncheresRemportees != false ||
-					ventesEnCours != false || ventesNonDebutees != false || ventesTerminees!= false) {
-				sbQuery.append(SQL_WHERE);
-				
-				if (motsClefs != null) {
-					sbQuery.append(SQL_MOT_CLEF + "'%"+ motsClefs +"%' ");
-					compteurConditions++;
-				}
 
-				if (categorie != null) {
-					if (compteurConditions > 0) {
-						sbQuery.append(SQL_AND);
-					}
-					sbQuery.append(SQL_CATEGORIE + categorie);
-					compteurConditions++;
-				}
+			sbQuery.append(SQL_WHERE);
 
-				if (achatsOuverts) {
-					if (compteurConditions > 0) {
-						sbQuery.append(SQL_AND);
-					}
-					sbQuery.append(SQL_ACHATS_ENCHERES_OUVERTES);
-					compteurConditions++;
-				}
+			sbQuery.append(SQL_MOT_CLEF + "'%" + motsClefs + "%' ");
+			compteurConditions++;
 
-				if (achatsEncheresEnCours) {
-					if (compteurConditions > 0) {
-						sbQuery.append(SQL_AND);
-					}
-					sbQuery.append(SQL_ACHATS_MES_ENCHERES_EN_COURS + idUser + " )");
-					compteurConditions++;
+			if (categorie != null) {
+				if (compteurConditions > 0) {
+					sbQuery.append(SQL_AND);
 				}
+				sbQuery.append(SQL_CATEGORIE + categorie);
+				compteurConditions++;
+			}
 
-				if (achatsEncheresRemportees) {
-					if (compteurConditions > 0) {
-						sbQuery.append(SQL_AND);
-					}
-					sbQuery.append(SQL_ACHATS_MES_ENCHERES_REMPORTEES + idUser + " )");
-					compteurConditions++;
+			if (achatsOuverts) {
+				if (compteurConditions > 0) {
+					sbQuery.append(SQL_AND);
 				}
+				sbQuery.append(SQL_ACHATS_ENCHERES_OUVERTES);
+				compteurConditions++;
+			}
 
-				if (ventesEnCours) {
-					if (compteurConditions > 0) {
-						sbQuery.append(SQL_AND);
-					}
-					sbQuery.append(SQL_MES_VENTES_EN_COURS + idUser + " )");
-					compteurConditions++;
+			if (achatsEncheresEnCours) {
+				if (compteurConditions > 0) {
+					sbQuery.append(SQL_AND);
 				}
+				sbQuery.append(SQL_ACHATS_MES_ENCHERES_EN_COURS + idUser + " )");
+				compteurConditions++;
+			}
 
-				if (ventesNonDebutees) {
-					if (compteurConditions > 0) {
-						sbQuery.append(SQL_AND);
-					}
-					sbQuery.append(SQL_VENTES_NON_DEBUTEES);
-					compteurConditions++;
+			if (achatsEncheresRemportees) {
+				if (compteurConditions > 0) {
+					sbQuery.append(SQL_AND);
 				}
+				sbQuery.append(SQL_ACHATS_MES_ENCHERES_REMPORTEES + idUser + " )");
+				compteurConditions++;
+			}
 
-				if (ventesTerminees) {
-					if (compteurConditions > 0) {
-						sbQuery.append(SQL_AND);
-					}
-					sbQuery.append(SQL_VENTES_TERMINEES);
-					compteurConditions++;
+			if (ventesEnCours) {
+				if (compteurConditions > 0) {
+					sbQuery.append(SQL_AND);
 				}
+				sbQuery.append(SQL_MES_VENTES_EN_COURS + idUser + " )");
+				compteurConditions++;
+			}
+
+			if (ventesNonDebutees) {
+				if (compteurConditions > 0) {
+					sbQuery.append(SQL_AND);
+				}
+				sbQuery.append(SQL_VENTES_NON_DEBUTEES);
+				compteurConditions++;
+			}
+
+			if (ventesTerminees) {
+				if (compteurConditions > 0) {
+					sbQuery.append(SQL_AND);
+				}
+				sbQuery.append(SQL_VENTES_TERMINEES);
+				compteurConditions++;
 			}
 
 			sbQuery.append(SQL_GROUP_BY);
-			
+
 			Statement pstmt = cnx.createStatement();
 
 			// récupération du résultat et intégration des données dans une liste
+			System.out.println(sbQuery.toString());
 			ResultSet rs = pstmt.executeQuery(sbQuery.toString());
 
-			UserAccount userAccount= null;
-			
+			UserAccount userAccount = null;
+
 			while (rs.next()) {
 
 				int prix;
@@ -217,9 +212,9 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 				} else {
 					prix = rs.getInt("prix_initial");
 				}
-				
+
 				userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("no_utilisateur"));
-				
+
 				ArticleVendu article = new ArticleVendu((int) rs.getInt("no_article"),
 						(String) rs.getString("nom_article"), (LocalDate) rs.getDate("date_fin_encheres").toLocalDate(),
 						(int) prix, userAccount.pseudo);

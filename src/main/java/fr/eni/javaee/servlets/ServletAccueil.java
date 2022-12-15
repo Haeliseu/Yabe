@@ -12,11 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.ArticleVenduManager;
 import fr.eni.javaee.bo.ArticleVendu;
 import fr.eni.javaee.bo.UserAccount;
-import fr.eni.javaee.dal.DAOFactory;
 
 @WebServlet("/ServletAccueil")
 public class ServletAccueil extends HttpServlet {
@@ -45,7 +43,12 @@ public class ServletAccueil extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
-		idUser = uA.getNoUtilisateur();
+		
+		if (session.getAttribute("useraccount") != null) {
+			idUser = uA.getNoUtilisateur();
+		}else {
+			idUser=0;
+		}
 		
 		// RECUPERATION DES PARAMETRES
 		motsClefs = (String) request.getParameter("motsClefs");

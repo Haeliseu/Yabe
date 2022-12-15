@@ -24,10 +24,7 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
       
-      <!-- TODO RECUPERATION DE LA VARIABLE DE CONNEXION -->
-      <% boolean checkConnect = true;%>
-      
-      <% if (checkConnect == true){ %>
+      <% if (session.getAttribute("useraccount") != null){ %>
       <!-- HEADER CONNECTE -->
           <li class="nav-item">
             <a class="nav-link" href="#">Enchères</a>
@@ -45,10 +42,10 @@
        <%}else {%>
           <!-- HEADER DECONNECTE -->
           <li class="nav-item">
-            <a class="nav-link" href="#">S'incrire</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/ServletRegister">S'incrire</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Se connecter</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/ServletConnect">Se connecter</a>
           </li>
 		
 		<%} %>
