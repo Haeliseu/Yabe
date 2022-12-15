@@ -16,7 +16,7 @@ import fr.eni.javaee.bo.UserAccount;
 /**
  * Servlet implementation class ServletChangementMotDePasseOublié
  */
-@WebServlet("/ServletChangementMotDePasseOublié")
+@WebServlet("/ServletChangementMotDePasseOublie")
 public class ServletChangementMotDePasseOublie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,10 +44,13 @@ public class ServletChangementMotDePasseOublie extends HttpServlet {
 			throws ServletException, IOException {
 
 		String motdepasse = request.getParameter("nouveauMotDePasse");
+		System.out.println(motdepasse);
 		String newMdp = request.getParameter("ConfirmationNouveauMotDePasse");
+		System.out.println(newMdp);
 		String pseudo = request.getParameter("pseudo");
+		System.out.println(pseudo);
 		String email = request.getParameter("email");
-
+		System.out.println(email);
 		if (motdepasse.equals(newMdp)) {
 
 			try {
@@ -55,13 +58,13 @@ public class ServletChangementMotDePasseOublie extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+			System.out.println("try");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
 			rd.forward(request, response);
 		} else {
 			System.err.println("Confirmation de mot de passe incorrect");
-
-			RequestDispatcher rd = request.getRequestDispatcher("/ServletMotDePasseOublie.java");
+			System.out.println("else");
+			RequestDispatcher rd = request.getRequestDispatcher("/ServletMotDePasseOublie");
 			rd.forward(request, response);
 
 		}
