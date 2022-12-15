@@ -21,22 +21,21 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	private final static String DELETE_USER = "DELETE FROM utilisateurs WHERE no_utilisateur = ?;";
 
-	private final static String MOT_DE_PASSE = "UPDATE utilisateurs SET mot_de_passe = ? WHERE no_utilisateur = ?;";
-
 	// Select mot de passe oublié
 	private final static String MDP_OUBLIE = "SELECT  email, pseudo FROM utilisateurs WHERE pseudo=? and email=?;";
 
-	private final static String CONNECT = "SELECT * "
-			+ "FROM utilisateurs "
+	private final static String CONNECT = "SELECT * " + "FROM utilisateurs "
 			+ "WHERE (pseudo = ? OR email = ?) AND mot_de_passe = ?;";
-	
-	private final static String NEW_MDP ="UPDATE utilisateurs SET mot_de_passe = ? WHERE pseudo=? and email=?;";
+
+	private final static String NEW_MDP = "UPDATE utilisateurs SET mot_de_passe = ? WHERE pseudo=? and email=?;";
 
 	private final static String UPDATE_USER = "UPDATE SET pseudo= ?, nom= ?, prenom= ?, email= ?, telephone= ?, rue= ?, code_postal= ?, ville= ?  FROM UTILISATEURS "
 			+ "WHERE no_utilisateur= ?;";
 	
+	private final static String DOUBLONCHECK = "SELECT ? FROM UTILISATEURS WHERE ? = '?';";
+
 	public UserAccount selectUser(int noUtilisateur) {
-		
+
 		UserAccount userAccount = null;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
@@ -78,8 +77,8 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			pstmt.setString(7, userAccount.getCode_postal());
 			pstmt.setString(8, userAccount.getVille());
 			pstmt.setString(9, userAccount.getMot_de_passe());
-			pstmt.setInt(9, 0);
-			pstmt.setBoolean(10, false);
+			pstmt.setInt(10, 0);
+			pstmt.setBoolean(11, false);
 			// Verifier éxections dans la catch
 			pstmt.executeUpdate();
 
@@ -124,71 +123,89 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		return userAccount;
 	}
 
-	public boolean verify(UserAccount userAccount) throws BusinessException{
+	public boolean verify(UserAccount userAccount) throws BusinessException {
 		boolean exist = false;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(CONNECT);
 			pstmt.setString(1, userAccount.getPseudo());
 			pstmt.setString(2, userAccount.getEmail());
 			pstmt.setString(3, userAccount.getMot_de_passe());
-		
-            ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()){
-            	userAccount.setNoUtilisateur(rs.getInt("no_utilisateur"));
-                userAccount.setPseudo(rs.getString("pseudo"));
-                userAccount.setNom(rs.getString("nom"));
-                userAccount.setPrenom(rs.getString("prenom"));
-                userAccount.setEmail(rs.getString("email"));
-                userAccount.setTelephone(rs.getString("telephone"));
-                userAccount.setRue(rs.getString("rue"));
-                userAccount.setCode_postal(rs.getString("code_postal"));
-                userAccount.setVille(rs.getString("ville"));
-                userAccount.setMot_de_passe(rs.getString("mot_de_passe"));
-                userAccount.setCredit(rs.getInt("credit"));
-                userAccount.setAdministrateur(rs.getBoolean("administrateur"));
-                
-                exist =  true;
-            }
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				userAccount.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				userAccount.setPseudo(rs.getString("pseudo"));
+				userAccount.setNom(rs.getString("nom"));
+				userAccount.setPrenom(rs.getString("prenom"));
+				userAccount.setEmail(rs.getString("email"));
+				userAccount.setTelephone(rs.getString("telephone"));
+				userAccount.setRue(rs.getString("rue"));
+				userAccount.setCode_postal(rs.getString("code_postal"));
+				userAccount.setVille(rs.getString("ville"));
+				userAccount.setMot_de_passe(rs.getString("mot_de_passe"));
+				userAccount.setCredit(rs.getInt("credit"));
+				userAccount.setAdministrateur(rs.getBoolean("administrateur"));
+
+				exist = true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-        }
+		}
 		return exist;
 	}
-	
-	
-	public  void newMdp(String mot_de_passe,String pseudo, String email) throws SQLException {
-		
+
+	public void newMdp(String mot_de_passe, String pseudo, String email) throws SQLException {
+
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(NEW_MDP);
-			pstmt.setString(1,mot_de_passe);
+			pstmt.setString(1, mot_de_passe);
 			pstmt.setString(2, pseudo);
-			pstmt.setString(3,email);
+			pstmt.setString(3, email);
 			pstmt.executeUpdate();
-								
+
 		}
 	}
-	public UserAccount updateUser(String pseudo,String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, int noUtilistaeur) throws SQLException {
-		//UPDATE pseudo, nom, prenom, email, telephone, rue, code_postal, ville  
+
+	public UserAccount updateUser(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, int noUtilistaeur) throws SQLException {
+		// UPDATE pseudo, nom, prenom, email, telephone, rue, code_postal, ville
 		UserAccount userAccount = new UserAccount();
-			try (Connection cnx = ConnectionProvider.getConnection()) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 
-				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_USER);
-				pstmt.setString(1, pseudo);
-				pstmt.setString(2, nom);
-				pstmt.setString(3, prenom);
-				pstmt.setString(4, email);
-				pstmt.setString(5, telephone);
-				pstmt.setString(6, rue);
-				pstmt.setString(7, codePostal);
-				pstmt.setString(8, ville);
-				pstmt.setInt(9, noUtilistaeur);
-				pstmt.executeUpdate();
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_USER);
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, nom);
+			pstmt.setString(3, prenom);
+			pstmt.setString(4, email);
+			pstmt.setString(5, telephone);
+			pstmt.setString(6, rue);
+			pstmt.setString(7, codePostal);
+			pstmt.setString(8, ville);
+			pstmt.setInt(9, noUtilistaeur);
+			pstmt.executeUpdate();
 
-		
+		}
+		return userAccount;
 	}
-			return userAccount;
+	
+	public boolean checkUser(String champ, String valeur) {
+		boolean exist = false;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(DOUBLONCHECK);
+			pstmt.setString(1, champ);
+			pstmt.setString(2, champ);
+			pstmt.setString(3, valeur);
+			
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+
+				exist = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exist;
 	}
 }
-

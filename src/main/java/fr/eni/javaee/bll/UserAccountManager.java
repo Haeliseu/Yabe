@@ -19,6 +19,12 @@ public class UserAccountManager {
 		return instance;
 	}
 
+	public boolean checkUser(String champ, String valeur) {
+//TODO: EXCEPTIONS A FAIRE 
+			boolean test = DAOFactory.getUserAccountDAO().checkUser(champ, valeur);
+			return test;
+			}
+
 	private UserAccountManager() {}
 	
 	public UserAccount inserer(String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe) throws BusinessException, SQLException {
@@ -40,10 +46,10 @@ public class UserAccountManager {
 	public boolean verify(UserAccount userAccount) throws BusinessException{
 		//1. vérification des données
 		BusinessException be = new BusinessException();
-		/*validerId(pseudo, email, be);
-		validerMdp(mot_de_passe, be);
-		validerMail(email, be);
-		validerConn(pseudo, email, mot_de_passe, be);*/
+		validerPseudo(userAccount.getPseudo(), userAccount.getEmail(), be);
+		validerMdp(userAccount.getMot_de_passe(), be);
+		validerMail(userAccount.getEmail(), be);
+		validerConn(userAccount.getPseudo(), userAccount.getEmail(), userAccount.getMot_de_passe(), be);
 		if(be.hasErreurs()) { //s'il y a un problème, on lève l'exception
 			throw be;
 		}
@@ -53,6 +59,16 @@ public class UserAccountManager {
 		return newConnectUserAccount;
 	}
 
+
+	private void validerConn(String pseudo, String email, String mot_de_passe, BusinessException be) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void validerPseudo(String pseudo, String email, BusinessException be) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private void validerMail(String email, BusinessException be) {
 		// TODO Auto-generated method stub

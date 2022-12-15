@@ -21,4 +21,5 @@ public interface UserAccountDAO {
 
 		UserAccount updateUser(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 				String codePostal, String ville, int noUtilistaeur) throws SQLException;
+		public boolean checkUser(String champ, String valeur);
 }

@@ -17,7 +17,7 @@
 
         <div class="col-lg-6 col-md-6">
          <label for="pseudo" class="form-label">Pseudo :</label>
-         <input type="text" class="form-control" id="pseudo"  name="pseudo" value="" required>
+         <input type="text" class="form-control" id="pseudo"  name="pseudo" value="" required pattern="[a-zA-Z0-9\s]+" required>
        </div>
  
        <div class="col-lg-6 col-md-6">
@@ -68,7 +68,7 @@
        <!-- controller le password -->
        <div class="col-lg-6 col-md-6">
          <label for="inputPassword" class="form-label">Confirmation :</label>
-         <input type="password" class="form-control" id="password"  name="mot_de_passe" value="" required>  
+         <input type="password" class="form-control" id="password"  name="Confirmation" value="" required>  
        </div>
        </div>
  	<div class="row">

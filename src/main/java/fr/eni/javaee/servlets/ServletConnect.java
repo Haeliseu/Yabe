@@ -61,7 +61,6 @@ public class ServletConnect extends HttpServlet {
 		        rd.forward(request, response);
 			
 			}else {
-				System.err.println("Identifiant ou mot de passe incorrect");
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
 				PrintWriter out = response.getWriter();

@@ -28,7 +28,7 @@ public class ServletDisconnect extends HttpServlet {
         if (session != null) {
             session.removeAttribute("useraccount");
              
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/connect.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
             dispatcher.forward(request, response);
 		
         }
