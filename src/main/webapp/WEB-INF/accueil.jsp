@@ -53,14 +53,26 @@
 
 	<%@include file="header.jsp"%>
 
+	<%
+	if (session.getAttribute("useraccount") != null) {
+		UserAccount useraccount = (UserAccount) session.getAttribute("useraccount");
+	%>
+	<h5 style="text-align: center;"><%=useraccount.getPseudo()%>
+		connecté(e)
+	</h5>
+	<hr>
+	<%
+	}
+	%>
+
 	<h2 class="text-center" style="margin-bottom: 1em;">Liste des
 		enchères</h2>
 
-	<div class="container" style="margin-bottom: 2em;">
-		<div class="row align-items-center">
-			<form method="POST"
-				action="<%=request.getContextPath()%>/ServletAccueil">
-				<div class="col">
+
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="row align-items-left">
 					<h3 style="margin-bottom: .5em;">Filtres :</h3>
 					<input type="text" class="form-control" style="margin-bottom: 1em;"
 						aria-label="Sizing example input"
@@ -87,23 +99,24 @@
 								<div class="form-check">
 									<input onclick="verifyAchats()" class="form-check-input"
 										type="radio" name="radio" id="flexRadioDefault1"
-										value="achats"> <label
-										class="form-check-label" for="flexRadioDefault1">
-										Achats </label>
+										value="achats"> <label class="form-check-label"
+										for="flexRadioDefault1"> Achats </label>
 								</div>
 
 								<div class="form-check chAchats">
 									<input onclick="verifyCheck()" class="form-check-input"
 										name="checkEncheresOuvertes" type="checkbox" value=""
-										id="encheresOuvertes" disabled> <label class="form-check-label"
-										for="encheresOuvertes"> enchères ouvertes </label>
+										id="encheresOuvertes" disabled> <label
+										class="form-check-label" for="encheresOuvertes">
+										enchères ouvertes </label>
 
 								</div>
 								<div class="form-check chAchats">
 									<input onclick="verifyCheck()" class="form-check-input"
 										name="checkEncheresEnCours" type="checkbox" value=""
-										id="encheresEnCours" disabled> <label class="form-check-label"
-										for="encheresEnCours"> mes enchères en cours </label>
+										id="encheresEnCours" disabled> <label
+										class="form-check-label" for="encheresEnCours"> mes
+										enchères en cours </label>
 								</div>
 								<div class="form-check chAchats">
 									<input onclick="verifyCheck()" class="form-check-input"
@@ -125,8 +138,9 @@
 								<div class="form-check chVentes">
 									<input onclick="verifyCheck()" class="form-check-input"
 										name="checkVentesEnCours" type="checkbox" value=""
-										id="ventesEnCours" disabled> <label class="form-check-label"
-										for="ventesEnCours"> mes ventes en cours </label>
+										id="ventesEnCours" disabled> <label
+										class="form-check-label" for="ventesEnCours"> mes
+										ventes en cours </label>
 								</div>
 								<div class="form-check chVentes">
 									<input onclick="verifyCheck()" class="form-check-input"
@@ -138,8 +152,9 @@
 								<div class="form-check chVentes">
 									<input onclick="verifyCheck()" class="form-check-input"
 										name="checkVentesTerminees" type="checkbox" value=""
-										id="ventesTerminees" disabled> <label class="form-check-label"
-										for="ventesTerminees"> ventes terminées </label>
+										id="ventesTerminees" disabled> <label
+										class="form-check-label" for="ventesTerminees"> ventes
+										terminées </label>
 								</div>
 							</div>
 						</div>
@@ -147,16 +162,25 @@
 					<%
 					}
 					%>
-
 				</div>
+			</div>
 
-				<div class="col">
-					<input type="submit" class="btn btn-primary btn-lg"
-						name="rechercher" value="Rechercher">
-				</div>
-			</form>
+			<div class="col-auto align-self-center ">
+				<input type="submit" class="btn btn-primary btn-lg"
+					name="rechercher" value="Rechercher">
+			</div>
 		</div>
 	</div>
+
+
+
+
+	<div class="container">
+
+		<form method="POST"
+			action="<%=request.getContextPath()%>/ServletAccueil"></form>
+	</div>
+
 
 
 
@@ -164,14 +188,15 @@
 		<div class="row align-items-center">
 
 			<!-- FAIRE LA BOUCLE D AFFICHAGE DES CARTES D ARTICLES -->
-	
+
 			<%
-				List<ArticleVendu> listeArticles = (List<ArticleVendu>)request.getAttribute("listeArticlesVendus");
-				if(listeArticles != null){
-					for (ArticleVendu article : listeArticles){
+			List<ArticleVendu> listeArticles = (List<ArticleVendu>) request.getAttribute("listeArticlesVendus");
+			if (listeArticles != null) {
+				for (ArticleVendu article : listeArticles) {
 			%>
-			
-			<div class="card container col-lg-12" style="width: 30rem;">
+
+			<div class="card container col-lg-12"
+				style="margin: .5em; width: 30rem;">
 				<div class="row">
 					<div class="col-lg-4">
 						<img class="card-img-left" src="..." alt="">
@@ -179,25 +204,30 @@
 					</div>
 					<div class="col-lg-8">
 						<div class="card-body">
-							<h5 class="card-title"><%=article.getNomArticle() %></h5>
-							<p class="card-text">Prix : <%=article.getPrix() %></p>
-							<p class="card-text">Fin de l'enchère :	<%=article.getDateFinEncheres() %></p>
+							<h5 class="card-title"><%=article.getNomArticle()%></h5>
 							<p class="card-text">
-								Vendeur : <a href="<%=request.getContextPath()%>/ServletAffichageProfil"><%=article.getPseudoVendeur() %></a>
-								<input name="pseudo" value="<%=article.getPseudoVendeur() %>" hidden="true" />
+								Prix :
+								<%=article.getPrix()%></p>
+							<p class="card-text">
+								Fin de l'enchère :
+								<%=article.getDateFinEncheres()%></p>
+							<p class="card-text">
+								Vendeur : <a
+									href="<%=request.getContextPath()%>/ServletAffichageProfil"><%=article.getPseudoVendeur()%></a>
+								<input name="pseudo" value="<%=article.getPseudoVendeur()%>"
+									hidden="true" />
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-			<%	
-					}
-				}
+			<%
+			}
+			}
 			%>
 
 
 		</div>
 	</div>
-
 </body>
 </html>
