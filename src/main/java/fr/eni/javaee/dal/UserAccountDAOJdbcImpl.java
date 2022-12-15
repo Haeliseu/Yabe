@@ -161,7 +161,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	}
 	public UserAccount updateUser(String pseudo,String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, int noUtilistaeur) throws SQLException {
 		//UPDATE pseudo, nom, prenom, email, telephone, rue, code_postal, ville  
-			
+		UserAccount userAccount = new UserAccount();
 			try (Connection cnx = ConnectionProvider.getConnection()) {
 
 				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_USER);
@@ -178,6 +178,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 		
 	}
+			return userAccount;
 	}
 }
 
