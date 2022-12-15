@@ -44,8 +44,8 @@ public class ServletRegister extends HttpServlet {
 		String mot_de_passe = request.getParameter("mot_de_passe");
 		String confirmation = request.getParameter("confirmation");
 		if (mot_de_passe.equals(confirmation)) {
-			if (!UserAccountManager.getInstance().checkUser("email", email)) {
-				if (!UserAccountManager.getInstance().checkUser("pseudo", pseudo)) {
+			if (UserAccountManager.getInstance().checkUser("email", email)) {
+				if (UserAccountManager.getInstance().checkUser("pseudo", pseudo)) {
 
 					try {
 						UserAccount useraccount = UserAccountManager.getInstance().inserer(pseudo, nom, prenom, email,

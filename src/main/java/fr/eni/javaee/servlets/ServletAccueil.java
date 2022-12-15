@@ -23,6 +23,17 @@ public class ServletAccueil extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		
+		ArticleVenduManager avManager = new ArticleVenduManager();
+		List<ArticleVendu> listeArticlesVendus = null;
+		try {
+			listeArticlesVendus = avManager.listeArticles("", null, "", false, false,
+					false, false, false, false, 0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("listeArticlesVendus", listeArticlesVendus);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		rd.forward(request, response);
 	}
@@ -110,6 +121,7 @@ public class ServletAccueil extends HttpServlet {
 		
 		request.setAttribute("listeArticlesVendus", listeArticlesVendus);
 		
-		doGet(request, response);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+		rd.forward(request, response);
 	}
 }

@@ -18,7 +18,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 	private static final String SQL_SELECT = " SELECT articles_vendus.no_article, nom_article, MAX(montant_enchere) as montant_max_enchere, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur ";
 	private static final String SQL_FROM = " FROM encheres "
-			+ " INNER JOIN articles_vendus ON encheres.no_article = articles_vendus.no_article "
+			+ " RIGHT JOIN articles_vendus ON encheres.no_article = articles_vendus.no_article "
 			+ " INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur "
 			+ " INNER JOIN categories ON articles_vendus.no_categorie = categories.no_categorie ";
 
