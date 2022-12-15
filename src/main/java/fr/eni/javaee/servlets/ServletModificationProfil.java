@@ -1,6 +1,7 @@
 package fr.eni.javaee.servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -60,7 +61,12 @@ public class ServletModificationProfil extends HttpServlet {
 		request.setAttribute("ville",ville);
 		request.setAttribute("mot_de_passe",mot_de_passe);
 		int noUtilisateur = 1;	
-		userAccount = UserAccountManager.getInstance().updateUser(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, noUtilisateur);
+		try {
+			userAccount = UserAccountManager.getInstance().updateUser(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, noUtilisateur);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
