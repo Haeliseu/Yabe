@@ -9,7 +9,7 @@ public class ArticleVendu {
 	private String description;
 	private LocalDate dateDebutEncheres;
 	private LocalDate dateFinEncheres;
-	private int prixInitial;
+	private int prix;
 	private int prixVente;
 	private String pseudoVendeur;
 
@@ -17,13 +17,13 @@ public class ArticleVendu {
 	private ArticleVendu() {
 	}
 
-	public ArticleVendu(int idArticle, String nomArticle, LocalDate dateFinEncheres, int prixInitial,
+	public ArticleVendu(int idArticle, String nomArticle, LocalDate dateFinEncheres, int prix,
 			String pseudoVendeur) {
 		this();
 		this.setIdArticle(idArticle);
 		this.setNomArticle(nomArticle);
 		this.setDateFinEncheres(dateFinEncheres);
-		this.setPrixInitial(prixInitial);
+		this.setPrix(prix);
 		this.setPseudoVendeur(pseudoVendeur);
 	}
 
@@ -76,12 +76,12 @@ public class ArticleVendu {
 		this.dateFinEncheres = dateFinEncheres;
 	}
 
-	public int getPrixInitial() {
-		return prixInitial;
+	public int getPrix() {
+		return prix;
 	}
 
-	public void setPrixInitial(int prixInitial) {
-		this.prixInitial = prixInitial;
+	public void setPrix(int prixInitial) {
+		this.prix = prixInitial;
 	}
 
 	public int getPrixVente() {

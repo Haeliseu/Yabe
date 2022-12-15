@@ -3,6 +3,7 @@ package fr.eni.javaee.bll;
 import java.sql.SQLException;
 import java.util.List;
 
+import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bo.ArticleVendu;
 import fr.eni.javaee.dal.DAOFactory;
 
@@ -16,16 +17,31 @@ public class ArticleVenduManager {
 		return instance;
 	}
 
-	private ArticleVenduManager() {
+	public ArticleVenduManager() {
 	}
 
-	public List<ArticleVendu> listeArticles(String[] motsClefs, String categorie, boolean achatsOuverts,
+	public List<ArticleVendu> listeArticles(String[] motsClefs, String categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
 			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException {
-
-		List<ArticleVendu> articles = DAOFactory.getArticleVenduDAO().listeArticles(motsClefs, categorie, achatsOuverts,
+		
+		BusinessException be = new BusinessException();
+				
+		if (motsClefs != null || motsClefs[0].isBlank()) {
+			motsClefs = null;
+		}
+		
+		validerAchats(radio, achatsOuverts, achatsEncheresEnCours, achatsEncheresRemportees, be);
+		
+		List<ArticleVendu> articles = DAOFactory.getArticleVenduDAO().listeArticles(motsClefs, categorie, radio, achatsOuverts,
 				achatsEncheresEnCours, achatsEncheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, idUser);
 		return articles;
+	}
+
+	public void validerAchats(String radio, boolean achatsOuverts,
+			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, BusinessException be) {
+		/*if(achatsOuverts==false && achatsEncheresEnCours==false && achatsEncheresRemportees==false && !radio.equals("achats")) {
+			be.ajouterErreur(CodesErreurBLL.VALIDATION_ACHATS_ERREUR);
+		}*/
 	}
 
 }

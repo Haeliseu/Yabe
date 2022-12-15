@@ -1,3 +1,5 @@
+<%@page import="fr.eni.javaee.bo.ArticleVendu"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -68,9 +70,8 @@
 					<select class="form-select" aria-label="Default select example"
 						style="margin-bottom: 1em;" name="categorie">
 						<option selected>Toutes</option>
-						<option value="1">Catégorie 1</option>
-						<option value="2">Catégorie 2</option>
-						<option value="3">Catégorie 3</option>
+						<option value="'cat1'">Catégorie 1</option>
+						<option value="'cat2'">Catégorie 2</option>
 					</select>
 
 					<!-- TODO RECUPERATION DE LA VARIABLE DE CONNEXION -->
@@ -163,7 +164,13 @@
 		<div class="row align-items-center">
 
 			<!-- FAIRE LA BOUCLE D AFFICHAGE DES CARTES D ARTICLES -->
-
+	
+			<%
+				List<ArticleVendu> listeArticles = (List<ArticleVendu>)request.getAttribute("listeArticlesVendus");
+				if(listeArticles != null){
+					for (ArticleVendu article : listeArticles){
+			%>
+			
 			<div class="card container col-lg-12" style="width: 30rem;">
 				<div class="row">
 					<div class="col-lg-4">
@@ -172,37 +179,20 @@
 					</div>
 					<div class="col-lg-8">
 						<div class="card-body">
-							<h5 class="card-title">article.getNom</h5>
-							<p class="card-text">Prix : "article.getPrix()"</p>
-							<p class="card-text">Fin de l'enchère :
-								"article.getFinEnchere()"</p>
+							<h5 class="card-title"><%=article.getNomArticle() %></h5>
+							<p class="card-text">Prix : <%=article.getPrix() %></p>
+							<p class="card-text">Fin de l'enchère :	<%=article.getDateFinEncheres() %></p>
 							<p class="card-text">
-								Vendeur : <a href="#">"article.getUser()"</a>
+								Vendeur : <a href="#"><%=article.getPseudoVendeur() %></a>
 							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="card container col-lg-12" style="width: 30rem;">
-				<div class="row">
-					<div class="col-lg-4">
-						<img class="card-img-left" src="..." alt="test">
-						<!-- INSERTION DES IMAGES -->
-					</div>
-					<div class="col-lg-8">
-						<div class="card-body">
-							<h5 class="card-title">article.getNom</h5>
-							<p class="card-text">Prix : "article.getPrix()"</p>
-							<p class="card-text">Fin de l'enchère :
-								"article.getFinEnchere()"</p>
-							<p class="card-text">
-								Vendeur : <a href="#">"article.getUser()"</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
+			<%	
+					}
+				}
+			%>
 
 
 		</div>

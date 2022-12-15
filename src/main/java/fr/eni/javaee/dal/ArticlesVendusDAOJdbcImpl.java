@@ -33,7 +33,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	private static final String SQL_VENTES_NON_DEBUTEES = " articles_vendus.date_debut_encheres > getdate() ";
 	private static final String SQL_VENTES_TERMINEES = " articles_vendus.date_fin_encheres > getdate() ";
 
-	private static final String SQL_GROUP_BY = "GROUP BY articles_vendus.no_article, nom_article, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur, pseudo;";
+	private static final String SQL_GROUP_BY = " GROUP BY articles_vendus.no_article, nom_article, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur, pseudo; ";
 
 	/*
 	 * private static final String SQL_RECHERCHE_MOT_CLEFS = // = RECHERCHE PAR MOTS
@@ -117,7 +117,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 	// Methods
 	@Override
-	public List<ArticleVendu> listeArticles(String[] motsClefs, String categorie, boolean achatsOuverts,
+	public List<ArticleVendu> listeArticles(String[] motsClefs, String categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
 			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException {
 
@@ -127,14 +127,14 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 			// Construction du WHERE Mots Clefs dans un StringBuilder
 			StringBuilder sbMotsClefs = new StringBuilder();
-
-			if (motsClefs != null) {
+			
+			if (motsClefs!=null) {
 				for (int i = 0; i < motsClefs.length; i++) {
 					if (i > 1) {
 						sbMotsClefs.append(SQL_AND);
 					}
 					sbMotsClefs.append(SQL_MOT_CLEF);
-					sbMotsClefs.append(motsClefs[i].toString());
+					sbMotsClefs.append("'%"+motsClefs[i].toString()+"%' ");
 				}
 			}
 
@@ -142,67 +142,74 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			int compteurConditions = 0;
 			sbQuery.append(SQL_SELECT);
 			sbQuery.append(SQL_FROM);
-			sbQuery.append(SQL_WHERE);
-
-			if (motsClefs != null) {
-				sbQuery.append(sbMotsClefs.toString());
-				compteurConditions++;
-			}
-
-			if (categorie != null) {
-				if (compteurConditions > 0) {
-					sbQuery.append(SQL_AND);
+			
+			System.out.println(motsClefs);
+			
+			if(motsClefs != null || categorie != null || radio != null || 
+					achatsOuverts != false || achatsEncheresEnCours != false || achatsEncheresRemportees != false ||
+					ventesEnCours != false || ventesNonDebutees != false || ventesTerminees!= false) {
+				sbQuery.append(SQL_WHERE);
+				
+				if (motsClefs != null) {
+					sbQuery.append(sbMotsClefs.toString());
+					compteurConditions++;
 				}
-				sbQuery.append(SQL_CATEGORIE + categorie);
-				compteurConditions++;
-			}
 
-			if (achatsOuverts) {
-				if (compteurConditions > 0) {
-					sbQuery.append(SQL_AND);
+				if (categorie != null) {
+					if (compteurConditions > 0) {
+						sbQuery.append(SQL_AND);
+					}
+					sbQuery.append(SQL_CATEGORIE + categorie);
+					compteurConditions++;
 				}
-				sbQuery.append(SQL_ACHATS_ENCHERES_OUVERTES);
-				compteurConditions++;
-			}
 
-			if (achatsEncheresEnCours) {
-				if (compteurConditions > 0) {
-					sbQuery.append(SQL_AND);
+				if (achatsOuverts) {
+					if (compteurConditions > 0) {
+						sbQuery.append(SQL_AND);
+					}
+					sbQuery.append(SQL_ACHATS_ENCHERES_OUVERTES);
+					compteurConditions++;
 				}
-				sbQuery.append(SQL_ACHATS_MES_ENCHERES_EN_COURS + idUser + " )");
-				compteurConditions++;
-			}
 
-			if (achatsEncheresRemportees) {
-				if (compteurConditions > 0) {
-					sbQuery.append(SQL_AND);
+				if (achatsEncheresEnCours) {
+					if (compteurConditions > 0) {
+						sbQuery.append(SQL_AND);
+					}
+					sbQuery.append(SQL_ACHATS_MES_ENCHERES_EN_COURS + idUser + " )");
+					compteurConditions++;
 				}
-				sbQuery.append(SQL_ACHATS_MES_ENCHERES_REMPORTEES + idUser + " )");
-				compteurConditions++;
-			}
 
-			if (ventesEnCours) {
-				if (compteurConditions > 0) {
-					sbQuery.append(SQL_AND);
+				if (achatsEncheresRemportees) {
+					if (compteurConditions > 0) {
+						sbQuery.append(SQL_AND);
+					}
+					sbQuery.append(SQL_ACHATS_MES_ENCHERES_REMPORTEES + idUser + " )");
+					compteurConditions++;
 				}
-				sbQuery.append(SQL_MES_VENTES_EN_COURS + idUser + " )");
-				compteurConditions++;
-			}
 
-			if (ventesNonDebutees) {
-				if (compteurConditions > 0) {
-					sbQuery.append(SQL_AND);
+				if (ventesEnCours) {
+					if (compteurConditions > 0) {
+						sbQuery.append(SQL_AND);
+					}
+					sbQuery.append(SQL_MES_VENTES_EN_COURS + idUser + " )");
+					compteurConditions++;
 				}
-				sbQuery.append(SQL_VENTES_NON_DEBUTEES);
-				compteurConditions++;
-			}
 
-			if (ventesTerminees) {
-				if (compteurConditions > 0) {
-					sbQuery.append(SQL_AND);
+				if (ventesNonDebutees) {
+					if (compteurConditions > 0) {
+						sbQuery.append(SQL_AND);
+					}
+					sbQuery.append(SQL_VENTES_NON_DEBUTEES);
+					compteurConditions++;
 				}
-				sbQuery.append(SQL_VENTES_TERMINEES);
-				compteurConditions++;
+
+				if (ventesTerminees) {
+					if (compteurConditions > 0) {
+						sbQuery.append(SQL_AND);
+					}
+					sbQuery.append(SQL_VENTES_TERMINEES);
+					compteurConditions++;
+				}
 			}
 
 			sbQuery.append(SQL_GROUP_BY);

@@ -2,6 +2,7 @@ package fr.eni.javaee.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.javaee.BusinessException;
+import fr.eni.javaee.bll.ArticleVenduManager;
+import fr.eni.javaee.bo.ArticleVendu;
 import fr.eni.javaee.dal.DAOFactory;
 
 @WebServlet("/ServletAccueil")
@@ -28,13 +33,14 @@ public class ServletAccueil extends HttpServlet {
 		String motsClefs = null;
 		String[] listeMotsClefs = null;
 		String categorie = null;
+		String radio= null;
 		boolean achatsOuverts = false;
 		boolean achatsEncheresEnCours = false;
 		boolean achatsEncheresRemportees = false;
 		boolean ventesEnCours = false;
 		boolean ventesNonDebutees = false;
 		boolean ventesTerminees = false;
-		int idUser = 0;
+		int idUser = 9;
 
 		// récupération des paramètres
 		motsClefs = (String) request.getParameter("motsClefs");
@@ -86,13 +92,18 @@ public class ServletAccueil extends HttpServlet {
 			ventesTerminees = true;
 		}
 		
+		radio = request.getParameter("radio");
+		
+		ArticleVenduManager avManager = new ArticleVenduManager();
+		List<ArticleVendu> listeArticlesVendus = null;
 		try {
-			DAOFactory.getArticleVenduDAO().listeArticles(listeMotsClefs, categorie, achatsOuverts, achatsEncheresEnCours,
-					achatsEncheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, idUser);
+			listeArticlesVendus = avManager.listeArticles(listeMotsClefs, categorie, radio, achatsOuverts, achatsEncheresEnCours,
+						achatsEncheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, idUser);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		request.setAttribute("listeArticlesVendus", listeArticlesVendus);
 		
 		doGet(request, response);
 	}
