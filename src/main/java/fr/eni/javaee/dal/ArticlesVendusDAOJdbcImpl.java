@@ -1,6 +1,8 @@
 package fr.eni.javaee.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,14 +15,49 @@ import fr.eni.javaee.bo.ArticleVendu;
 import fr.eni.javaee.bo.UserAccount;
 
 public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
+	
+	// Query - insertVente
+	private static final String SQL_INSERT_VENTE="INSERT INTO ARTICLES_VENDUS ("
+			+ "nom_article,"
+			+ "description,"
+			+ "date_debut_encheres,"
+			+ "date_fin_encheres,"
+			+ "prix_initial,"
+			+ "prix_vente,"
+			+ "no_utilisateur,"
+			+ "no_categorie) "
+			+ "VALUES (?,?,?,?,?,?,?,?);";
+	
+	// Méthode - insertVente
+	public void insertVente(String nomArticle, String description, 
+			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, 
+			int prixInitial, int prixVente, int noUtilisateur, int noCategorie) throws SQLException {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_INSERT_VENTE);
+			pstmt.setString(1, nomArticle);
+			pstmt.setString(2, description);
+			pstmt.setString(3, Date.valueOf(dateDebutEncheres).toString());
+			pstmt.setString(4, Date.valueOf(dateFinEncheres).toString());
+			pstmt.setInt(5, prixInitial);
+			pstmt.setInt(6, prixVente);
+			pstmt.setInt(7, noUtilisateur);
+			pstmt.setInt(8, noCategorie);
+			
+			pstmt.executeUpdate();
 
-	// Querys - Liste des requêtes SQL
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	// Querys - listeArticles
 
 	private static final String SQL_SELECT = " SELECT articles_vendus.no_article, nom_article, MAX(montant_enchere) as montant_max_enchere, prix_initial, date_fin_encheres, articles_vendus.no_utilisateur ";
 	private static final String SQL_FROM = " FROM encheres "
 			+ " RIGHT JOIN articles_vendus ON encheres.no_article = articles_vendus.no_article "
-			+ " INNER JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur "
-			+ " INNER JOIN categories ON articles_vendus.no_categorie = categories.no_categorie ";
+			+ " LEFT JOIN utilisateurs ON encheres.no_utilisateur = utilisateurs.no_utilisateur "
+			+ " LEFT JOIN categories ON articles_vendus.no_categorie = categories.no_categorie ";
 
 	private static final String SQL_WHERE = " WHERE ";
 	private static final String SQL_AND = " AND ";
@@ -117,7 +154,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	 * + "FROM articles_vendus " + "WHERE date_fin_encheres < getdate();";
 	 */
 
-	// Methods
+	// Methode listeArticles
 	@Override
 	public List<ArticleVendu> listeArticles(String motsClefs, String categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
