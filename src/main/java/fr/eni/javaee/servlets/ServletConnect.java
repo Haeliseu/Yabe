@@ -1,6 +1,7 @@
 package fr.eni.javaee.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -38,15 +39,15 @@ public class ServletConnect extends HttpServlet {
 		String pseudo = request.getParameter("pseudo");
 		String email = request.getParameter("pseudo");
 		String mot_de_passe = request.getParameter("mot_de_passe");
+		
 			boolean login = false;
 			UserAccount useraccount = new UserAccount(pseudo, email, mot_de_passe);
 					
+
 	    	useraccount.setPseudo(pseudo);
 	    	useraccount.setEmail(email);
 	    	useraccount.setMot_de_passe(mot_de_passe);
-	    	System.out.println(useraccount.getPseudo());
-	    	System.out.println(useraccount.getEmail());
-	    	System.out.println(useraccount.getMot_de_passe());
+	    	
 			try {
 				login = UserAccountManager.getInstance().verify(useraccount);
 			
@@ -54,6 +55,7 @@ public class ServletConnect extends HttpServlet {
 				
 				HttpSession session = request.getSession();
 				session.setAttribute("useraccount", useraccount);
+				//TODO : expiration session
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		        rd.forward(request, response);
@@ -62,7 +64,9 @@ public class ServletConnect extends HttpServlet {
 				System.err.println("Identifiant ou mot de passe incorrect");
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
-		        rd.forward(request, response);
+				PrintWriter out = response.getWriter();
+				out.println("<font color=red>Identifiant ou mot de passe incorrect.</font>");
+				rd.include(request, response);
 			}
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
