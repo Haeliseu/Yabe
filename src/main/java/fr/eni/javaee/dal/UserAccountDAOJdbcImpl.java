@@ -27,7 +27,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	private final static String MDP_OUBLIE = "SELECT  email, pseudo FROM utilisateurs WHERE pseudo=? and email=?;";
 
 	private final static String CONNECT = "SELECT * "
-			+ "FROM utilisateurs"
+			+ "FROM utilisateurs "
 			+ "WHERE (pseudo = ? OR email = ?) AND mot_de_passe = ?;";
 	
 	private final static String NEW_MDP ="UPDATE utilisateurs SET mot_de_passe = ? WHERE pseudo=? and email=?;";
