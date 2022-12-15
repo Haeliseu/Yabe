@@ -7,7 +7,7 @@ import fr.eni.javaee.bo.ArticleVendu;
 
 public interface ArticlesVendusDAO {
 
-	public List<ArticleVendu> listeArticles(String[] motsClefs, String categorie, String radio, boolean achatsOuverts,
+	public List<ArticleVendu> listeArticles(String motsClefs, String categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
 			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException;
 }

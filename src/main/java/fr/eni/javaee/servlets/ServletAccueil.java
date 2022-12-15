@@ -31,7 +31,6 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 
 		String motsClefs = null;
-		String[] listeMotsClefs = null;
 		String categorie = null;
 		String radio= null;
 		boolean achatsOuverts = false;
@@ -44,10 +43,6 @@ public class ServletAccueil extends HttpServlet {
 
 		// récupération des paramètres
 		motsClefs = (String) request.getParameter("motsClefs");
-		System.out.println(motsClefs);
-		if (motsClefs!=null || !motsClefs.isBlank()) {
-			listeMotsClefs = motsClefs.split(" ");
-		}
 		
 		if (request.getParameter("categorie").equals("Toutes")) {
 			categorie = null;
@@ -97,7 +92,7 @@ public class ServletAccueil extends HttpServlet {
 		ArticleVenduManager avManager = new ArticleVenduManager();
 		List<ArticleVendu> listeArticlesVendus = null;
 		try {
-			listeArticlesVendus = avManager.listeArticles(listeMotsClefs, categorie, radio, achatsOuverts, achatsEncheresEnCours,
+			listeArticlesVendus = avManager.listeArticles(motsClefs, categorie, radio, achatsOuverts, achatsEncheresEnCours,
 						achatsEncheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, idUser);
 		} catch (SQLException e) {
 			e.printStackTrace();

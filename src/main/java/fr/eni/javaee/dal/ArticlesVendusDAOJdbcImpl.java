@@ -119,7 +119,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 	// Methods
 	@Override
-	public List<ArticleVendu> listeArticles(String[] motsClefs, String categorie, String radio, boolean achatsOuverts,
+	public List<ArticleVendu> listeArticles(String motsClefs, String categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
 			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException {
 
@@ -127,33 +127,18 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
-			// Construction du WHERE Mots Clefs dans un StringBuilder
-			StringBuilder sbMotsClefs = new StringBuilder();
-			
-			if (motsClefs!=null) {
-				for (int i = 0; i < motsClefs.length; i++) {
-					if (i > 1) {
-						sbMotsClefs.append(SQL_AND);
-					}
-					sbMotsClefs.append(SQL_MOT_CLEF);
-					sbMotsClefs.append("'%"+motsClefs[i].toString()+"%' ");
-				}
-			}
-
 			StringBuilder sbQuery = new StringBuilder();
 			int compteurConditions = 0;
 			sbQuery.append(SQL_SELECT);
 			sbQuery.append(SQL_FROM);
-			
-			System.out.println(motsClefs);
-			
+						
 			if(motsClefs != null || categorie != null ||
 					achatsOuverts != false || achatsEncheresEnCours != false || achatsEncheresRemportees != false ||
 					ventesEnCours != false || ventesNonDebutees != false || ventesTerminees!= false) {
 				sbQuery.append(SQL_WHERE);
 				
 				if (motsClefs != null) {
-					sbQuery.append(sbMotsClefs.toString());
+					sbQuery.append(SQL_MOT_CLEF + "'%"+ motsClefs +"%' ");
 					compteurConditions++;
 				}
 
@@ -236,8 +221,6 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 				}
 				
 				userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("no_utilisateur"));
-				System.out.println(rs.getInt("no_utilisateur"));
-				System.out.println(userAccount.pseudo);
 				
 				ArticleVendu article = new ArticleVendu((int) rs.getInt("no_article"),
 						(String) rs.getString("nom_article"), (LocalDate) rs.getDate("date_fin_encheres").toLocalDate(),
