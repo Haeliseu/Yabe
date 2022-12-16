@@ -16,20 +16,12 @@ import fr.eni.javaee.bo.UserAccount;
 public class ServletRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/register.jsp");
 		rd.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -43,28 +35,26 @@ public class ServletRegister extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String mot_de_passe = request.getParameter("mot_de_passe");
 		String confirmation = request.getParameter("confirmation");
+
 		if (mot_de_passe.equals(confirmation)) {
-			if (UserAccountManager.getInstance().checkUser("email", email)) {
-				if (UserAccountManager.getInstance().checkUser("pseudo", pseudo)) {
 
-					try {
-						UserAccount useraccount = UserAccountManager.getInstance().inserer(pseudo, nom, prenom, email,
-								telephone, rue, code_postal, ville, mot_de_passe);
+			try {
+				UserAccount useraccount = UserAccountManager.getInstance().inserer(pseudo, nom, prenom, email,
+						telephone, rue, code_postal, ville, mot_de_passe);
 
-						request.setAttribute("useraccount", useraccount);
+				request.setAttribute("useraccount", useraccount);
 
-					} catch (SQLException e) {
-						// BusinessException be = new BusinessException();
-						// be.ajouterErreur(CodesResultatServlets.FORMAT_EMAIL_ERREUR);
-						// request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
-					} catch (BusinessException e) {
-						// request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-					}
-
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/register.jsp");
-					rd.forward(request, response);
-				}
+			} catch (SQLException e) {
+				BusinessException be = new BusinessException();
+				be.ajouterErreur(CodesResultatServlets.FORMAT_EMAIL_ERREUR);
+				request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
+			} catch (BusinessException e) {
+				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			}
+
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/register.jsp");
+			rd.forward(request, response);
 		}
+
 	}
 }

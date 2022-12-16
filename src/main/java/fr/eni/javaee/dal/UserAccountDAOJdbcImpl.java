@@ -32,7 +32,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	private final static String UPDATE_USER = "UPDATE SET pseudo= ?, nom= ?, prenom= ?, email= ?, telephone= ?, rue= ?, code_postal= ?, ville= ?  FROM UTILISATEURS "
 			+ "WHERE no_utilisateur= ?;";
 
-	private final static String DOUBLONCHECK = "SELECT ? FROM UTILISATEURS WHERE ? = '?';";
+	private final static String DOUBLONCHECK = "SELECT ? FROM UTILISATEURS WHERE ? = ?;";
 
 	public static String SELECT_PROFIL = "SELECT no_utilisateur WHERE pseudo  = ?;";
 
