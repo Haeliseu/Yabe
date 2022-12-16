@@ -274,12 +274,13 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 				} else {
 					prix = rs.getInt("prix_initial");
 				}
-
+								
 				userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("no_utilisateur"));
 
 				ArticleVendu article = new ArticleVendu((int) rs.getInt("no_article"),
 						(String) rs.getString("nom_article"), (LocalDate) rs.getDate("date_fin_encheres").toLocalDate(),
-						(int) prix, userAccount.getNoUtilisateur(), userAccount.getPseudo());
+						(int) prix, rs.getInt("no_utilisateur"), userAccount.getPseudo());
+				System.out.println(article.getIdVendeur());
 				articles.add(article);
 			}
 		} catch (SQLException e) {
