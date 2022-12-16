@@ -27,29 +27,12 @@ public class ServletAffichageProfilVendeur extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		int idUser = parseInt(request.getParameter("pseudo"));
-		System.out.println(idUser);
-		try {
-			int idVendeur;
-			idVendeur = UserAccountManager.getInstance().selectUser(idUser);
-			System.out.println(idVendeur);
-			UserAccount userAccount = null;
-			userAccount = UserAccountManager.getInstance().selectUser(idVendeur);
-			System.out.println(userAccount);
-			request.setAttribute("userAccount", userAccount);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
-			rd.forward(request, response);
+		int idUser = Integer.parseInt(request.getParameter("idUser"));
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-		}
+		UserAccount userAccount = UserAccountManager.getInstance().selectUser(idUser);
+		request.setAttribute("userAccount", userAccount);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
+		rd.forward(request, response);
 
 	}
-
-	private int parseInt(String parameter) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }
