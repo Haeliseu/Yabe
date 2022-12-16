@@ -101,4 +101,9 @@ public class UserAccountManager {
 		return DAOFactory.getUserAccountDAO().selectProfil(pseudo);
 		
 	}
+
+	public void  supprimer(int noUtilisateur) throws SQLException {
+		DAOFactory.getUserAccountDAO().supprimer(noUtilisateur);
+		
+	}
 }

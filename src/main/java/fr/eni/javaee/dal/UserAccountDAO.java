@@ -13,7 +13,7 @@ public interface UserAccountDAO {
 		
 		public UserAccount selectUser(int noUtilisateur);
 		
-		public void supprimer (UserAccount userAccount)throws SQLException;
+		public void supprimer (int idUser)throws SQLException;
 		
 		public UserAccount oublieMotDePasse (String pseudo,String email);
 		
