@@ -87,7 +87,15 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			
+			BusinessException be = new BusinessException();
+			if(e.getMessage().contains("UN_UTILISATEURS_MAIL")) {
+			be.ajouterErreur(CodesResultatDAL.REGLE_MAIL_ECHEC);
+			}else if(e.getMessage().contains("UN_UTILISATEURS_PSEUDO")) {
+			be.ajouterErreur(CodesResultatDAL.REGLE_PSEUDO_ECHEC);
+			}
+			throw be;
+			
 		}
 
 	}
@@ -154,7 +162,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 				exist = true;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//unicité mail et pseudo
 		}
 		return exist;
 	}

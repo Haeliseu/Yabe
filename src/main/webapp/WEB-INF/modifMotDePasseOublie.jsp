@@ -1,3 +1,5 @@
+<%@page import="fr.eni.javaee.messages.LecteurMessage"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,14 +21,11 @@
 	<form
 		action="<%=request.getContextPath()%>/ServletChangementMotDePasseOublie"
 		method="post">
-		
+
 		<input type="text" class="form-control" name="email"
 			style="margin-bottom: 1em;" aria-label="Sizing example input"
 			aria-describedby="inputGroup-sizing-default" value="<%=email%>"
-			hidden>
-
-		
-		<input type="text" class="form-control" name="pseudo"
+			hidden> <input type="text" class="form-control" name="pseudo"
 			style="margin-bottom: 1em;" aria-label="Sizing example input"
 			aria-describedby="inputGroup-sizing-default" value="<%=pseudo%>"
 			hidden>
@@ -40,10 +39,26 @@
 		<input type="password" class="form-control"
 			name="ConfirmationNouveauMotDePasse" style="margin-bottom: 1em;"
 			aria-label="Sizing example input"
-			aria-describedby="inputGroup-sizing-default"> 
-			
-			<input
+			aria-describedby="inputGroup-sizing-default"> <input
 			type="submit" class="btn btn-primary btn-lg" value="Validez">
 	</form>
+	<div style="text-align: center";>
+		<%
+		List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+		if (listeCodesErreur != null) {
+		%>
+		<p style="color: red">Erreur, le mot de passe n'a pas pu être changé
+			:</p>
+		<%
+		for (int code : listeCodesErreur) {
+		%>
+		<p><%=code%>
+			:
+			<%=LecteurMessage.getMessageErreur(code)%></p>
+		<%
+		}
+		}
+		%>
+	</div>
 </body>
 </html>
