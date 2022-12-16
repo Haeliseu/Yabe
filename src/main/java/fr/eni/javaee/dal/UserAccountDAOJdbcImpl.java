@@ -34,6 +34,9 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	
 	private final static String DOUBLONCHECK = "SELECT ? FROM UTILISATEURS WHERE ? = '?';";
 
+	
+	
+	
 	public UserAccount selectUser(int noUtilisateur) {
 
 		UserAccount userAccount = null;
