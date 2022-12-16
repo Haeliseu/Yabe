@@ -20,18 +20,20 @@ public class UserAccountManager {
 	}
 
 	public boolean checkUser(String champ, String valeur) {
-//TODO: EXCEPTIONS A FAIRE 
+		
 			boolean test = DAOFactory.getUserAccountDAO().checkUser(champ, valeur);
 			return test;
 			}
 
 	private UserAccountManager() {}
 	
-	public UserAccount inserer(String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe) throws BusinessException, SQLException {
+	public UserAccount inserer(String pseudo, String nom, String prenom, String email, String telephone, String rue, String code_postal, String ville, String mot_de_passe,String confirmation) throws BusinessException {
 		//1. vérification des données
 		BusinessException be = new BusinessException();
 		validerPseudo(pseudo, email, be);
 		validerMail(email, be);
+		validerMotDePasse(mot_de_passe, confirmation, be);
+		
 		if(be.hasErreurs()) { //s'il y a un problème, on lève l'exception
 			throw be;
 		}
@@ -43,11 +45,12 @@ public class UserAccountManager {
 		return newUserAccount;
 	}
 	
-	public boolean verify(UserAccount userAccount) throws BusinessException{
+	public boolean verify(UserAccount userAccount, String mot_de_passe, String confirmation) throws BusinessException{
 		//1. vérification des données
 		BusinessException be = new BusinessException();
 		validerPseudo(userAccount.getPseudo(), userAccount.getEmail(), be);
 		validerMail(userAccount.getEmail(), be);
+		validerMotDePasse(mot_de_passe, confirmation, be);
 		if(be.hasErreurs()) { //s'il y a un problème, on lève l'exception
 			throw be;
 		}
@@ -59,15 +62,21 @@ public class UserAccountManager {
 
 	private void validerPseudo(String pseudo, String email, BusinessException be) {
 		// TODO Auto-generated method stub
-		if (UserAccountManager.getInstance().checkUser("pseudo", pseudo)) {
+		if(!UserAccountManager.getInstance().checkUser("pseudo", pseudo)) {
 			be.ajouterErreur(CodesErreurBLL.REGLE_UNIQUE_PSEUDO_ERREUR);
 		}
 	}
 
 	private void validerMail(String email, BusinessException be) {
 		// TODO Auto-generated method stub
-		if (UserAccountManager.getInstance().checkUser("email", email)) {
+		if (!UserAccountManager.getInstance().checkUser("email", email)) {
 			be.ajouterErreur(CodesErreurBLL.REGLE_UNIQUE_MAIL_ERREUR);
+		}
+	}
+	
+	private void validerMotDePasse(String mot_de_passe, String confirmation,BusinessException be) {
+		if ((mot_de_passe != confirmation)) {
+			be.ajouterErreur(CodesErreurBLL.REGLE_DIFFERENT_MDP_ERREUR);
 		}
 	}
 

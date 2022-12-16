@@ -6,6 +6,8 @@ public interface CodesErreurBLL {
 	
 	public static final int REGLE_UNIQUE_PSEUDO_ERREUR = 20_001;
 	
+	public static final int REGLE_DIFFERENT_MDP_ERREUR = 20_002;
+	
 	public static final int VALIDATION_ACHATS_ERREUR = 20_101;
 
 	

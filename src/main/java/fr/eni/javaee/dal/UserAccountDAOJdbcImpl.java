@@ -65,7 +65,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		return userAccount;
 	}
 
-	public void inserer(UserAccount userAccount) throws SQLException {
+	public void inserer(UserAccount userAccount) throws BusinessException {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
@@ -199,7 +199,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			pstmt.setString(1, champ);
 			pstmt.setString(2, champ);
 			pstmt.setString(3, valeur);
-
+			
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 

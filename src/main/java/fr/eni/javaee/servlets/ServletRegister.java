@@ -36,24 +36,20 @@ public class ServletRegister extends HttpServlet {
 		String mot_de_passe = request.getParameter("mot_de_passe");
 		String confirmation = request.getParameter("confirmation");
 
-		if (mot_de_passe.equals(confirmation)) {
+		try {
+			UserAccount useraccount = UserAccountManager.getInstance().inserer(pseudo, nom, prenom, email, telephone,
+																			   rue, code_postal, ville, mot_de_passe, confirmation);
 
-			try {
-				UserAccount useraccount = UserAccountManager.getInstance().inserer(pseudo, nom, prenom, email,
-						telephone, rue, code_postal, ville, mot_de_passe);
+			request.setAttribute("useraccount", useraccount);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
+			rd.forward(request, response);
 
-				request.setAttribute("useraccount", useraccount);
+		} catch (BusinessException e) {
 
-			} catch (SQLException e) {
-				BusinessException be = new BusinessException();
-				be.ajouterErreur(CodesResultatServlets.FORMAT_EMAIL_ERREUR);
-				request.setAttribute("listeCodesErreur", be.getListeCodesErreur());
-			} catch (BusinessException e) {
-				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-			}
-
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/register.jsp");
 			rd.forward(request, response);
+
 		}
 
 	}

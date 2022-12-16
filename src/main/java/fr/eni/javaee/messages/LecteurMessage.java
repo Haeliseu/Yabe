@@ -9,7 +9,7 @@ public class LecteurMessage {
 	//charge le fichier contenant les messages
 	static {
 		try {
-			rb = ResourceBundle.getBundle("fr.eni.javaee.module4.messages.messages_erreur");
+			rb = ResourceBundle.getBundle("fr.eni.javaee.messages.messages_erreur");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

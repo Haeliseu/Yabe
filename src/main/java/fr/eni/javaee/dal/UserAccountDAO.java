@@ -9,7 +9,7 @@ public interface UserAccountDAO {
 
 		
 		
-		void inserer(UserAccount userAccount) throws BusinessException, SQLException;
+		void inserer(UserAccount userAccount) throws BusinessException;
 		
 		public UserAccount selectUser(int noUtilisateur);
 		

@@ -1,3 +1,5 @@
+<%@page import="fr.eni.javaee.messages.LecteurMessage"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -7,19 +9,18 @@
 <title>S'inscrire</title>
 </head>
 <body>
-
 <header>
 <jsp:include page="header.jsp" />
 </header>
 <form action="" method="post" style="background-color: lightgray; padding:15px; border-radius:5px; box-shadow: 10px 5px 5px gray;">
 <div class="container">
     <div class="row">
-
         <div class="col-lg-6 col-md-6">
          <label for="pseudo" class="form-label">Pseudo :</label>
          <input type="text" class="form-control" id="pseudo"  name="pseudo" value="" required pattern="[a-zA-Z0-9\s]+" required>
+         <!-- if erreur reload -->
+         <!-- REGLE_UNIQUE_PSEUDO_ERREUR -->
        </div>
- 
        <div class="col-lg-6 col-md-6">
          <label for="name" class="form-label">Nom :</label>
          <input type="text" class="form-control" id="name"  name="nom" value="" required>
@@ -34,6 +35,8 @@
  	  <div class="col-lg-6 col-md-6">
          <label for="inputEmail" class="form-label">Email :</label>
          <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" value="" required>
+          <!-- if erreur reload -->
+          <!-- REGLE_UNIQUE_MAIL_ERREUR -->
        </div>
        
     </div>
@@ -68,7 +71,7 @@
        <!-- controller le password -->
        <div class="col-lg-6 col-md-6">
          <label for="inputPassword" class="form-label">Confirmation :</label>
-         <input type="password" class="form-control" id="password"  name="Confirmation" value="" required>  
+         <input type="password" class="form-control" id="password"  name="confirmation" value="" required>  
        </div>
        </div>
  	<div class="row">
@@ -79,6 +82,25 @@
        </div>
      </div>
      </div>
+     
      </form>
+     <br>
+     <br>
+     <br>
+     <div style="text-align:center";>
+     <%
+		List<Integer> listeCodesErreur = (List<Integer>)request.getAttribute("listeCodesErreur");
+		if(listeCodesErreur != null) {
+	%>
+		<p style="color:red">Erreur, l'utilisateur n'a pas pu être ajouté :</p>
+		<%
+			for(int code : listeCodesErreur) {
+		%>
+			<p><%=code %> : <%=LecteurMessage.getMessageErreur(code) %></p>
+		<%
+			}
+		}
+	%>
+	</div>
 </body>
 </html>

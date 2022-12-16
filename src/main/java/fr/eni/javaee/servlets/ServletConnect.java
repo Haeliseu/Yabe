@@ -49,7 +49,7 @@ public class ServletConnect extends HttpServlet {
 	    	useraccount.setMot_de_passe(mot_de_passe);
 	    	
 			try {
-				login = UserAccountManager.getInstance().verify(useraccount);
+				login = UserAccountManager.getInstance().verify(useraccount, mot_de_passe, mot_de_passe);
 			
 			if (login == true){
 				
