@@ -31,7 +31,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			+ "no_article,"
 			+ "rue,"
 			+ "code_postal,"
-			+ "ville "
+			+ "ville)"
 			+ "VALUES (?,?,?,?);";
 	
 	// Méthode - insertVente
@@ -52,13 +52,14 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_INSERT_VENTE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, nomArticle);
 			pstmt.setString(2, description);
-			pstmt.setString(3, Date.valueOf(dateDebutEncheres).toString());
-			pstmt.setString(4, Date.valueOf(dateFinEncheres).toString());
+			pstmt.setDate(3, Date.valueOf(dateDebutEncheres));
+			pstmt.setDate(4, Date.valueOf(dateFinEncheres));
 			pstmt.setInt(5, prixInitial);
 			pstmt.setInt(6, noUtilisateur);
 			pstmt.setInt(7, Categorie);
 			pstmt.executeUpdate();
 			ResultSet clef = pstmt.getGeneratedKeys();
+			clef.next();
 			
 			pstmt = cnx.prepareStatement(SQL_INSERT_RETRAIT);
 			pstmt.setInt(1, clef.getInt(1));
@@ -67,7 +68,9 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			pstmt.setString(4,  ville);
 			pstmt.executeUpdate();
 			
+			cnx.commit();
 			}catch (SQLException e) {
+				cnx.rollback();
 				e.printStackTrace();
 			}
 		}catch (SQLException e) {

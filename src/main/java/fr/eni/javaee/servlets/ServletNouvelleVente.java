@@ -27,13 +27,13 @@ public class ServletNouvelleVente extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		// RECUP ID USER
 		int idUser;
 		HttpSession session = request.getSession();
 		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
 		idUser = uA.getNoUtilisateur();
-		
+		System.out.println(idUser);
 		// RECUP INFOS ARTICLE
 		String nomArticle = request.getParameter("nomArticle");
 		String descriptionArticle = request.getParameter("descriptionArticle");
@@ -46,19 +46,6 @@ public class ServletNouvelleVente extends HttpServlet {
 		String retraitRue = request.getParameter("retraitRue");
 		int retraitCP = Integer.parseInt(request.getParameter("retaitCP"));
 		String retraitVille = request.getParameter("retaitVille");
-		
-		
-		System.out.println(nomArticle);
-		System.out.println(descriptionArticle);
-		System.out.println(categorie);
-		System.out.println(miseAPrix);
-		System.out.println(debutEncheres);
-		System.out.println(finEncheres);
-		
-		System.out.println(retraitRue);
-		System.out.println(retraitCP);
-		System.out.println(retraitVille);
-		
 
 		ArticleVenduManager.getInstance().insertVente(
 				nomArticle, descriptionArticle, categorie, 

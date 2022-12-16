@@ -84,8 +84,8 @@
 							<select class="form-select" aria-label="Default select example"
 								style="margin-bottom: 1em;" name="categorie">
 								<option selected>Toutes</option>
-								<option value="'cat1'">Catégorie 1</option>
-								<option value="'cat2'">Catégorie 2</option>
+								<option value="'1'">Catégorie 1</option>
+								<option value="'2'">Catégorie 2</option>
 							</select>
 
 							<%

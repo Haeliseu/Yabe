@@ -21,7 +21,7 @@
 
 			<div class="col">
 				<!-- FORMULAIRE -->
-				<form method="POST" action="/ServletNouvelleVente">
+				<form method="POST" action="<%=request.getContextPath()%>/ServletNouvelleVente">
 					<div class="row">
 						<div class="col">
 							<label for="nomArticle">Article : </label> <input type="text"
@@ -46,14 +46,16 @@
 								class="form-select" aria-label="Default select example"
 								name="categorie" id="categorie">
 								<option selected>Toutes</option>
-								<option value="'cat1'">Catégorie 1</option>
-								<option value="'cat2'">Catégorie 2</option>
+								<option value="1">Catégorie 1</option>
+								<option value="2">Catégorie 2</option>
 							</select>
 						</div>
 					</div>
 
 					<br>
-
+					
+					
+					<!--  EN COMMENTAIRE POUR LE MOMENT
 					<div class="row">
 						<div class="col">
 							<label for="photoDeLArticle">Photo de l'article : </label> <input
@@ -62,7 +64,7 @@
 						</div>
 					</div>
 
-					<br>
+					<br> -->
 
 					<div class="row">
 						<div class="col">

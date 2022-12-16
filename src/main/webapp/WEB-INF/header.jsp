@@ -34,7 +34,7 @@
             <a class="nav-link" href="<%=request.getContextPath()%>/ServletAccueil">Enchères</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Vendre un article</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/ServletNouvelleVente">Vendre un article</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<%=request.getContextPath()%>/ServletAffichageProfil">Mon Profil</a>
