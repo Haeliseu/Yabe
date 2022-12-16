@@ -7,6 +7,8 @@ import fr.eni.javaee.bo.UserAccount;
 
 public interface UserAccountDAO {
 
+		
+		
 		void inserer(UserAccount userAccount) throws BusinessException, SQLException;
 		
 		public UserAccount selectUser(int noUtilisateur);
@@ -22,4 +24,9 @@ public interface UserAccountDAO {
 		UserAccount updateUser(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 				String codePostal, String ville, int noUtilistaeur) throws SQLException;
 		public boolean checkUser(String champ, String valeur);
+		
+		public UserAccount selectProfil(String pseudo, int noUtilisateur) throws SQLException;
+
+		
+
 }

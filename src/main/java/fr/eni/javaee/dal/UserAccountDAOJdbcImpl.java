@@ -31,12 +31,11 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	private final static String UPDATE_USER = "UPDATE SET pseudo= ?, nom= ?, prenom= ?, email= ?, telephone= ?, rue= ?, code_postal= ?, ville= ?  FROM UTILISATEURS "
 			+ "WHERE no_utilisateur= ?;";
-	
+
 	private final static String DOUBLONCHECK = "SELECT ? FROM UTILISATEURS WHERE ? = '?';";
 
-	
-	
-	
+	public static String SELECT_PROFIL = "SELECT no_utilisateur WHERE pseudo  = ?;";
+
 	public UserAccount selectUser(int noUtilisateur) {
 
 		UserAccount userAccount = null;
@@ -192,7 +191,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		}
 		return userAccount;
 	}
-	
+
 	public boolean checkUser(String champ, String valeur) {
 		boolean exist = false;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -200,7 +199,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			pstmt.setString(1, champ);
 			pstmt.setString(2, champ);
 			pstmt.setString(3, valeur);
-			
+
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
 
@@ -211,4 +210,26 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		}
 		return exist;
 	}
+
+	public UserAccount selectProfil(String pseudo, int noUtilisateur) throws SQLException {
+
+		UserAccount userAccount = null;
+		int noUtilisateurTr;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_USER);
+			ResultSet rs = pstmt.executeQuery();
+			pstmt.setString(1, "pseudo");
+
+			while (rs.next()) {
+				noUtilisateurTr = rs.getInt("no_utilisateur");
+				userAccount = new UserAccount(noUtilisateur);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+			return userAccount;
+
+	}
+
+	
 }

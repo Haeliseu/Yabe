@@ -96,6 +96,9 @@ public class UserAccountManager {
 		return DAOFactory.getUserAccountDAO().updateUser(pseudo, nom, prenom,email, telephone, rue,
 			 codePostal, ville,  noUtilistaeur);
 	}
-
-
+	public UserAccount selectProfil(String pseudo, int noUtilisateur) throws SQLException {
+		
+		return DAOFactory.getUserAccountDAO().selectProfil(pseudo, noUtilisateur);
+		
+	}
 }
