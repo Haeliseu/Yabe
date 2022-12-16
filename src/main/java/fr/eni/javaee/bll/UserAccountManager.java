@@ -48,8 +48,6 @@ public class UserAccountManager {
 			String code_postal, String ville, String mot_de_passe, String confirmation) throws BusinessException {
 		// 1. vérification des données
 		BusinessException be = new BusinessException();
-		validerPseudo(pseudo, email, be);
-		validerMail(email, be);
 		validerMotDePasse(mot_de_passe, confirmation, be);
 
 		if (be.hasErreurs()) { // s'il y a un problème, on lève l'exception
@@ -67,8 +65,6 @@ public class UserAccountManager {
 	public boolean verify(UserAccount userAccount, String mot_de_passe, String confirmation) throws BusinessException {
 		// 1. vérification des données
 		BusinessException be = new BusinessException();
-		validerPseudo(userAccount.getPseudo(), userAccount.getEmail(), be);
-		validerMail(userAccount.getEmail(), be);
 		validerMotDePasse(mot_de_passe, confirmation, be);
 		if (be.hasErreurs()) { // s'il y a un problème, on lève l'exception
 			throw be;
@@ -77,22 +73,6 @@ public class UserAccountManager {
 		boolean newConnectUserAccount = DAOFactory.getUserAccountDAO().verify(userAccount);
 
 		return newConnectUserAccount;
-	}
-
-	private void validerPseudo(String pseudo, String email, BusinessException be) {
-		/*
-		 * // TODO Auto-generated method stub
-		 * if(!UserAccountManager.getInstance().checkUser("pseudo", pseudo)) {
-		 * be.ajouterErreur(CodesErreurBLL.REGLE_UNIQUE_PSEUDO_ERREUR); }
-		 */
-	}
-
-	private void validerMail(String email, BusinessException be) {
-		/*
-		 * // TODO Auto-generated method stub if
-		 * (!UserAccountManager.getInstance().checkUser("email", email)) {
-		 * be.ajouterErreur(CodesErreurBLL.REGLE_UNIQUE_MAIL_ERREUR); }
-		 */
 	}
 
 	private void validerMotDePasse(String mot_de_passe, String confirmation, BusinessException be) {

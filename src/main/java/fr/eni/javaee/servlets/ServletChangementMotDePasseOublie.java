@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.UserAccountManager;
 import fr.eni.javaee.bo.UserAccount;
 
@@ -44,31 +45,24 @@ public class ServletChangementMotDePasseOublie extends HttpServlet {
 			throws ServletException, IOException {
 
 		String motdepasse = request.getParameter("nouveauMotDePasse");
-		
+
 		String newMdp = request.getParameter("ConfirmationNouveauMotDePasse");
-		
+
 		String pseudo = request.getParameter("pseudo");
-		
+
 		String email = request.getParameter("email");
-		
-		if (motdepasse.equals(newMdp)) {
 
 			try {
-				UserAccountManager.getInstance().newMdp(motdepasse, pseudo, email);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			System.out.println("try");
+				UserAccountManager.getInstance().inserermdp(pseudo, email, motdepasse, newMdp);
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
 			rd.forward(request, response);
-		} else {
-			System.err.println("Confirmation de mot de passe incorrect");
-			System.out.println("else");
-			RequestDispatcher rd = request.getRequestDispatcher("/ServletMotDePasseOublie");
+			
+			} catch (BusinessException e) {
+				
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifMotDePasseOublie.jsp");
 			rd.forward(request, response);
-
-		}
-
+			}
 	}
-
 }

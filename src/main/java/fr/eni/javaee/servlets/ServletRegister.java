@@ -39,7 +39,6 @@ public class ServletRegister extends HttpServlet {
 		try {
 			UserAccount useraccount = UserAccountManager.getInstance().inserer(pseudo, nom, prenom, email, telephone,
 																			   rue, code_postal, ville, mot_de_passe, confirmation);
-
 			request.setAttribute("useraccount", useraccount);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/connect.jsp");
 			rd.forward(request, response);
