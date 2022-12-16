@@ -211,10 +211,10 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		return exist;
 	}
 
-	public UserAccount selectProfil(String pseudo, int noUtilisateur) throws SQLException {
+	public int selectProfil(int noUtilisateur) throws SQLException {
 
-		UserAccount userAccount = null;
-		int noUtilisateurTr;
+		
+		int noUtilisateurTr = 0;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(SELECT_USER);
 			ResultSet rs = pstmt.executeQuery();
@@ -222,12 +222,12 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 			while (rs.next()) {
 				noUtilisateurTr = rs.getInt("no_utilisateur");
-				userAccount = new UserAccount(noUtilisateur);
+				
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-			return userAccount;
+			return noUtilisateurTr;
 
 	}
 

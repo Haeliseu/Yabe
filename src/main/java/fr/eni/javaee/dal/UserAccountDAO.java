@@ -25,7 +25,7 @@ public interface UserAccountDAO {
 				String codePostal, String ville, int noUtilistaeur) throws SQLException;
 		public boolean checkUser(String champ, String valeur);
 		
-		public UserAccount selectProfil(String pseudo, int noUtilisateur) throws SQLException;
+		public int selectProfil(String pseudo) throws SQLException;
 
 		
 
