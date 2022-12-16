@@ -46,7 +46,7 @@
        <%}else {%>
           <!-- HEADER DECONNECTE -->
           <li class="nav-item">
-            <a class="nav-link" href="<%=request.getContextPath()%>/ServletRegister">S'incrire</a>
+            <a class="nav-link" href="<%=request.getContextPath()%>/ServletRegister">S'inscrire</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<%=request.getContextPath()%>/ServletConnect">Se connecter</a>

@@ -35,11 +35,22 @@ public class ArticleVenduManager {
 	
 	
 	
-	public void insertVente(String nomArticle, String description, String categorie,
+	public void insertVente(
+			String nomArticle, String description, int categorie,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, 
-			int prixInitial, int noUtilisateur, int noCategorie) {
+			int prixInitial, int noUtilisateur, 
+			String retraitRue, int retraitCP, String retraitVille) {
 		
-		BusinessException be = new BusinessException();
+		try {
+			DAOFactory.getArticleVenduDAO().insertVente(
+					nomArticle, description, categorie, 
+					dateDebutEncheres, dateFinEncheres, prixInitial, 
+					noUtilisateur, 
+					retraitRue, retraitCP, retraitVille);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 
 	}
 

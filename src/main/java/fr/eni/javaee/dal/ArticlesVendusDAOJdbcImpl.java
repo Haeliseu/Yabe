@@ -260,7 +260,6 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			Statement pstmt = cnx.createStatement();
 
 			// récupération du résultat et intégration des données dans une liste
-			System.out.println(sbQuery.toString());
 			ResultSet rs = pstmt.executeQuery(sbQuery.toString());
 
 			UserAccount userAccount = null;
@@ -280,7 +279,6 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 				ArticleVendu article = new ArticleVendu((int) rs.getInt("no_article"),
 						(String) rs.getString("nom_article"), (LocalDate) rs.getDate("date_fin_encheres").toLocalDate(),
 						(int) prix, rs.getInt("no_utilisateur"), userAccount.getPseudo());
-				System.out.println(article.getIdVendeur());
 				articles.add(article);
 			}
 		} catch (SQLException e) {

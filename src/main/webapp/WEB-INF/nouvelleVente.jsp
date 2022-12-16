@@ -21,7 +21,7 @@
 
 			<div class="col">
 				<!-- FORMULAIRE -->
-				<form action="/ServletNouvelleVente" method="POST">
+				<form method="POST" action="/ServletNouvelleVente">
 					<div class="row">
 						<div class="col">
 							<label for="nomArticle">Article : </label> <input type="text"
