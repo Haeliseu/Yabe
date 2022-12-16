@@ -59,11 +59,10 @@ public class ServletModificationProfil extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String mot_de_passe = request.getParameter("mot_de_passe");
 
-		if (mot_de_passe == null) {			
-			mot_de_passe=uA.getMot_de_passe();		
+		if (mot_de_passe == null) {
+			mot_de_passe = uA.getMot_de_passe();
 		}
-		
-		
+
 		request.setAttribute("pseudo", pseudo);
 		request.setAttribute("nom", nom);
 		request.setAttribute("prenom", prenom);
@@ -74,7 +73,6 @@ public class ServletModificationProfil extends HttpServlet {
 		request.setAttribute("ville", ville);
 		request.setAttribute("mot_de_passe", mot_de_passe);
 
-		
 		try {
 			userAccount = UserAccountManager.getInstance().updateUser(pseudo, nom, prenom, email, telephone, rue,
 					codePostal, ville, noUtilisateur);
