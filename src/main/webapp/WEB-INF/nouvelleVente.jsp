@@ -91,10 +91,13 @@
 						</div>
 					</div>
 					<br>
-
+<fieldset><legend><h5 style="margin: 1em;">Retrait</h5></legend>
 					<div class="row">
+					
 						<div class="col">
-							<h5 style="margin: 1em;">Retrait</h5>
+						
+						
+							
 							<label for="retraitRue">Rue : </label> <input type="text"
 								name="retraitRue" id="retraitRue">
 						</div>
@@ -113,6 +116,7 @@
 								name="retaitVille" id="retaitVille">
 						</div>
 					</div>
+					</fieldset>
 					<br>
 					<div class="row">
 							<input type="submit" value="Enregistrer">
