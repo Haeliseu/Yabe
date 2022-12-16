@@ -203,7 +203,7 @@
 								<%=article.getDateFinEncheres()%></p>
 							<p class="card-text">
 								Vendeur : <a
-									href="<%=request.getContextPath()%>/ServletAffichageProfilVendeur?pseudo=<%=article.getPseudoVendeur()%>"><%=article.getPseudoVendeur()%></a>
+									href="<%=request.getContextPath()%>/ServletAffichageProfilVendeur?idUser=<%=article.getIdVendeur()%>"><%=article.getPseudoVendeur()%></a>
 							</p>
 						</div>
 					</div>

@@ -11,6 +11,7 @@ public class ArticleVendu {
 	private LocalDate dateFinEncheres;
 	private int prix;
 	private int prixVente;
+	private int idVendeur;
 	private String pseudoVendeur;
 
 	// Constructors
@@ -20,16 +21,25 @@ public class ArticleVendu {
 	
 	
 	public ArticleVendu(int idArticle, String nomArticle, LocalDate dateFinEncheres, int prix,
-			String pseudoVendeur) {
+			int idVendeur, String pseudoVendeur) {
 		this();
 		this.setIdArticle(idArticle);
 		this.setNomArticle(nomArticle);
 		this.setDateFinEncheres(dateFinEncheres);
 		this.setPrix(prix);
+		this.setIdVendeur(idVendeur);
 		this.setPseudoVendeur(pseudoVendeur);
 	}
 
 	// Getters & Setters
+	public int getIdVendeur() {
+		return idVendeur;
+	}
+
+	public void setIdVendeur(int idVendeur) {
+		this.idVendeur = idVendeur;
+	}
+	
 	public String getPseudoVendeur() {
 		return pseudoVendeur;
 	}

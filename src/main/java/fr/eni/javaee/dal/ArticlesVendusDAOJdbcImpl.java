@@ -279,7 +279,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 				ArticleVendu article = new ArticleVendu((int) rs.getInt("no_article"),
 						(String) rs.getString("nom_article"), (LocalDate) rs.getDate("date_fin_encheres").toLocalDate(),
-						(int) prix, userAccount.pseudo);
+						(int) prix, userAccount.getNoUtilisateur(), userAccount.getPseudo());
 				articles.add(article);
 			}
 		} catch (SQLException e) {
