@@ -21,7 +21,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			+ "(pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur)"
 			+ "VALUES" + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
-	private final static String DELETE_USER = "DELETE FROM utilisateurs WHERE no_utilisateur = ?;";
+	private final static String DELETE_USER = "DELETE no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville FROM utilisateurs WHERE no_utilisateur = ?;";
 
 	// Select mot de passe oublié
 	private final static String MDP_OUBLIE = "SELECT  email, pseudo FROM utilisateurs WHERE pseudo=? and email=?;";
@@ -92,12 +92,12 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	}
 
-	public void supprimer(UserAccount userAccount) throws SQLException {
+	public void supprimer(int idUser) throws SQLException {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(DELETE_USER);
-			pstmt.setInt(1, userAccount.getNoUtilisateur());
+			pstmt.setInt(1, idUser);
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {

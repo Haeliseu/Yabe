@@ -75,10 +75,15 @@
        <br>
        <div>
        <button type="submit" class="btn btn-primary" name="Inscription" value="Modifier">Modifier</button>
-       <button type="reset" class="btn btn-secondary" name="reset" value="annuler">Annuler</button>
+       <button type="reset" class="btn btn-secondary" name="reset" value="annuler">Annuler</button>        
+      
        </div>
      </div>
      </div>
+     </form>
+     <form action="/ServletSupprimerMonCompte.java"method="post" style="background-color: lightgray; padding:15px; border-radius:5px; box-shadow: 10px 5px 5px gray;">
+     
+     <button type="submit" class="btn btn-primary" name="Supprimer" value="Supprimer">Supprimer mon compte</button>     
      </form>
 </body>
 </html>
