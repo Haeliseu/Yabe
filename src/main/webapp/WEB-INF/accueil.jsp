@@ -69,7 +69,6 @@
 		enchères</h2>
 
 	<div class="container">
-
 		<form method="POST"
 			action="<%=request.getContextPath()%>/ServletAccueil">
 			<div class="container">
@@ -172,10 +171,6 @@
 					</div>
 				</div>
 			</div>
-
-
-
-
 		</form>
 	</div>
 
