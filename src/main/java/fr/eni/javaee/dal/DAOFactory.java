@@ -10,4 +10,8 @@ public class DAOFactory {
 		return new ArticlesVendusDAOJdbcImpl();
 	}
 	
+	public static CategoriesDAO getCategoriesDAO() {
+		return new CategoriesDAOJdbcImpl();
+	}
+	
 }

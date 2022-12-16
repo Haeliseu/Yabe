@@ -26,25 +26,50 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			+ "prix_vente,"
 			+ "no_utilisateur,"
 			+ "no_categorie) "
-			+ "VALUES (?,?,?,?,?,?,?,?);";
+			+ "VALUES (?,?,?,?,?,null,?,?);";
+	private static final String SQL_INSERT_RETRAIT="INSERT INTO RETRAITS ("
+			+ "no_article,"
+			+ "rue,"
+			+ "code_postal,"
+			+ "ville "
+			+ "VALUES (?,?,?,?);";
 	
 	// Méthode - insertVente
-	public void insertVente(String nomArticle, String description, 
-			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, 
-			int prixInitial, int prixVente, int noUtilisateur, int noCategorie) throws SQLException {
+	public void insertVente(
+							// DATA ARTICLE
+							String nomArticle, String description, int Categorie,
+							LocalDate dateDebutEncheres, LocalDate dateFinEncheres, 
+							int prixInitial, 
+							// DATA USER
+							int noUtilisateur, 
+							// DATA RETRAIT
+							String rue, int cp, String ville) throws SQLException {
+		
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement pstmt = cnx.prepareStatement(SQL_INSERT_VENTE);
+			try {
+			cnx.setAutoCommit(false);
+			
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_INSERT_VENTE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, nomArticle);
 			pstmt.setString(2, description);
 			pstmt.setString(3, Date.valueOf(dateDebutEncheres).toString());
 			pstmt.setString(4, Date.valueOf(dateFinEncheres).toString());
 			pstmt.setInt(5, prixInitial);
-			pstmt.setInt(6, prixVente);
-			pstmt.setInt(7, noUtilisateur);
-			pstmt.setInt(8, noCategorie);
-			
+			pstmt.setInt(6, noUtilisateur);
+			pstmt.setInt(7, Categorie);
 			pstmt.executeUpdate();
-
+			ResultSet clef = pstmt.getGeneratedKeys();
+			
+			pstmt = cnx.prepareStatement(SQL_INSERT_RETRAIT);
+			pstmt.setInt(1, clef.getInt(1));
+			pstmt.setString(2,  rue);
+			pstmt.setInt(3,  cp);
+			pstmt.setString(4,  ville);
+			pstmt.executeUpdate();
+			
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}

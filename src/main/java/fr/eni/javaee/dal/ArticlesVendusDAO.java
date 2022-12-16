@@ -12,7 +12,13 @@ public interface ArticlesVendusDAO {
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
 			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException;
 	
-	public void insertVente(String nomArticle, String description, 
+	public void insertVente(
+			// DATA ARTICLE
+			String nomArticle, String description, int Categorie,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, 
-			int prixInitial, int prixVente, int noUtilisateur, int noCategorie) throws SQLException;
+			int prixInitial, 
+			// DATA USER
+			int noUtilisateur, 
+			// DATA RETRAIT
+			String rue, int cp, String ville) throws SQLException;
 }

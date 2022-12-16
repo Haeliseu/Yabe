@@ -1,6 +1,7 @@
 package fr.eni.javaee.bll;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import fr.eni.javaee.BusinessException;
@@ -30,6 +31,16 @@ public class ArticleVenduManager {
 		List<ArticleVendu> articles = DAOFactory.getArticleVenduDAO().listeArticles(motsClefs, categorie, radio, achatsOuverts,
 				achatsEncheresEnCours, achatsEncheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, idUser);
 		return articles;
+	}
+	
+	
+	
+	public void insertVente(String nomArticle, String description, String categorie,
+			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, 
+			int prixInitial, int noUtilisateur, int noCategorie) {
+		
+		BusinessException be = new BusinessException();
+
 	}
 
 }
