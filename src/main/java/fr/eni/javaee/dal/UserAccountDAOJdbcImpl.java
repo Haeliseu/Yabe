@@ -211,7 +211,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		return exist;
 	}
 
-	public int selectProfil(int noUtilisateur) throws SQLException {
+	public int selectProfil(String pseudo) throws SQLException {
 
 		
 		int noUtilisateurTr = 0;
@@ -230,6 +230,8 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 			return noUtilisateurTr;
 
 	}
+
+	
 
 	
 }
