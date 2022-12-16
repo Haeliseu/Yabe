@@ -12,7 +12,9 @@ import fr.eni.javaee.bo.UserAccount;
 public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	// select pour affichage
-	private final static String SELECT_USER = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville  FROM UTILISATEURS "
+	
+	
+	private final static String SELECT_USER = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville  FROM UTILISATEURS "
 			+ "WHERE no_utilisateur =?;";
 //
 	private final static String ADD_USER = "INSERT INTO utilisateurs"
@@ -34,7 +36,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	private final static String DOUBLONCHECK = "SELECT ? FROM UTILISATEURS WHERE ? = ?;";
 
-	public static String SELECT_PROFIL = "SELECT no_utilisateur WHERE pseudo  = ?;";
+	public static String SELECT_PROFIL = "SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo  = ?;";
 
 	public UserAccount selectUser(int noUtilisateur) {
 
@@ -216,13 +218,13 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		
 		int noUtilisateurTr = 0;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_USER);
-			ResultSet rs = pstmt.executeQuery();
-			pstmt.setString(1, "pseudo");
-
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_PROFIL);
+			
+			pstmt.setString(1,pseudo);
+			ResultSet rs = pstmt.executeQuery();	
 			while (rs.next()) {
 				noUtilisateurTr = rs.getInt("no_utilisateur");
-				
+			System.out.println(noUtilisateurTr);
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();

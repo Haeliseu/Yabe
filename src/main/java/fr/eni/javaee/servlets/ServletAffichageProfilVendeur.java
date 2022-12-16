@@ -26,32 +26,30 @@ public class ServletAffichageProfilVendeur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserAccount idVendeur = null;
-		String pseudo = request.getParameter("pseudo");
 
+		int idUser = parseInt(request.getParameter("pseudo"));
+		System.out.println(idUser);
 		try {
-			idVendeur.setNoUtilisateur(UserAccountManager.getInstance().selectProfil(pseudo));
+			int idVendeur;
+			idVendeur = UserAccountManager.getInstance().selectUser(idUser);
+			System.out.println(idVendeur);
+			UserAccount userAccount = null;
+			userAccount = UserAccountManager.getInstance().selectUser(idVendeur);
+			System.out.println(userAccount);
+			request.setAttribute("userAccount", userAccount);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/profil.jsp");
+			rd.forward(request, response);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
+
 		}
-		UserAccount userAccount= null;
-		userAccount = UserAccountManager.getInstance().selectUser(idVendeur.getNoUtilisateur());
-	
-		request.setAttribute("userAccount", userAccount);
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/monProfil.jsp");
-		rd.forward(request, response);
+
 	}
 
-	
-	
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	private int parseInt(String parameter) {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		return 0;
 	}
 
 }

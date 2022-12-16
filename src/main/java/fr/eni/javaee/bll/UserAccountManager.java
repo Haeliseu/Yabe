@@ -98,7 +98,6 @@ public class UserAccountManager {
 			 codePostal, ville,  noUtilistaeur);
 	}
 	public int selectProfil(String pseudo) throws SQLException {
-		
 		return DAOFactory.getUserAccountDAO().selectProfil(pseudo);
 		
 	}
