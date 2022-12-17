@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="fr.eni.javaee.messages.LecteurMessage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -131,5 +133,26 @@
 			</div>
 		</div>
 	</div>
+<div style="text-align: center";>
+		<%
+		List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
+		if (listeCodesErreur != null) {
+		%>
+		<p style="color: red">Erreur, l'utilisateur n'a pas pu être ajouté
+			:</p>
+		<%
+		for (int code : listeCodesErreur) {
+		%>
+		<p><%=code%>
+			:
+			<%=LecteurMessage.getMessageErreur(code)%></p>
+		<%
+		}
+		}
+		%>
+	</div>
+	
 </body>
+
+<footer><jsp:include page="footer.jsp" /></footer>
 </html>

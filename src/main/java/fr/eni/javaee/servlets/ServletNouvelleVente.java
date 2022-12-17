@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.ArticleVenduManager;
 import fr.eni.javaee.bo.UserAccount;
 import fr.eni.javaee.dal.DAOFactory;
@@ -47,11 +48,16 @@ public class ServletNouvelleVente extends HttpServlet {
 		int retraitCP = Integer.parseInt(request.getParameter("retaitCP"));
 		String retraitVille = request.getParameter("retaitVille");
 
-		ArticleVenduManager.getInstance().insertVente(
-				nomArticle, descriptionArticle, categorie, 
-				debutEncheres, finEncheres, 
-				miseAPrix, idUser,
-				retraitRue, retraitCP, retraitVille);
+			try {
+				ArticleVenduManager.getInstance().insertVente(
+						nomArticle, descriptionArticle, categorie, 
+						debutEncheres, finEncheres, 
+						miseAPrix, idUser,
+						retraitRue, retraitCP, retraitVille);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		rd.forward(request, response);
