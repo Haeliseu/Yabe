@@ -195,7 +195,7 @@
 					</div>
 					<div class="col-lg-8">
 						<div class="card-body">
-							<h5 class="card-title"><%=article.getNomArticle()%></h5>
+							<a href="<%=request.getContextPath()%>/ServletAfficherUneVente?noArticle=<%=article.getIdArticle()%>"><h5 class="card-title"><%=article.getNomArticle()%></h5></a>
 							<p class="card-text">
 								Prix :
 								<%=article.getPrix()%></p>

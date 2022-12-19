@@ -26,7 +26,7 @@ public class ArticleVenduManager {
 
 		ArticleVendu articleVendu = null;
 		
-		if(!(idArticle > 0)) {
+		if(idArticle > 0) {
 			articleVendu = DAOFactory.getArticleVenduDAO().afficherArticle(idArticle);
 		}else {
 			be.ajouterErreur(CodesErreurBLL.INSERT_VENTE_ID_ARTICLE_ERREUR);

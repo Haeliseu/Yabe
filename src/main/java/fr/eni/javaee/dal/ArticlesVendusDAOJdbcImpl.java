@@ -27,7 +27,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			+ "LEFT JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article "
 			+ "INNER JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article "
 			+ "INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie "
-			+ "WHERE ARTICLES_VENDUS.no_article = 1 "
+			+ "WHERE ARTICLES_VENDUS.no_article = ? "
 			+ "GROUP BY articles_vendus.no_article, nom_article, description, prix_initial, date_debut_encheres, date_fin_encheres, articles_vendus.no_utilisateur, pseudo, retraits.rue, RETRAITS.code_postal, RETRAITS.ville, libelle; ";
 	
 	// Méthode - afficherVente
@@ -37,14 +37,13 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_AFFICHER_VENTE);
 			pstmt.setInt(1, noArticle);
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if(!rs.next()) {
 				article.setNomArticle(rs.getString("nom_article"));
 				article.setDescription(rs.getString("description"));
 				article.setCategorie(rs.getString("libelle"));
 				article.setPrix(rs.getInt("prix_initial"));
 				article.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
 				article.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
-				article.setIdVendeur(rs.getInt("no_utilisateur"));
 				article.setPseudoVendeur(rs.getString("pseudo"));
 				article.setRue(rs.getString("rue"));
 				article.setCodePostal(rs.getString("code_postal"));
