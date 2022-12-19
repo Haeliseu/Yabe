@@ -20,7 +20,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	private static final String SQL_AFFICHER_VENTE=
 			"SELECT articles_vendus.no_article, nom_article, description, "
 			+ "MAX(montant_enchere) as montant_max_enchere, prix_initial, date_debut_encheres, date_fin_encheres, "
-			+ "articles_vendus.no_utilisateur , pseudo, rue, code_postal, ville, libelle "
+			+ "articles_vendus.no_utilisateur , pseudo, RETRAITS.rue, RETRAITS.code_postal, RETRAITS.ville, libelle "
 			
 			+ "FROM ARTICLES_VENDUS "
 			+ "LEFT JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
@@ -28,7 +28,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			+ "INNER JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article "
 			+ "INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie "
 			+ "WHERE ARTICLES_VENDUS.no_article = ? "
-			+ "GROUP BY articles_vendus.no_article, nom_article, description, prix_initial, date_debut_encheres, date_fin_encheres, articles_vendus.no_utilisateur, pseudo, rue, code_postal, ville, libelle; ";
+			+ "GROUP BY articles_vendus.no_article, nom_article, description, prix_initial, date_debut_encheres, date_fin_encheres, articles_vendus.no_utilisateur, pseudo, RETRAITS.rue, RETRAITS.code_postal, RETRAITS.ville, libelle; ";
 	
 	// Méthode - afficherVente
 	public ArticleVendu afficherArticle(int noArticle) throws SQLException {

@@ -10,18 +10,18 @@
 </head>
 <body>
 
-	<%@include file="header.jsp"%>
+	<jsp:include page="header.jsp"></jsp:include>
 
 	<h2 class="text-center" style="margin-bottom: 1em;">Nouvelle vente</h2>
 
 	<div class="container align-items-center">
 		<div class="row">
-			<div class="col">
+			<div class="col-3">
 				<!-- PHOTO -->
 				<img alt="test" src="">
 			</div>
 
-			<div class="col">
+			<div class="col-9">
 				<!-- FORMULAIRE -->
 				<form method="POST" action="<%=request.getContextPath()%>/ServletNouvelleVente">
 					<div class="row">
@@ -93,7 +93,7 @@
 						</div>
 					</div>
 					<br>
-<fieldset><legend><h5 style="margin: 1em;">Retrait</h5></legend>
+<fieldset style="margin: 1em;"><legend><h5>Retrait</h5></legend>
 					<div class="row">
 					
 						<div class="col">
@@ -133,7 +133,9 @@
 			</div>
 		</div>
 	</div>
-<div style="text-align: center";>
+	
+	
+<div style="text-align: center;">
 		<%
 		List<Integer> listeCodesErreur = (List<Integer>) request.getAttribute("listeCodesErreur");
 		if (listeCodesErreur != null) {
@@ -154,5 +156,5 @@
 	
 </body>
 
-<footer><jsp:include page="footer.jsp" /></footer>
+<jsp:include page="footer.jsp">
 </html>
