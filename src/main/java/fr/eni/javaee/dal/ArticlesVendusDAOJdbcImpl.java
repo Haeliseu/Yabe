@@ -16,6 +16,47 @@ import fr.eni.javaee.bo.UserAccount;
 
 public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	
+	// Query - afficherVente
+	private static final String SQL_AFFICHER_VENTE=
+			"SELECT articles_vendus.no_article, nom_article, description, "
+			+ "MAX(montant_enchere) as montant_max_enchere, prix_initial, date_debut_encheres, date_fin_encheres, "
+			+ "articles_vendus.no_utilisateur , pseudo, retraits.rue, RETRAITS.code_postal, RETRAITS.ville, libelle "
+			
+			+ "FROM ARTICLES_VENDUS "
+			+ "LEFT JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
+			+ "LEFT JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article "
+			+ "INNER JOIN ENCHERES ON ARTICLES_VENDUS.no_article = ENCHERES.no_article "
+			+ "INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie "
+			+ "WHERE ARTICLES_VENDUS.no_article = 1 "
+			+ "GROUP BY articles_vendus.no_article, nom_article, description, prix_initial, date_debut_encheres, date_fin_encheres, articles_vendus.no_utilisateur, pseudo, retraits.rue, RETRAITS.code_postal, RETRAITS.ville, libelle; ";
+	
+	// Méthode - afficherVente
+	public ArticleVendu afficherArticle(int noArticle) throws SQLException {
+		ArticleVendu article = null;
+		try(Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_AFFICHER_VENTE);
+			pstmt.setInt(1, noArticle);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				article.setNomArticle(rs.getString("nom_article"));
+				article.setDescription(rs.getString("description"));
+				article.setCategorie(rs.getString("libelle"));
+				article.setPrix(rs.getInt("prix_initial"));
+				article.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
+				article.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
+				article.setIdVendeur(rs.getInt("no_utilisateur"));
+				article.setPseudoVendeur(rs.getString("pseudo"));
+				article.setRue(rs.getString("rue"));
+				article.setCodePostal(rs.getString("code_postal"));
+				article.setVille(rs.getString("ville"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return article;
+	}
+	
+	
 	// Query - insertVente
 	private static final String SQL_INSERT_VENTE="INSERT INTO ARTICLES_VENDUS ("
 			+ "nom_article,"

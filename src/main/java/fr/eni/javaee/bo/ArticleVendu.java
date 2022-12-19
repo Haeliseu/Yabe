@@ -13,13 +13,16 @@ public class ArticleVendu {
 	private int prixVente;
 	private int idVendeur;
 	private String pseudoVendeur;
+	private String categorie;
+	private String rue;
+	private String codePostal;
+	private String ville;
 
 	// Constructors
 	private ArticleVendu() {
 	}
-
 	
-	
+	// Constructor insertArticle
 	public ArticleVendu(int idArticle, String nomArticle, LocalDate dateFinEncheres, int prix,
 			int idVendeur, String pseudoVendeur) {
 		this();
@@ -30,8 +33,55 @@ public class ArticleVendu {
 		this.setIdVendeur(idVendeur);
 		this.setPseudoVendeur(pseudoVendeur);
 	}
+	
+	// Constructor afficherArticle
+	public ArticleVendu(String nom, String description, String categorie,
+			int prix, LocalDate debutEncheres, LocalDate finEncheres, 
+			String retraitRue, String retraitCP, String retraitVille) {
+		this.setNomArticle(nom);
+		this.setDescription(description);
+		this.setCategorie(categorie);
+		this.setPrix(prix);
+		this.setDateDebutEncheres(debutEncheres);
+		this.setDateFinEncheres(finEncheres);
+		this.setRue(retraitRue);
+		this.setCodePostal(retraitCP);
+		this.setVille(retraitVille);
+		
+	}
 
 	// Getters & Setters
+	public String getRue() {
+		return rue;
+	}
+
+	public void setRue(String rue) {
+		this.rue = rue;
+	}
+
+	public String getCodePostal() {
+		return codePostal;
+	}
+
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+	public String getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(String categorie) {
+		this.categorie = categorie;
+	}
+	
 	public int getIdVendeur() {
 		return idVendeur;
 	}

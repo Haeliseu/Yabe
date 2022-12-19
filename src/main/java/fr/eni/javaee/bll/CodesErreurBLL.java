@@ -19,4 +19,7 @@ public interface CodesErreurBLL {
 	public static final int INSERT_VENTE_RUE_ERREUR = 20_207;
 	public static final int INSERT_VENTE_VILLE_ERREUR = 20_208;
 	public static final int INSERT_VENTE_CODE_POSTAL_ERREUR = 20_209;
+	
+		// AFFICHER ARTICLE
+	public static final int INSERT_VENTE_ID_ARTICLE_ERREUR = 20_210;
 }
