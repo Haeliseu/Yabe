@@ -21,7 +21,7 @@ public class ArticleVenduManager {
 	public ArticleVenduManager() {
 	}
 	
-	public ArticleVendu afficherArticle(int idArticle) throws SQLException {
+	public ArticleVendu afficherArticle(int idArticle) throws BusinessException, SQLException {
 		BusinessException be = new BusinessException();
 
 		ArticleVendu articleVendu = null;

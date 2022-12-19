@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.ArticleVenduManager;
 import fr.eni.javaee.bo.ArticleVendu;
 
@@ -29,21 +30,20 @@ public class ServletAfficherUneVente extends HttpServlet {
 		
 		ArticleVendu article = null;
 		
-		try {
-			article = ArticleVenduManager.getInstance().afficherArticle(idArticle);
-						
+			try {
+				article = ArticleVenduManager.getInstance().afficherArticle(idArticle);
+			} catch (BusinessException | SQLException e) {
+				e.printStackTrace();
+			}
+			
 			request.setAttribute("article", article);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/afficherUneVente.jsp");
 			rd.forward(request, response);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
