@@ -38,16 +38,13 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			pstmt.setInt(1, noArticle);
 			ResultSet rs = pstmt.executeQuery();
 			if(!rs.next()) {
-				article.setNomArticle(rs.getString("nom_article"));
-				article.setDescription(rs.getString("description"));
-				article.setCategorie(rs.getString("libelle"));
-				article.setPrix(rs.getInt("prix_initial"));
-				article.setDateDebutEncheres(rs.getDate("date_debut_encheres").toLocalDate());
-				article.setDateFinEncheres(rs.getDate("date_fin_encheres").toLocalDate());
-				article.setPseudoVendeur(rs.getString("pseudo"));
-				article.setRue(rs.getString("rue"));
-				article.setCodePostal(rs.getString("code_postal"));
-				article.setVille(rs.getString("ville"));
+				
+				article= new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), 
+						rs.getString("libelle"),rs.getInt("prix_initial"), 
+						rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(),
+						rs.getString("pseudo"),
+						rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
+				
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

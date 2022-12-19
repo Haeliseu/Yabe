@@ -31,9 +31,7 @@ public class ServletAfficherUneVente extends HttpServlet {
 		
 		try {
 			article = ArticleVenduManager.getInstance().afficherArticle(idArticle);
-			
-			System.out.println(article.getNomArticle());
-			
+						
 			request.setAttribute("article", article);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/afficherUneVente.jsp");
