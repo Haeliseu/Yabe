@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
-<footer class="text-center text-white fixed-bottom" style="background-color: #0D6EFD;">
+<footer class="text-center text-white" style="background-color: #0D6EFD;">
   <!-- Grid container -->
   <div class="container p-4"></div>
   <!-- Grid container -->
