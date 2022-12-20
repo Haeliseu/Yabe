@@ -14,4 +14,8 @@ public class DAOFactory {
 		return new CategoriesDAOJdbcImpl();
 	}
 	
+	public static EncheresDAO getEncheresDAO() {
+		return new EncheresDAOJdbcImpl();
+	}
+	
 }
