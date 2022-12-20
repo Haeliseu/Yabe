@@ -15,14 +15,29 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.ArticleVenduManager;
+import fr.eni.javaee.bll.UserAccountManager;
 import fr.eni.javaee.bo.UserAccount;
 import fr.eni.javaee.dal.DAOFactory;
 
 @WebServlet("/ServletNouvelleVente")
 public class ServletNouvelleVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// RECUP ID USER
+		int idUser;
+		HttpSession session = request.getSession();
+		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
+		idUser = uA.getNoUtilisateur();
+		
+		UserAccount uARech;
+		uARech = UserAccountManager.getInstance().selectUser(idUser);
+				
+		request.setAttribute("Rue", uARech.getRue());
+		request.setAttribute("CP", uARech.getCode_postal());
+		request.setAttribute("Ville", uARech.getVille());
+				
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/nouvelleVente.jsp");
 		rd.forward(request, response);
 	}
@@ -34,7 +49,8 @@ public class ServletNouvelleVente extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
 		idUser = uA.getNoUtilisateur();
-		System.out.println(idUser);
+		uA = UserAccountManager.getInstance().selectUser(idUser);
+		
 		// RECUP INFOS ARTICLE
 		String nomArticle = request.getParameter("nomArticle");
 		String descriptionArticle = request.getParameter("descriptionArticle");
