@@ -36,7 +36,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 
 	private final static String DOUBLONCHECK = "SELECT ? FROM UTILISATEURS WHERE ? = ?;";
 
-	public static String SELECT_PROFIL = "SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo  = ?;";
+	public final static String SELECT_PROFIL = "SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo  = ?;";
 
 	public UserAccount selectUser(int noUtilisateur) {
 
@@ -162,7 +162,14 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 				exist = true;
 			}
 		} catch (SQLException e) {
-			//unicité mail et pseudo
+
+			BusinessException be = new BusinessException();
+			if(e.getMessage().contains("UN_UTILISATEURS_MAIL")) {
+			be.ajouterErreur(CodesResultatDAL.REGLE_MAIL_ECHEC);
+			}else if(e.getMessage().contains("UN_UTILISATEURS_PSEUDO")) {
+			be.ajouterErreur(CodesResultatDAL.REGLE_PSEUDO_ECHEC);
+			}
+			throw be;
 		}
 		return exist;
 	}
