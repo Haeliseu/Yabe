@@ -80,6 +80,7 @@ public class UserAccountManager {
 			be.ajouterErreur(CodesErreurBLL.REGLE_DIFFERENT_MDP_ERREUR);
 		}
 	}
+	
 
 	public UserAccount selectUser(int noUtilisateur) {
 		return DAOFactory.getUserAccountDAO().selectUser(noUtilisateur);
