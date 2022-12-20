@@ -39,7 +39,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	public static String SELECT_PROFIL = "SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo  = ?;";
 	
 	public static String VERIF_CREDIT = "SELECT credit FROM utilisateurs WHERE no_utilisateur = ? ;";
-	
+		
 	public UserAccount selectUser(int noUtilisateur) {
 
 		UserAccount userAccount = null;
