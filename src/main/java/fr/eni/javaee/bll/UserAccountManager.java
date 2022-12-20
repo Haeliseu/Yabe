@@ -108,4 +108,12 @@ public class UserAccountManager {
 		DAOFactory.getUserAccountDAO().supprimer(noUtilisateur);
 		
 	}
+	
+	public int checkCredit(int noUtilisateur) throws SQLException{
+		int credit = 0;
+		
+		credit = DAOFactory.getUserAccountDAO().checkCredit(noUtilisateur);
+		
+		return credit;
+	}
 }

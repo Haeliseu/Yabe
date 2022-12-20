@@ -37,7 +37,9 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	private final static String DOUBLONCHECK = "SELECT ? FROM UTILISATEURS WHERE ? = ?;";
 
 	public static String SELECT_PROFIL = "SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo  = ?;";
-
+	
+	public static String VERIF_CREDIT = "SELECT credit FROM utilisateurs WHERE no_utilisateur = ? ;";
+	
 	public UserAccount selectUser(int noUtilisateur) {
 
 		UserAccount userAccount = null;
@@ -242,6 +244,23 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	}
 
 	
-
+	public int checkCredit(int noUtilisateur) throws SQLException{
+		int credit = 0;
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(VERIF_CREDIT);
+			
+			pstmt.setInt(1,noUtilisateur);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				credit = rs.getInt("credit");
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return credit;
+	}
 	
 }
