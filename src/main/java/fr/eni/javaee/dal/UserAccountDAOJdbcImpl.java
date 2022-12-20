@@ -266,10 +266,9 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	}
 	
 	public void updateCredit(int montant, int noUtilisateur) throws SQLException{
-		UPDATE_CREDIT = "UPDATE SET credit = ? FROM utilisateurs WHERE no_utilisateur = ? ;";
 		
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement pstmt = cnx.prepareStatement(VERIF_CREDIT);
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_CREDIT);
 			
 			pstmt.setInt(1,montant);
 			pstmt.setInt(2,noUtilisateur);

@@ -75,7 +75,7 @@ public class EnchereManager {
 			// EXECUTION DU CREDIT SUR LE COMPTE DE L UTILISATEUR ENCHERISSEUR PRECEDENT
 			if(maxEnchere != null) {
 				int creditEncherisseurPrecedent;
-				creditEncherisseurPrecedent = UserAccountManager.getInstance().checkCredit(noUtilisateur) + maxEnchere.getMontantEnchere();
+				creditEncherisseurPrecedent = UserAccountManager.getInstance().checkCredit(maxEnchere.getNoUtilisateur()) + maxEnchere.getMontantEnchere();
 				DAOFactory.getUserAccountDAO().updateCredit(creditEncherisseurPrecedent, maxEnchere.getNoUtilisateur());
 			}
 			

@@ -3,6 +3,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- <%//@ page session="false" %> -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +56,7 @@
 	<%@include file="header.jsp"%>
 
 	<%
-	if (session.getAttribute("useraccount") != null) {
+	if (request.getSession(false) != null && session.getAttribute("useraccount") != null) {
 		UserAccount useraccount = (UserAccount) session.getAttribute("useraccount");
 	%>
 	<h5 style="text-align: center;"><%=useraccount.getPseudo()%>
@@ -89,7 +90,7 @@
 						</select>
 
 						<%
-						if (session.getAttribute("useraccount") != null) {
+						if (session != null && session.getAttribute("useraccount") != null) {
 						%>
 						<!-- FILTRES DE RECHERCHE -->
 						<div class="row align-items-left">
