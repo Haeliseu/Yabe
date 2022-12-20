@@ -128,5 +128,5 @@
 
 </body>
 
-<footer><jsp:include page="footer.jsp"></footer>
+<jsp:include page="footer.jsp" />
 </html>

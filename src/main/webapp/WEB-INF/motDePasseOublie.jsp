@@ -30,4 +30,5 @@
 <input type="submit" class="btn btn-primary btn-lg"value ="Validez"/>
 </form>
 </body>
+<jsp:include page="footer.jsp" />
 </html>

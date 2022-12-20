@@ -26,4 +26,5 @@
 		<a href="<%=request.getContextPath() %>/ServletModificationProfil" >Modifier</a>
 
 </body>
+<jsp:include page="footer.jsp" />
 </html>

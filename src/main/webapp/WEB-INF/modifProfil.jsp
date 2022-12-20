@@ -91,4 +91,5 @@
      <button type="submit" class="btn btn-primary" name="Supprimer" value="Supprimer">Supprimer mon compte</button>     
      </form>
 </body>
+<jsp:include page="footer.jsp" />
 </html>
