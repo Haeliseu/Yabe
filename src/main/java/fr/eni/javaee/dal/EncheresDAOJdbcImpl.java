@@ -19,7 +19,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			+ "(no_utilisateur, no_article, date_enchere, montant_enchere) "
 			+ "VALUES "
 			+ "(?, ?, ?, ?);";
-	private static final String SQL_MAX_ENCHERE = "SELECT MAX(montant_enchere) FROM encheres WHERE no_article = ? ;";
+	private static final String SQL_MAX_ENCHERE = "SELECT MAX(montant_enchere), no_utilisateur FROM encheres WHERE no_article = ? GROUP BY no_utilisateur;";
 	
 	// METHODS
 	public List<Enchere> listeEncheresByArticle(int noArticle) {
@@ -67,8 +67,8 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		
 	}
 
-	public int maxEnchereByArticle(int noArticle) {
-		int montantMaxEncheres = 0;
+	public Enchere maxEnchereByArticle(int noArticle) {
+		Enchere maxEnchere = null;
 		
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			
@@ -78,14 +78,14 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			rs.next();
 			
 			if(rs.getInt(1) > 0) {
-				montantMaxEncheres = rs.getInt(1);
+				maxEnchere = new Enchere(rs.getInt("montant_enchere"), rs.getInt("no_utilisateur"));
 			}
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return montantMaxEncheres;
+		return maxEnchere;
 	}
 	
 }

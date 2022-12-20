@@ -11,6 +11,6 @@ public interface EncheresDAO {
 	
 	void nouvelleEnchere(int noUtilisateur, int noArticle, LocalDate dateEnchere, int montantEnchere);
 	
-	int maxEnchereByArticle(int noArticle);
+	Enchere maxEnchereByArticle(int noArticle);
 	
 }

@@ -39,6 +39,8 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	public static String SELECT_PROFIL = "SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo  = ?;";
 	
 	public static String VERIF_CREDIT = "SELECT credit FROM utilisateurs WHERE no_utilisateur = ? ;";
+	
+	public static String UPDATE_CREDIT = "UPDATE SET credit = ? FROM utilisateurs WHERE no_utilisateur = ? ;";
 		
 	public UserAccount selectUser(int noUtilisateur) {
 
@@ -261,6 +263,23 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		}
 		
 		return credit;
+	}
+	
+	public void updateCredit(int montant, int noUtilisateur) throws SQLException{
+		UPDATE_CREDIT = "UPDATE SET credit = ? FROM utilisateurs WHERE no_utilisateur = ? ;";
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(VERIF_CREDIT);
+			
+			pstmt.setInt(1,montant);
+			pstmt.setInt(2,noUtilisateur);
+			
+			pstmt.executeUpdate();
+			
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

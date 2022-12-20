@@ -28,5 +28,7 @@ public interface UserAccountDAO {
 		public int selectProfil(String pseudo) throws SQLException;
 
 		public int checkCredit(int noUtilisateur) throws SQLException;
+		
+		public void updateCredit(int montant, int noUtilisateur) throws SQLException;
 
 }

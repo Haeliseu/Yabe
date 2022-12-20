@@ -12,12 +12,18 @@ public class Enchere {
 	//Constructors
 	private Enchere() {}
 	
+	public Enchere(int noUtilisateur, int montantEnchere) {
+		this.setNoUtilisateur(noUtilisateur);
+		this.setMontantEnchere(montantEnchere);
+	}
+	
 	public Enchere(int noUtilisateur, int noArticle, LocalDate dateEnchere, int montantEnchere) {
 		this.setNoUtilisateur(noUtilisateur);
 		this.setNoArticle(noArticle);
 		this.setDateEnchere(dateEnchere);
 		this.setMontantEnchere(montantEnchere);
 	}
+	
 	
 	// Getters & Setters
 	public int getNoUtilisateur() {

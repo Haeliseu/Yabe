@@ -1,5 +1,6 @@
 package fr.eni.javaee.bll;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,45 +23,76 @@ public class EnchereManager {
 	
 	public List<Enchere> listeEncheresByArticle(int noArticle){
 		List<Enchere> encheres = null;
-		
-		
-		
+		BusinessException be = new BusinessException();
 		
 		if(noArticle > 0) {
 			encheres = DAOFactory.getEncheresDAO().listeEncheresByArticle(noArticle);
+		}else {
+			be.ajouterErreur(CodesErreurBLL.INSERT_ENCHERE_ARTICLE_ERREUR);
 		}
 		
 		return encheres;
 	}
 	
-	public void nouvelleEnchere(int noUtilisateur, int noArticle, LocalDate dateEnchere, int montantEnchere) {
+	public void nouvelleEnchere(int noUtilisateur, int noArticle, LocalDate dateEnchere, int montantEnchere) throws SQLException {
 		BusinessException be = new BusinessException();
-		int maxEnchere = 0;
+		int nbErreurs = 0;
+		Enchere maxEnchere = null;
 		
 		// CONTROLE ENCHERE PRECEDENTE SI <
 		maxEnchere = DAOFactory.getEncheresDAO().maxEnchereByArticle(noArticle);
-				
-		if(maxEnchere > montantEnchere) {
-			be.ajouterErreur(CodesErreurBLL.INSERT_VENTE_ID_ARTICLE_ERREUR);
+		
+		// CHECK ARTICLE EXIST
+		if(noArticle <= 0) {
+			be.ajouterErreur(CodesErreurBLL.INSERT_ENCHERE_ARTICLE_ERREUR);
+			nbErreurs++;
+		}
+		
+		// CHECK USER EXIST
+		if(noUtilisateur <= 0) {
+			be.ajouterErreur(CodesErreurBLL.INSERT_ENCHERE_USER_ERREUR);
+			nbErreurs++;
+		}
+		
+		// CHECK MAXENCHERE EXIST + MAXENCHERE > ENCHERE
+		if(maxEnchere != null && maxEnchere.getMontantEnchere() > montantEnchere) {
+			be.ajouterErreur(CodesErreurBLL.INSERT_ENCHERE_MONTANT_ERREUR);
+			nbErreurs++;
 		}
 				
-		// CONTROLE SI DEBIT POSSIBLE SUR LE CREDIT RESTANT
+		// CHECK DEBIT IS POSSIBLE
+		int credit = 0;
+		credit = UserAccountManager.getInstance().checkCredit(noUtilisateur);
 		
+		if(credit < montantEnchere) {
+			be.ajouterErreur(CodesErreurBLL.INSERT_ENCHERE_CREDIT_RESTANT_INSUFFISANT_ERREUR);
+			nbErreurs++;
+		}
 		
-		// DEBIT SUR LE CREDIT DISPO SUR LE COMPTE
-		
-		
-		if(be==null) {
+		// CHECK IF ERROR > 0 = NO UPDATE
+		if(nbErreurs == 0) {
+			
+			// EXECUTION DU CREDIT SUR LE COMPTE DE L UTILISATEUR ENCHERISSEUR PRECEDENT
+			if(maxEnchere != null) {
+				int creditEncherisseurPrecedent;
+				creditEncherisseurPrecedent = UserAccountManager.getInstance().checkCredit(noUtilisateur) + maxEnchere.getMontantEnchere();
+				DAOFactory.getUserAccountDAO().updateCredit(creditEncherisseurPrecedent, maxEnchere.getNoUtilisateur());
+			}
+			
+			// EXECUTION DU DEBIT SUR LE COMPTE DE L UTILISATEUR
+			DAOFactory.getUserAccountDAO().updateCredit((credit - montantEnchere), noUtilisateur);
+			
+			// EXECUTION DE L AJOUT DE LA NOUVELLE ENCHERE
 			DAOFactory.getEncheresDAO().nouvelleEnchere(noUtilisateur, noArticle, dateEnchere, montantEnchere);
 		}
 	}
 	
-	public int maxEnchereByArticle(int noArticle) {
-		int montantMaxEnchere = 0;
+	public Enchere maxEnchereByArticle(int noArticle) {
+		Enchere maxEnchere = null;
 		
+		maxEnchere = DAOFactory.getEncheresDAO().maxEnchereByArticle(noArticle);
 		
-		
-		return montantMaxEnchere;
+		return maxEnchere;
 	}
 	
 }
