@@ -7,6 +7,8 @@ import java.util.List;
 import fr.eni.javaee.bo.ArticleVendu;
 
 public interface ArticlesVendusDAO {
+	
+	public ArticleVendu afficherArticle(int idArticle) throws SQLException;
 
 	public List<ArticleVendu> listeArticles(String motsClefs, String categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,

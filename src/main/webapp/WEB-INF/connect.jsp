@@ -77,5 +77,5 @@
 		%>
 	</div>
 </body>
-<footer><jsp:include page="footer.jsp" /></footer>
+<div class="fixed-bottom"><jsp:include page="footer.jsp" /></div>
 </html>

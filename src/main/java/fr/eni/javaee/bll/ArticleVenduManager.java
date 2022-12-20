@@ -20,6 +20,20 @@ public class ArticleVenduManager {
 
 	public ArticleVenduManager() {
 	}
+	
+	public ArticleVendu afficherArticle(int idArticle) throws BusinessException, SQLException {
+		BusinessException be = new BusinessException();
+
+		ArticleVendu articleVendu = null;
+		
+		if(idArticle > 0) {
+			articleVendu = DAOFactory.getArticleVenduDAO().afficherArticle(idArticle);
+		}else {
+			be.ajouterErreur(CodesErreurBLL.INSERT_VENTE_ID_ARTICLE_ERREUR);
+		}
+		
+		return articleVendu;
+	}
 
 	public List<ArticleVendu> listeArticles(String motsClefs, String categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
@@ -27,9 +41,11 @@ public class ArticleVenduManager {
 		
 		BusinessException be = new BusinessException();
 		
-		
 		List<ArticleVendu> articles = DAOFactory.getArticleVenduDAO().listeArticles(motsClefs, categorie, radio, achatsOuverts,
 				achatsEncheresEnCours, achatsEncheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, idUser);
+		
+		
+		
 		return articles;
 	}
 	
@@ -96,8 +112,6 @@ public class ArticleVenduManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-
 	}
 
 }

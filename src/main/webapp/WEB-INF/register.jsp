@@ -102,5 +102,8 @@
 		}
 	%>
 	</div>
+
+<div class="fixed-bottom"><jsp:include page="footer.jsp" /></div>
+	
 </body>
 </html>
