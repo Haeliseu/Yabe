@@ -4,39 +4,39 @@ import java.time.LocalDate;
 
 public class Enchere {
 	// Fields
-	private int noUtilisateur;
-	private int noArticle;
+	private UserAccount userAccount;
+	private ArticleVendu article;
 	private LocalDate dateEnchere;
 	private int montantEnchere;
 	
 	//Constructors
 	private Enchere() {}
 	
-	public Enchere(int noUtilisateur, int montantEnchere) {
-		this.setNoUtilisateur(noUtilisateur);
+	public Enchere(UserAccount userAccount, int montantEnchere) {
+		this.setUserAccount(userAccount);
 		this.setMontantEnchere(montantEnchere);
 	}
 	
-	public Enchere(int noUtilisateur, int noArticle, LocalDate dateEnchere, int montantEnchere) {
-		this.setNoUtilisateur(noUtilisateur);
-		this.setNoArticle(noArticle);
+	public Enchere(UserAccount userAccount, ArticleVendu article, LocalDate dateEnchere, int montantEnchere) {
+		this.setUserAccount(userAccount);
+		this.setArticle(article);
 		this.setDateEnchere(dateEnchere);
 		this.setMontantEnchere(montantEnchere);
 	}
 	
 	
 	// Getters & Setters
-	public int getNoUtilisateur() {
-		return noUtilisateur;
+	public UserAccount getUserAccount() {
+		return userAccount;
 	}
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
-	public int getNoArticle() {
-		return noArticle;
+	public ArticleVendu getArticle() {
+		return article;
 	}
-	public void setNoArticle(int noArticle) {
-		this.noArticle = noArticle;
+	public void setArticle(ArticleVendu article) {
+		this.article = article;
 	}
 	public LocalDate getDateEnchere() {
 		return dateEnchere;

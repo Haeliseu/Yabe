@@ -3,6 +3,7 @@ package fr.eni.javaee.dal;
 import java.sql.SQLException;
 
 import fr.eni.javaee.BusinessException;
+import fr.eni.javaee.bo.Enchere;
 import fr.eni.javaee.bo.UserAccount;
 
 public interface UserAccountDAO {
@@ -27,8 +28,8 @@ public interface UserAccountDAO {
 		
 		public int selectProfil(String pseudo) throws SQLException;
 
-		public int checkCredit(int noUtilisateur) throws SQLException;
+		public int checkCredit(UserAccount userAccount) throws SQLException;
 		
-		public void updateCredit(int montant, int noUtilisateur) throws SQLException;
+		public void updateCredit(int montantEnchere, UserAccount userAccount) throws SQLException;
 
 }

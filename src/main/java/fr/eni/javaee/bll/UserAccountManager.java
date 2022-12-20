@@ -110,10 +110,10 @@ public class UserAccountManager {
 		
 	}
 	
-	public int checkCredit(int noUtilisateur) throws SQLException{
+	public int checkCredit(UserAccount userAccount) throws SQLException{
 		int credit = 0;
 		
-		credit = DAOFactory.getUserAccountDAO().checkCredit(noUtilisateur);
+		credit = DAOFactory.getUserAccountDAO().checkCredit(userAccount);
 		
 		return credit;
 	}
