@@ -31,9 +31,9 @@ public class ServletConnect extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		    Cookie[] cookies = request.getCookies();
-		    if (cookies != null) {
-		        for (Cookie cookie : cookies) {
+		    Cookie[] cookieRememberMe = request.getCookies();
+		    if (cookieRememberMe != null) {
+		        for (Cookie cookie : cookieRememberMe) {
 		            if ("cookieRememberMe".equals(cookie.getName())) {
 		                // Récupérer le pseudo et le mot de passe du cookie
 		                String[] loginInfo = cookie.getValue().split(":");
@@ -49,6 +49,7 @@ public class ServletConnect extends HttpServlet {
 							if (login = UserAccountManager.getInstance().verify(useraccount, mot_de_passe, mot_de_passe) && login == true) {
 								
 								HttpSession session = request.getSession();
+								session.setMaxInactiveInterval(5 * 60);
 								session.setAttribute("useraccount", useraccount);
 
 							    // Rediriger l'utilisateur vers la page d'accueil ou une autre page autorisée
@@ -93,13 +94,14 @@ public class ServletConnect extends HttpServlet {
 			if (login == true){ 
 				
 				HttpSession session = request.getSession();
+				session.setMaxInactiveInterval(5 * 60);
 				session.setAttribute("useraccount", useraccount);
 				
 				if ((request.getParameter("rememberMe"))!= null && rememberMe.equals("on")) {
 					
-					Cookie cookie = new Cookie("cookieRememberMe", pseudo + ":" + mot_de_passe);
-					cookie.setMaxAge(60 * 60 * 24 * 30);
-					response.addCookie(cookie);
+					Cookie cookieRememberMe = new Cookie("cookieRememberMe", pseudo + ":" + mot_de_passe);
+					cookieRememberMe.setMaxAge(60 * 60 * 24 * 30);
+					response.addCookie(cookieRememberMe);
 				}
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		        rd.forward(request, response);
