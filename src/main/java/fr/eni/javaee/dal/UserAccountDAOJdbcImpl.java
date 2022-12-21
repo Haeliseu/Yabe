@@ -246,13 +246,13 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 	}
 
 	
-	public int checkCredit(int noUtilisateur) throws SQLException{
+	public int checkCredit(UserAccount userAccount) throws SQLException{
 		int credit = 0;
 		
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = cnx.prepareStatement(VERIF_CREDIT);
 			
-			pstmt.setInt(1,noUtilisateur);
+			pstmt.setInt(1,userAccount.getNoUtilisateur());
 			ResultSet rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -265,14 +265,13 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		return credit;
 	}
 	
-	public void updateCredit(int montant, int noUtilisateur) throws SQLException{
-		UPDATE_CREDIT = "UPDATE SET credit = ? FROM utilisateurs WHERE no_utilisateur = ? ;";
+	public void updateCredit(int montant, UserAccount userAccount) throws SQLException{
 		
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			PreparedStatement pstmt = cnx.prepareStatement(VERIF_CREDIT);
+			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_CREDIT);
 			
 			pstmt.setInt(1,montant);
-			pstmt.setInt(2,noUtilisateur);
+			pstmt.setInt(2,userAccount.getNoUtilisateur());
 			
 			pstmt.executeUpdate();
 			

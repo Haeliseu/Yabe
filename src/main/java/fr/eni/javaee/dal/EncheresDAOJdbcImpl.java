@@ -6,9 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.javaee.bo.ArticleVendu;
 import fr.eni.javaee.bo.Enchere;
+import fr.eni.javaee.bo.UserAccount;
 
 public class EncheresDAOJdbcImpl implements EncheresDAO {
 	
@@ -22,19 +25,21 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 	private static final String SQL_MAX_ENCHERE = "SELECT MAX(montant_enchere), no_utilisateur FROM encheres WHERE no_article = ? GROUP BY no_utilisateur;";
 	
 	// METHODS
-	public List<Enchere> listeEncheresByArticle(int noArticle) {
-		List<Enchere> encheres = null;
+	public List<Enchere> listeEncheresByArticle(ArticleVendu article) {
+		List<Enchere> encheres = new ArrayList<>();
 		
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_LISTE_ENCHERES);
-			pstmt.setInt(1, noArticle);
+			pstmt.setInt(1, article.getIdArticle());
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+				UserAccount userAccount = new UserAccount(rs.getInt("no_utilisateur"));
+				ArticleVendu newArticle = new ArticleVendu(rs.getInt("no_article"));
 				Enchere enchere = new Enchere(
-						rs.getInt("no_utilisateur"),
-						rs.getInt("no_article"),
+						userAccount,
+						newArticle,
 						rs.getDate("date_enchere").toLocalDate(),
 						rs.getInt("montant_enchere")
 						);
@@ -48,14 +53,14 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		return encheres;
 	}
 
-	public void nouvelleEnchere(int noUtilisateur, int noArticle, LocalDate dateEnchere, int montantEnchere) {
+	public void nouvelleEnchere(UserAccount userAccount, ArticleVendu article, LocalDate dateEnchere, int montantEnchere) {
 		
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_NOUVELLE_ENCHERE);
 			
-			pstmt.setInt(1, noUtilisateur);
-			pstmt.setInt(2, noArticle);
+			pstmt.setInt(1, userAccount.getNoUtilisateur());
+			pstmt.setInt(2, article.getIdArticle());
 			pstmt.setDate(3, Date.valueOf(dateEnchere));
 			pstmt.setInt(4, montantEnchere);
 			
@@ -67,18 +72,20 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		
 	}
 
-	public Enchere maxEnchereByArticle(int noArticle) {
+	public Enchere maxEnchereByArticle(ArticleVendu article) {
 		Enchere maxEnchere = null;
+		UserAccount userAccount = null;
 		
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_MAX_ENCHERE);
-			pstmt.setInt(1, noArticle);
+			pstmt.setInt(1, article.getIdArticle());
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			
 			if(rs.getInt(1) > 0) {
-				maxEnchere = new Enchere(rs.getInt("montant_enchere"), rs.getInt("no_utilisateur"));
+				userAccount = new UserAccount(rs.getInt("no_utilisateur"));
+				maxEnchere = new Enchere(userAccount, rs.getInt("montant_enchere"));
 			}
 			
 		}catch(SQLException e) {

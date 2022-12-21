@@ -6,6 +6,8 @@ import java.util.List;
 
 import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bo.ArticleVendu;
+import fr.eni.javaee.bo.Categorie;
+import fr.eni.javaee.bo.UserAccount;
 import fr.eni.javaee.dal.DAOFactory;
 
 public class ArticleVenduManager {
@@ -21,13 +23,13 @@ public class ArticleVenduManager {
 	public ArticleVenduManager() {
 	}
 	
-	public ArticleVendu afficherArticle(int idArticle) throws BusinessException, SQLException {
+	public ArticleVendu afficherArticle(ArticleVendu article) throws BusinessException, SQLException {
 		BusinessException be = new BusinessException();
 
 		ArticleVendu articleVendu = null;
 		
-		if(idArticle > 0) {
-			articleVendu = DAOFactory.getArticleVenduDAO().afficherArticle(idArticle);
+		if(article.getIdArticle() > 0) {
+			articleVendu = DAOFactory.getArticleVenduDAO().afficherArticle(article);
 		}else {
 			be.ajouterErreur(CodesErreurBLL.INSERT_VENTE_ID_ARTICLE_ERREUR);
 		}
@@ -35,7 +37,7 @@ public class ArticleVenduManager {
 		return articleVendu;
 	}
 
-	public List<ArticleVendu> listeArticles(String motsClefs, String categorie, String radio, boolean achatsOuverts,
+	public List<ArticleVendu> listeArticles(String motsClefs, Categorie categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
 			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException {
 		
@@ -52,9 +54,9 @@ public class ArticleVenduManager {
 	
 	
 	public void insertVente(
-			String nomArticle, String description, int categorie,
+			String nomArticle, String description, Categorie categorie,
 			LocalDate dateDebutEncheres, LocalDate dateFinEncheres, 
-			int prixInitial, int noUtilisateur, 
+			int prixInitial, UserAccount userAccount, 
 			String retraitRue, int retraitCP, String retraitVille) throws BusinessException {
 		
 		BusinessException be = new BusinessException();
@@ -67,7 +69,7 @@ public class ArticleVenduManager {
 			be.ajouterErreur(CodesErreurBLL.INSERT_VENTE_DESCRIPTION_ARTICLE_ERREUR);
 		}
 		
-		if(categorie == 0) {
+		if(categorie.getIdCategorie() == 0) {
 			be.ajouterErreur(CodesErreurBLL.INSERT_VENTE_CATEGORIE_ARTICLE_ERREUR);
 		}
 		
@@ -83,7 +85,7 @@ public class ArticleVenduManager {
 			be.ajouterErreur(CodesErreurBLL.INSERT_VENTE_PRIX_INITIAL_ERREUR);
 		}
 		
-		if(DAOFactory.getUserAccountDAO().selectUser(noUtilisateur)==null) {
+		if(DAOFactory.getUserAccountDAO().selectUser(userAccount.getNoUtilisateur())==null) {
 			be.ajouterErreur(CodesErreurBLL.INSERT_VENTE_USER_ERREUR);
 		}
 		
@@ -107,7 +109,7 @@ public class ArticleVenduManager {
 			DAOFactory.getArticleVenduDAO().insertVente(
 					nomArticle, description, categorie, 
 					dateDebutEncheres, dateFinEncheres, prixInitial, 
-					noUtilisateur, 
+					userAccount, 
 					retraitRue, retraitCP, retraitVille);
 		} catch (SQLException e) {
 			e.printStackTrace();

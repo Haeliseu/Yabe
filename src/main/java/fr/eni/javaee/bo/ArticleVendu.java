@@ -11,9 +11,8 @@ public class ArticleVendu {
 	private LocalDate dateFinEncheres;
 	private int prix;
 	private int prixVente;
-	private int idVendeur;
-	private String pseudoVendeur;
-	private String categorie;
+	private UserAccount userAccount;
+	private Categorie categorie;
 	private String rue;
 	private String codePostal;
 	private String ville;
@@ -22,22 +21,23 @@ public class ArticleVendu {
 	private ArticleVendu() {
 	}
 	
+	public ArticleVendu(int idArticle) {
+		this.setIdArticle(idArticle);
+	}
+	
 	// Constructor insertArticle
 	public ArticleVendu(int idArticle, String nomArticle, LocalDate dateFinEncheres, int prix,
-			int idVendeur, String pseudoVendeur) {
-		this();
+			UserAccount userAccount) {
 		this.setIdArticle(idArticle);
 		this.setNomArticle(nomArticle);
 		this.setDateFinEncheres(dateFinEncheres);
 		this.setPrix(prix);
-		this.setIdVendeur(idVendeur);
-		this.setPseudoVendeur(pseudoVendeur);
+		this.setUserAccount(userAccount);
 	}
 	
 	// Constructor afficherArticle
-	public ArticleVendu(String nom, String description, String categorie,
-			int prix, LocalDate debutEncheres, LocalDate finEncheres, 
-			String pseudoVendeur, int idVendeur,
+	public ArticleVendu(String nom, String description, Categorie categorie,
+			int prix, LocalDate debutEncheres, LocalDate finEncheres, UserAccount userAccount,
 			String retraitRue, String retraitCP, String retraitVille) {
 		this.setNomArticle(nom);
 		this.setDescription(description);
@@ -45,8 +45,7 @@ public class ArticleVendu {
 		this.setPrix(prix);
 		this.setDateDebutEncheres(debutEncheres);
 		this.setDateFinEncheres(finEncheres);
-		this.setPseudoVendeur(pseudoVendeur);
-		this.setIdVendeur(idVendeur);
+		this.setUserAccount(userAccount);
 		this.setRue(retraitRue);
 		this.setCodePostal(retraitCP);
 		this.setVille(retraitVille);
@@ -77,29 +76,22 @@ public class ArticleVendu {
 	public void setVille(String ville) {
 		this.ville = ville;
 	}
-	public String getCategorie() {
+	public Categorie getCategorie() {
 		return categorie;
 	}
 
-	public void setCategorie(String categorie) {
+	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 	}
 	
-	public int getIdVendeur() {
-		return idVendeur;
+	public UserAccount getUserAccount() {
+		return userAccount;
 	}
 
-	public void setIdVendeur(int idVendeur) {
-		this.idVendeur = idVendeur;
+	public void setUserAccount(UserAccount userAccount) {
+		this.userAccount = userAccount;
 	}
 	
-	public String getPseudoVendeur() {
-		return pseudoVendeur;
-	}
-
-	public void setPseudoVendeur(String pseudoVendeur) {
-		this.pseudoVendeur = pseudoVendeur;
-	}
 
 	public int getIdArticle() {
 		return idArticle;

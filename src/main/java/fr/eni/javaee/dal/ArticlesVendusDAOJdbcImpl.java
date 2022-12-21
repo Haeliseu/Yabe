@@ -12,6 +12,7 @@ import java.util.List;
 
 import fr.eni.javaee.bll.UserAccountManager;
 import fr.eni.javaee.bo.ArticleVendu;
+import fr.eni.javaee.bo.Categorie;
 import fr.eni.javaee.bo.UserAccount;
 
 public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
@@ -31,29 +32,31 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			+ "GROUP BY articles_vendus.no_article, nom_article, description, prix_initial, date_debut_encheres, date_fin_encheres, articles_vendus.no_utilisateur, pseudo, RETRAITS.rue, RETRAITS.code_postal, RETRAITS.ville, libelle; ";
 	
 	// Méthode - afficherVente
-	public ArticleVendu afficherArticle(int noArticle) throws SQLException {
-		ArticleVendu article = null;
+	public ArticleVendu afficherArticle(ArticleVendu article) throws SQLException {
+		ArticleVendu articleTr = null;
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_AFFICHER_VENTE);
-			pstmt.setInt(1, noArticle);
+			pstmt.setInt(1, article.getIdArticle());
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			
 			if(!rs.getString("nom_article").isBlank()) {
 				
-				System.out.println("OK");
+				UserAccount userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("no_utilisateur"));
 				
-				article= new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), 
-				rs.getString("libelle"),rs.getInt("prix_initial"), 
+				Categorie categorie = new Categorie(rs.getString("libelle"));
+				
+				articleTr= new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), 
+				categorie,rs.getInt("prix_initial"), 
 				rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(),
-				rs.getString("pseudo"), rs.getInt("no_utilisateur"),
+				userAccount,
 				rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
 				
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return article;
+		return articleTr;
 	}
 	
 	
@@ -78,11 +81,11 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	// Méthode - insertVente
 	public void insertVente(
 							// DATA ARTICLE
-							String nomArticle, String description, int Categorie,
+							String nomArticle, String description, Categorie categorie,
 							LocalDate dateDebutEncheres, LocalDate dateFinEncheres, 
 							int prixInitial, 
 							// DATA USER
-							int noUtilisateur, 
+							UserAccount userAccount, 
 							// DATA RETRAIT
 							String rue, int cp, String ville) throws SQLException {
 		
@@ -96,8 +99,8 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			pstmt.setDate(3, Date.valueOf(dateDebutEncheres));
 			pstmt.setDate(4, Date.valueOf(dateFinEncheres));
 			pstmt.setInt(5, prixInitial);
-			pstmt.setInt(6, noUtilisateur);
-			pstmt.setInt(7, Categorie);
+			pstmt.setInt(6, userAccount.getNoUtilisateur());
+			pstmt.setInt(7, categorie.getIdCategorie());
 			pstmt.executeUpdate();
 			ResultSet clef = pstmt.getGeneratedKeys();
 			clef.next();
@@ -225,7 +228,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 	// Methode listeArticles
 	@Override
-	public List<ArticleVendu> listeArticles(String motsClefs, String categorie, String radio, boolean achatsOuverts,
+	public List<ArticleVendu> listeArticles(String motsClefs, Categorie categorie, String radio, boolean achatsOuverts,
 			boolean achatsEncheresEnCours, boolean achatsEncheresRemportees, boolean ventesEnCours,
 			boolean ventesNonDebutees, boolean ventesTerminees, int idUser) throws SQLException {
 
@@ -322,7 +325,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 
 				ArticleVendu article = new ArticleVendu((int) rs.getInt("no_article"),
 						(String) rs.getString("nom_article"), (LocalDate) rs.getDate("date_fin_encheres").toLocalDate(),
-						(int) prix, rs.getInt("no_utilisateur"), userAccount.getPseudo());
+						(int) prix, userAccount);
 				articles.add(article);
 			}
 		} catch (SQLException e) {

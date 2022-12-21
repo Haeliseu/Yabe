@@ -52,7 +52,7 @@ public class ServletAccueil extends HttpServlet {
 		boolean ventesTerminees = false;
 		int idUser;
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
 		
 		if (session.getAttribute("useraccount") != null) {
