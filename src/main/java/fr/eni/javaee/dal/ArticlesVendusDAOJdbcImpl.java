@@ -21,8 +21,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	private static final String SQL_AFFICHER_VENTE=
 			"SELECT articles_vendus.no_article, nom_article, description, "
 			+ "MAX(montant_enchere) as montant_max_enchere, prix_initial, date_debut_encheres, date_fin_encheres, "
-			+ "articles_vendus.no_utilisateur , pseudo, RETRAITS.rue, RETRAITS.code_postal, RETRAITS.ville, libelle "
-			
+			+ "articles_vendus.no_utilisateur as vendeur, pseudo, RETRAITS.rue as Rrue, RETRAITS.code_postal as Rcp, RETRAITS.ville as Rville, libelle "
 			+ "FROM ARTICLES_VENDUS "
 			+ "LEFT JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur "
 			+ "LEFT JOIN RETRAITS ON ARTICLES_VENDUS.no_article = RETRAITS.no_article "
@@ -42,16 +41,15 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			
 			if(!rs.getString("nom_article").isBlank()) {
 				
-				UserAccount userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("no_utilisateur"));
+				UserAccount userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("vendeur"));
 				
 				Categorie categorie = new Categorie(rs.getString("libelle"));
 				
 				articleTr= new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), 
-				categorie,rs.getInt("prix_initial"), 
-				rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(),
-				userAccount,
-				rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
-				
+											categorie,rs.getInt("prix_initial"), 
+											rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(),
+											userAccount,
+											rs.getString("Rrue"), rs.getString("Rcp"), rs.getString("Rville"));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
