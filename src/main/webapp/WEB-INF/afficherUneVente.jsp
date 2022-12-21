@@ -1,3 +1,5 @@
+<%@page import="fr.eni.javaee.bo.Categorie"%>
+<%@page import="fr.eni.javaee.bo.UserAccount"%>
 <%@page import="fr.eni.javaee.bo.Enchere"%>
 <%@page import="fr.eni.javaee.bo.ArticleVendu"%>
 <%@page import="java.util.List"%>
@@ -18,15 +20,20 @@
 
 		<ul class="list-group">
 
-			<li class="list-group-item">Vendeur : ${article.pseudoVendeur }</li>
-			<label name="idVendeur" disabled hidden>${article.idVendeur }</label>
+			<% ArticleVendu article = (ArticleVendu) request.getAttribute("article");
+			UserAccount userAccount = (UserAccount) request.getAttribute("userAccount");
+			Enchere enchere = (Enchere) request.getAttribute("enchere");
+			Categorie categorie = (Categorie) request.getAttribute("categorie");%>
+			
+			<li class="list-group-item">Vendeur : ${requestScope.userAccount.pseudo }</li>
+			<label name="idVendeur" disabled hidden>${requestScope.userAccount.noUtilisateur }</label>
 
 			<li class="list-group-item">Nom
 				: ${requestScope.article.nomArticle }</li>
 			<li class="list-group-item">Description
 				: ${requestScope.article.description }</li>
 			<li class="list-group-item">Catégorie
-				: ${requestScope.article.categorie }</li>
+				: ${requestScope.categorie.libelle }</li>
 			<li class="list-group-item">Mise à prix
 				: ${requestScope.article.prix }</li>
 			<li class="list-group-item">Début de l'enchère
@@ -47,9 +54,7 @@
 	</div>
 
 	<%
-	ArticleVendu article = (ArticleVendu) request.getAttribute("article");
-	Enchere enchere = (Enchere) request.getAttribute("enchere");
-	if (Integer.valueOf(session.getId()) == article.getIdVendeur()) {
+	if (session != null && session.getAttribute("useraccount") == userAccount) {
 	%>
 	<div class="container">
 		<div class="row">
@@ -62,7 +67,7 @@
 		</div>
 	</div>
 	<%
-	} else if (enchere.getNoUtilisateur()!= Integer.valueOf(session.getId())){
+	} else if (session != null && enchere.getUserAccount().getNoUtilisateur()!= Integer.valueOf(session.getId())){
 	%>
 	<div class="container">
 		<div class="row">

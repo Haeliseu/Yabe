@@ -15,9 +15,25 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 	private static final String SQL_CAT_AJOUT="INSERT INTO categories (libelle) VALUES (?);";
 	private static final String SQL_CAT_SUPP="DELETE FROM categories WHERE libelle = ?";
 	private static final String SQL_CAT_LIST="SELECT * FROM categories";
+	private static final String SQL_CAT_RECH="SELECT * FROM categories WHERE no_categorie = ? ;";
 	
 	// METHODS
-	@Override
+	
+	public Categorie rechCategorie(Categorie categorieR) throws SQLException {
+		Categorie categorie = null;
+		try(Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_CAT_RECH);
+			pstmt.setInt(1, categorieR.getIdCategorie());
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return categorie;
+	}
+	
 	public void ajoutCategorie(String libelle) throws SQLException {
 		
 		try(Connection cnx = ConnectionProvider.getConnection()){
@@ -30,7 +46,6 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 		}
 	}
 
-	@Override
 	public void suppCategorie(String libelle) {
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_CAT_SUPP);
@@ -42,7 +57,6 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 		}
 	}
 
-	@Override
 	public List<Categorie> listCategorie() {
 		
 		List<Categorie> categories = null;
@@ -52,7 +66,7 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 			ResultSet rs = stmt.executeQuery(SQL_CAT_LIST);
 			
 			while(rs.next()) {
-				Categorie cat = new Categorie(rs.getString(1));
+				Categorie cat = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
 				categories.add(cat);
 			}
 			
