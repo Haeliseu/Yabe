@@ -103,8 +103,11 @@ public class ServletConnect extends HttpServlet {
 					cookieRememberMe.setMaxAge(60 * 60 * 24 * 30);
 					response.addCookie(cookieRememberMe);
 				}
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+				/*RequestDispatcher rd = request.getRequestDispatcher("/ServletAccueil");
 		        rd.forward(request, response);
+		        */
+		        
+		        response.sendRedirect(request.getContextPath() + "/ServletAccueil");
 			
 			}else {
 				

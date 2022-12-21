@@ -57,7 +57,7 @@
 	<%@include file="header.jsp"%>
 
 	<%
-	if (request.getSession(false) != null && session.getAttribute("useraccount") != null) {
+	if (session.getAttribute("useraccount") != null) {
 		UserAccount useraccount = (UserAccount) session.getAttribute("useraccount");
 	%>
 	<h5 style="text-align: center;"><%=useraccount.getPseudo()%>
@@ -87,12 +87,13 @@
 							style="margin-bottom: 1em;" name="categorie">
 							<option selected>Toutes</option>
 							<%
-							List<Categorie> categories = (List<Categorie>)request.getAttribute("listeCategories");
-							for(Categorie cat : categories) {
+							List<Categorie> categories = (List<Categorie>) request.getAttribute("listeCategories");
+							if (categories != null) {
+								for(Categorie cat : categories) {
 							%>
 							<option value="'<%=cat.getIdCategorie() %>'"><%=cat.getLibelle() %></option>
 							<%
-							}
+							}}
 							%>
 						</select>
 

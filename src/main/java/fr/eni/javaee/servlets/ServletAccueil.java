@@ -56,8 +56,9 @@ public class ServletAccueil extends HttpServlet {
 		boolean ventesNonDebutees = false;
 		boolean ventesTerminees = false;
 		int idUser;
+		List<Categorie> categories = null;
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
 		
 		if (session.getAttribute("useraccount") != null) {
@@ -118,11 +119,13 @@ public class ServletAccueil extends HttpServlet {
 		try {
 			listeArticlesVendus = avManager.listeArticles(motsClefs, categorie, radio, achatsOuverts, achatsEncheresEnCours,
 						achatsEncheresRemportees, ventesEnCours, ventesNonDebutees, ventesTerminees, idUser);
+			categories = CategorieManager.getInstance().listCategorie();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		request.setAttribute("listeArticlesVendus", listeArticlesVendus);
+		request.setAttribute("listeCategories", categories);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		rd.forward(request, response);
