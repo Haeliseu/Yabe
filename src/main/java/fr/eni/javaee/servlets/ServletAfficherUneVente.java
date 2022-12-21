@@ -27,15 +27,13 @@ public class ServletAfficherUneVente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int idArticle = Integer.valueOf(request.getParameter("noArticle"));
-		
-		System.out.println(idArticle);
-		
-		ArticleVendu article = null;
+				
+		ArticleVendu article = new ArticleVendu(idArticle);
 		Enchere enchere = null;
 		
 			try {
-				article = ArticleVenduManager.getInstance().afficherArticle(idArticle);
-				enchere = EnchereManager.getInstance().maxEnchereByArticle(idArticle);
+				article = ArticleVenduManager.getInstance().afficherArticle(article);
+				enchere = EnchereManager.getInstance().maxEnchereByArticle(article);
 			} catch (BusinessException | SQLException e) {
 				e.printStackTrace();
 			}

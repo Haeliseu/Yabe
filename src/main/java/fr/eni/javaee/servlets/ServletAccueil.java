@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.bll.ArticleVenduManager;
 import fr.eni.javaee.bo.ArticleVendu;
+import fr.eni.javaee.bo.Categorie;
 import fr.eni.javaee.bo.UserAccount;
 
 @WebServlet("/ServletAccueil")
@@ -42,7 +43,7 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 
 		String motsClefs = null;
-		String categorie = null;
+		Categorie categorie = null;
 		String radio= null;
 		boolean achatsOuverts = false;
 		boolean achatsEncheresEnCours = false;
@@ -64,10 +65,8 @@ public class ServletAccueil extends HttpServlet {
 		// RECUPERATION DES PARAMETRES
 		motsClefs = (String) request.getParameter("motsClefs");
 		
-		if (request.getParameter("categorie").equals("Toutes")) {
-			categorie = null;
-		}else {
-			categorie = (String) request.getParameter("categorie");	
+		if (!request.getParameter("categorie").equals("Toutes")) {
+			categorie = new Categorie(request.getParameter("categorie"));	
 		}
 		
 		

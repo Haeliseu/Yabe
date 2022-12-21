@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.ArticleVenduManager;
 import fr.eni.javaee.bll.UserAccountManager;
+import fr.eni.javaee.bo.Categorie;
 import fr.eni.javaee.bo.UserAccount;
 import fr.eni.javaee.dal.DAOFactory;
 
@@ -54,7 +55,7 @@ public class ServletNouvelleVente extends HttpServlet {
 		// RECUP INFOS ARTICLE
 		String nomArticle = request.getParameter("nomArticle");
 		String descriptionArticle = request.getParameter("descriptionArticle");
-		int categorie = Integer.parseInt(request.getParameter("categorie"));
+		Categorie categorie = new Categorie(Integer.parseInt(request.getParameter("categorie")));
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 		LocalDate debutEncheres = LocalDate.parse(request.getParameter("debutEncheres"));
 		LocalDate finEncheres = LocalDate.parse(request.getParameter("finEncheres"));
@@ -68,7 +69,7 @@ public class ServletNouvelleVente extends HttpServlet {
 				ArticleVenduManager.getInstance().insertVente(
 						nomArticle, descriptionArticle, categorie, 
 						debutEncheres, finEncheres, 
-						miseAPrix, idUser,
+						miseAPrix, uA,
 						retraitRue, retraitCP, retraitVille);
 			} catch (BusinessException e) {
 				e.printStackTrace();

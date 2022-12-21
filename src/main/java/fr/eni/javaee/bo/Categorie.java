@@ -4,6 +4,10 @@ public class Categorie {
 	private int idCategorie;
 	private String libelle;
 	
+	
+	public Categorie(int idCategorie){
+		this.setIdCategorie(idCategorie);
+	}
 	public Categorie(String libelle){
 		this.setLibelle(libelle);
 	}
@@ -12,7 +16,6 @@ public class Categorie {
 		this.setLibelle(libelle);
 	}
 
-	
 	public int getIdCategorie() {
 		return idCategorie;
 	}
