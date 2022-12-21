@@ -1,3 +1,4 @@
+<%@page import="fr.eni.javaee.bo.Categorie"%>
 <%@page import="fr.eni.javaee.messages.LecteurMessage"%>
 <%@page import="fr.eni.javaee.bo.ArticleVendu"%>
 <%@page import="java.util.List"%>
@@ -85,8 +86,14 @@
 						<select class="form-select" aria-label="Default select example"
 							style="margin-bottom: 1em;" name="categorie">
 							<option selected>Toutes</option>
-							<option value="'1'">Catégorie 1</option>
-							<option value="'2'">Catégorie 2</option>
+							<%
+							List<Categorie> categories = (List<Categorie>)request.getAttribute("listeCategories");
+							for(Categorie cat : categories) {
+							%>
+							<option value="'<%=cat.getIdCategorie() %>'"><%=cat.getLibelle() %></option>
+							<%
+							}
+							%>
 						</select>
 
 						<%

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.eni.javaee.bo.Categorie;
@@ -12,9 +13,9 @@ import fr.eni.javaee.bo.Categorie;
 public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 	
 	// QUERYS
-	private static final String SQL_CAT_AJOUT="INSERT INTO categories (libelle) VALUES (?);";
-	private static final String SQL_CAT_SUPP="DELETE FROM categories WHERE libelle = ?";
-	private static final String SQL_CAT_LIST="SELECT * FROM categories";
+	private static final String SQL_CAT_AJOUT="INSERT INTO categories (libelle) VALUES (?) ;";
+	private static final String SQL_CAT_SUPP="DELETE FROM categories WHERE libelle = ? ;";
+	private static final String SQL_CAT_LIST="SELECT * FROM categories ;";
 	private static final String SQL_CAT_RECH="SELECT * FROM categories WHERE no_categorie = ? ;";
 	
 	// METHODS
@@ -59,7 +60,7 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 
 	public List<Categorie> listCategorie() {
 		
-		List<Categorie> categories = null;
+		List<Categorie> categories = new ArrayList<>();
 		
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			Statement stmt = cnx.createStatement();

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.bll.ArticleVenduManager;
+import fr.eni.javaee.bll.CategorieManager;
 import fr.eni.javaee.bo.ArticleVendu;
 import fr.eni.javaee.bo.Categorie;
 import fr.eni.javaee.bo.UserAccount;
@@ -24,16 +25,19 @@ public class ServletAccueil extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		
-		ArticleVenduManager avManager = new ArticleVenduManager();
 		List<ArticleVendu> listeArticlesVendus = null;
+		List<Categorie> categories = null;
+		
 		try {
-			listeArticlesVendus = avManager.listeArticles("", null, "", false, false,
+			listeArticlesVendus = ArticleVenduManager.getInstance().listeArticles("", null, "", false, false,
 					false, false, false, false, 0);
+			categories = CategorieManager.getInstance().listCategorie();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
 		request.setAttribute("listeArticlesVendus", listeArticlesVendus);
+		request.setAttribute("listeCategories", categories);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
 		rd.forward(request, response);

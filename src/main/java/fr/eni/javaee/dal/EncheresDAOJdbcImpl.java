@@ -81,9 +81,10 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_MAX_ENCHERE);
 			pstmt.setInt(1, article.getIdArticle());
 			ResultSet rs = pstmt.executeQuery();
-			rs.next();
 			
-			if(rs.getInt(1) > 0) {
+			
+			if(rs.next() && rs.getInt("montant_enchere") > 0 ) {
+				rs.next();
 				userAccount = new UserAccount(rs.getInt("no_utilisateur"));
 				maxEnchere = new Enchere(userAccount, rs.getInt("montant_enchere"));
 			}
