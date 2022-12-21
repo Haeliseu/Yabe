@@ -1,3 +1,5 @@
+<%@page import="fr.eni.javaee.bo.Enchere"%>
+<%@page import="fr.eni.javaee.bo.ArticleVendu"%>
 <%@page import="java.util.List"%>
 <%@page import="fr.eni.javaee.messages.LecteurMessage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -6,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${requestScope.article.nomArticle } - Détail de la vente</title>
+<title>${requestScope.article.nomArticle }-Détail de la vente</title>
 </head>
 <body>
 
@@ -17,6 +19,7 @@
 		<ul class="list-group">
 
 			<li class="list-group-item">Vendeur : ${article.pseudoVendeur }</li>
+			<label name="idVendeur" disabled hidden>${article.idVendeur }</label>
 
 			<li class="list-group-item">Nom
 				: ${requestScope.article.nomArticle }</li>
@@ -43,16 +46,36 @@
 		</ul>
 	</div>
 
+	<%
+	ArticleVendu article = (ArticleVendu) request.getAttribute("article");
+	Enchere enchere = (Enchere) request.getAttribute("enchere");
+	if (Integer.valueOf(session.getId()) == article.getIdVendeur()) {
+	%>
 	<div class="container">
 		<div class="row">
-			<a class="btn btn-primary col" style="margin:1em;" 
+			<a class="btn btn-primary col" style="margin: 1em;"
 				href="<%=request.getContextPath()%>/%>">Modifier la vente</a> <a
-				class="btn btn-primary col" style="margin:1em;" 
-				href="<%=request.getContextPath()%>/ServletAccueil">Retour à l'accueil</a> <a
-				class="btn btn-primary col" style="margin:1em;" 
+				class="btn btn-primary col" style="margin: 1em;"
+				href="<%=request.getContextPath()%>/ServletAccueil">Retour à
+				l'accueil</a> <a class="btn btn-primary col" style="margin: 1em;"
 				href="<%=request.getContextPath()%>/%>">Annuler la vente</a>
 		</div>
 	</div>
+	<%
+	} else if (enchere.getNoUtilisateur()!= Integer.valueOf(session.getId())){
+	%>
+	<div class="container">
+		<div class="row">
+		<label for="montantEnchere">Ma proposition : </label>
+			<input type="number" name="montantEnchere" id="montantEnchere" value="<%=(enchere.getMontantEnchere()+1)%>">
+			<a class="btn btn-primary col" style="margin: 1em;"
+				href="<%=request.getContextPath()%>/%>">Enchérir</a>
+		</div>
+	</div>
+	<%
+	}
+	%>
+
 
 	<div style="text-align: center";>
 		<%

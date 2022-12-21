@@ -36,7 +36,8 @@ public class ArticleVendu {
 	
 	// Constructor afficherArticle
 	public ArticleVendu(String nom, String description, String categorie,
-			int prix, LocalDate debutEncheres, LocalDate finEncheres, String pseudoVendeur,
+			int prix, LocalDate debutEncheres, LocalDate finEncheres, 
+			String pseudoVendeur, int idVendeur,
 			String retraitRue, String retraitCP, String retraitVille) {
 		this.setNomArticle(nom);
 		this.setDescription(description);
@@ -45,6 +46,7 @@ public class ArticleVendu {
 		this.setDateDebutEncheres(debutEncheres);
 		this.setDateFinEncheres(finEncheres);
 		this.setPseudoVendeur(pseudoVendeur);
+		this.setIdVendeur(idVendeur);
 		this.setRue(retraitRue);
 		this.setCodePostal(retraitCP);
 		this.setVille(retraitVille);

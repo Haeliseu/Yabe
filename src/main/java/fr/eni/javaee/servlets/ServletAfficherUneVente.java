@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.ArticleVenduManager;
+import fr.eni.javaee.bll.EnchereManager;
 import fr.eni.javaee.bo.ArticleVendu;
+import fr.eni.javaee.bo.Enchere;
 
 /**
  * Servlet implementation class ServletAfficherUneVente
@@ -29,14 +31,17 @@ public class ServletAfficherUneVente extends HttpServlet {
 		System.out.println(idArticle);
 		
 		ArticleVendu article = null;
+		Enchere enchere = null;
 		
 			try {
 				article = ArticleVenduManager.getInstance().afficherArticle(idArticle);
+				enchere = EnchereManager.getInstance().maxEnchereByArticle(idArticle);
 			} catch (BusinessException | SQLException e) {
 				e.printStackTrace();
 			}
 			
 			request.setAttribute("article", article);
+			request.setAttribute("enchere", enchere);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/afficherUneVente.jsp");
 			rd.forward(request, response);

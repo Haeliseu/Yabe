@@ -46,7 +46,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 				article= new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), 
 				rs.getString("libelle"),rs.getInt("prix_initial"), 
 				rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(),
-				rs.getString("pseudo"),
+				rs.getString("pseudo"), rs.getInt("no_utilisateur"),
 				rs.getString("rue"), rs.getString("code_postal"), rs.getString("ville"));
 				
 			}
