@@ -170,6 +170,38 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 		}
 		return exist;
 	}
+	
+	public boolean connect(UserAccount userAccount) throws BusinessException {
+		boolean exist = false;
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = cnx.prepareStatement(CONNECT);
+			pstmt.setString(1, userAccount.getPseudo());
+			pstmt.setString(2, userAccount.getEmail());
+			pstmt.setString(3, userAccount.getMot_de_passe());
+
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				userAccount.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				userAccount.setPseudo(rs.getString("pseudo"));
+				userAccount.setNom(rs.getString("nom"));
+				userAccount.setPrenom(rs.getString("prenom"));
+				userAccount.setEmail(rs.getString("email"));
+				userAccount.setTelephone(rs.getString("telephone"));
+				userAccount.setRue(rs.getString("rue"));
+				userAccount.setCode_postal(rs.getString("code_postal"));
+				userAccount.setVille(rs.getString("ville"));
+				userAccount.setMot_de_passe(rs.getString("mot_de_passe"));
+				userAccount.setCredit(rs.getInt("credit"));
+				userAccount.setAdministrateur(rs.getBoolean("administrateur"));
+
+				exist = true;
+			}
+		} catch (SQLException e) {
+			//unicité mail et pseudo
+		}
+		return exist;
+	}
 
 	public void newMdp(String mot_de_passe, String pseudo, String email) throws SQLException {
 

@@ -39,14 +39,13 @@ public class ServletConnect extends HttpServlet {
 		                String[] loginInfo = cookie.getValue().split(":");
 		                String pseudo = loginInfo[0];
 		                String email = loginInfo[0];
-		                String mot_de_passe = loginInfo[1];
-		                UserAccount useraccount = new UserAccount(pseudo, email, mot_de_passe);
+		                UserAccount useraccount = new UserAccount(pseudo, email);
 		                boolean login = false;
 
 		                // Vérifier si les informations de connexion de l'utilisateur sont valides
 		                // (par exemple, en utilisant une requête SQL ou en appelant une méthode de vérification de mot de passe)
 		                try {
-							if (login = UserAccountManager.getInstance().verify(useraccount, mot_de_passe, mot_de_passe) && login == true) {
+							if (login = UserAccountManager.getInstance().connect(useraccount, pseudo) && login == true) {
 								
 								HttpSession session = request.getSession();
 								session.setMaxInactiveInterval(5 * 60);
@@ -89,7 +88,7 @@ public class ServletConnect extends HttpServlet {
 	    	useraccount.setMot_de_passe(mot_de_passe);
 	    	
 			try {
-				login = UserAccountManager.getInstance().verify(useraccount, mot_de_passe, mot_de_passe);
+				login = UserAccountManager.getInstance().connect(useraccount, mot_de_passe);
 			
 			if (login == true){ 
 				
@@ -99,7 +98,7 @@ public class ServletConnect extends HttpServlet {
 				
 				if ((request.getParameter("rememberMe"))!= null && rememberMe.equals("on")) {
 					
-					Cookie cookieRememberMe = new Cookie("cookieRememberMe", pseudo + ":" + mot_de_passe);
+					Cookie cookieRememberMe = new Cookie("cookieRememberMe", pseudo);
 					cookieRememberMe.setMaxAge(60 * 60 * 24 * 30);
 					response.addCookie(cookieRememberMe);
 				}

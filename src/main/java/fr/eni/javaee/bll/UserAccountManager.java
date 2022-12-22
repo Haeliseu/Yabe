@@ -74,6 +74,19 @@ public class UserAccountManager {
 
 		return newConnectUserAccount;
 	}
+	
+	public boolean connect(UserAccount userAccount, String mot_de_passe) throws BusinessException {
+		// 1. vérification des données
+				BusinessException be = new BusinessException();
+				if (be.hasErreurs()) { // s'il y a un problème, on lève l'exception
+					throw be;
+				}
+				// 2. si on arrive ici, c'est que tout va bien
+				boolean newConnectUserAccount = DAOFactory.getUserAccountDAO().connect(userAccount);
+
+				return newConnectUserAccount;
+			}
+	
 
 	private void validerMotDePasse(String mot_de_passe, String confirmation, BusinessException be) {
 		if (!mot_de_passe.equals(confirmation)) {
