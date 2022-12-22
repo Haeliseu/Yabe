@@ -173,7 +173,7 @@
 			</div>
 			<div class="col-2 align-self-center mx-auto">
 				<input type="submit" class="btn btn-primary btn-lg"
-					name="rechercher" value="Rechercher">
+					name="rechercher" value="Rechercher" style="margin:1em;">
 			</div>
 		</form>
 	</div>
