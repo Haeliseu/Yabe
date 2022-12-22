@@ -43,7 +43,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 				
 				UserAccount userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("vendeur"));				
 				Categorie categorie = new Categorie(rs.getString("libelle"));				
-				articleTr= new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), 
+				articleTr= new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"), rs.getString("description"), 
 											categorie,rs.getInt("prix_initial"), 
 											rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(),
 											userAccount,

@@ -22,7 +22,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			+ "(no_utilisateur, no_article, date_enchere, montant_enchere) "
 			+ "VALUES "
 			+ "(?, ?, ?, ?);";
-	private static final String SQL_MAX_ENCHERE = "SELECT MAX(montant_enchere), no_utilisateur FROM encheres WHERE no_article = ? GROUP BY no_utilisateur;";
+	private static final String SQL_MAX_ENCHERE = "SELECT MAX(montant_enchere) as montant_enchere, no_utilisateur FROM encheres WHERE no_article = ? GROUP BY no_utilisateur;";
 	
 	// METHODS
 	public List<Enchere> listeEncheresByArticle(ArticleVendu article) {

@@ -36,9 +36,10 @@ public class ArticleVendu {
 	}
 	
 	// Constructor afficherArticle
-	public ArticleVendu(String nom, String description, Categorie categorie,
+	public ArticleVendu(int idArticle, String nom, String description, Categorie categorie,
 			int prix, LocalDate debutEncheres, LocalDate finEncheres, UserAccount userAccount,
 			String retraitRue, String retraitCP, String retraitVille) {
+		this.setIdArticle(idArticle);
 		this.setNomArticle(nom);
 		this.setDescription(description);
 		this.setCategorie(categorie);

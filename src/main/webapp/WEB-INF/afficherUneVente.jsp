@@ -27,8 +27,8 @@
 			Categorie categorie = (Categorie) request.getAttribute("categorie");%>
 			
 			<li class="list-group-item">Vendeur : ${requestScope.userAccount.pseudo }</li>
-			<label name="idVendeur" disabled hidden>${requestScope.userAccount.noUtilisateur }</label>
-
+			<input type="text" name="idVendeur" id="idVendeur" value="${requestScope.userAccount.noUtilisateur }" disabled hidden>
+						
 			<li class="list-group-item">Nom
 				: ${requestScope.articleRech.nomArticle }</li>
 			<li class="list-group-item">Description
@@ -68,19 +68,20 @@
 		</div>
 	</div>
 	<%
-	} else if (session != null && articleRech.getDateFinEncheres().isAfter(LocalDate.now())){
+	} else if (session.getAttribute("useraccount") != null && articleRech.getDateFinEncheres().isAfter(LocalDate.now())){
 	%>
 	<div class="container">
 		<div class="row">
+		<form method="POST" action="<%=request.getContextPath()%>/ServletAfficherUneVente?idArticle=<%=articleRech.getIdArticle() %>">
 		<label for="montantEnchere">Ma proposition : </label>
 		<%if(enchere!=null){ %>
 			<input type="number" name="montantEnchere" id="montantEnchere" value="<%=(enchere.getMontantEnchere()+1)%>">
 		<%}else{ %>
 		<input type="number" name="montantEnchere" id="montantEnchere">
 		<%} %>
-			<a class="btn btn-primary col" style="margin: 1em;"
-				href="<%=request.getContextPath()%>/ServletEncherir">Enchérir</a>
+			<input type="submit" class="btn btn-primary col" value="Enchérir" style="margin: 1em;">
 		</div>
+		</form>
 	</div>
 	<%
 	}
