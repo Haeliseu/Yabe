@@ -27,7 +27,29 @@ public class ServletModificationProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		String pseudoUser = request.getParameter("pseudoUser");
+		String nomUser = request.getParameter("nomUser");
+		String prenomUser = request.getParameter("prenomUser");
+		String emailUser = request.getParameter("emailUser");
+		String telephoneUser = request.getParameter("telephoneUser");
+		String rueUser = request.getParameter("rueUser");
+		String cpUser = request.getParameter("cpUser");
+		String villeUser = request.getParameter("villeUser");
+		
+		UserAccount uA = new UserAccount();
+		
+		uA.setPseudo(pseudoUser);
+		uA.setNom(nomUser);
+		uA.setPrenom(prenomUser);
+		uA.setEmail(emailUser);
+		uA.setTelephone(telephoneUser);
+		uA.setRue(rueUser);
+		uA.setCode_postal(cpUser);
+		uA.setVille(villeUser);
+		
+		request.setAttribute("monUserAccount", uA);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/modifProfil.jsp");
 		rd.forward(request, response);
 
