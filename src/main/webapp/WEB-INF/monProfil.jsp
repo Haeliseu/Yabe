@@ -23,16 +23,14 @@
 		<li>Code postal : ${requestScope.userAccount.code_postal }</li>
 		<li>Ville : ${requestScope.userAccount.ville }</li>
 		
-		<%UserAccount userAccount = (UserAccount) request.getAttribute("userAccount"); %>
-		<input type="text" name="idUser" value="<%=userAccount.getNoUtilisateur() %>" disabled hidden>
-		<input type="text" name="pseudoUser" value="<%=userAccount.getPseudo() %>" disabled hidden>
-		<input type="text" name="nomUser" value="<%=userAccount.getNom() %>" disabled hidden>
-		<input type="text" name="prenomUser" value="<%=userAccount.getPrenom() %>" disabled hidden>
-		<input type="text" name="emailUser" value="<%=userAccount.getEmail() %>" disabled hidden>
-		<input type="text" name="telephoneUser" value="<%=userAccount.getTelephone() %>" disabled hidden>
-		<input type="text" name="rueUser" value="<%=userAccount.getRue() %>" disabled hidden>
-		<input type="text" name="cpUser" value="<%=userAccount.getCode_postal() %>" disabled hidden>
-		<input type="text" name="villeUser" value="<%=userAccount.getVille() %>" disabled hidden>
+		<input type="text" name="pseudoUser" value="${requestScope.userAccount.pseudo }" disabled hidden>
+		<input type="text" name="nomUser" value="${requestScope.userAccount.nom }" disabled hidden>
+		<input type="text" name="prenomUser" value="${requestScope.userAccount.prenom }" disabled hidden>
+		<input type="text" name="emailUser" value="${requestScope.userAccount.email }" disabled hidden>
+		<input type="text" name="telephoneUser" value="${requestScope.userAccount.telephone }" disabled hidden>
+		<input type="text" name="rueUser" value="${requestScope.userAccount.rue }" disabled hidden>
+		<input type="text" name="cpUser" value="${requestScope.userAccount.code_postal }" disabled hidden>
+		<input type="text" name="villeUser" value="${requestScope.userAccount.ville }" disabled hidden>
 	</ul>
 		
 		<a href="<%=request.getContextPath() %>/ServletModificationProfil" >Modifier</a>

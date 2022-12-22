@@ -12,7 +12,7 @@
 <header>
 <jsp:include page="header.jsp" />
 </header>
-<form action="/ServletModificationProfil" method="post" style="background-color: lightgray; padding:15px; border-radius:5px; box-shadow: 10px 5px 5px gray;">
+<form action="/ServletModificationProfil" method="post" style="background-color: lightgray; padding:15px; border-radius:5px; box-shadow: 10px 5px 5px gray; margin:1em;">
 <div class="container">
     <div class="row">
 		<%UserAccount uA = (UserAccount) request.getAttribute("monUserAccount"); %>
@@ -75,7 +75,7 @@
  	<div class="row">
        <br>
        <div>
-       <button type="submit" class="btn btn-primary" name="Inscription" value="Modifier">Modifier</button>
+       <button type="submit" class="btn btn-primary" name="Inscription" value="Modifier" style="margin:1em;">Modifier</button>
       
              
       
@@ -83,11 +83,9 @@
      </div>
      </div>
      </form>
-     <form action="/ServletAccueil" style="background-color: lightgray; padding:15px; border-radius:5px; box-shadow: 10px 5px 5px gray;">
-       <input type="reset" class="btn btn-secondary" name="reset" value="Annuler">
-     </form>
+       <a href="<%=request.getContextPath() %>/ServletAccueil"><button class="btn btn-secondary" name="reset" value="Annuler">Annuler</button></a>
      
-     <form action="/ServletSupprimerMonCompte.java"method="post" style="background-color: lightgray; padding:15px; border-radius:5px; box-shadow: 10px 5px 5px gray;">
+     <form action="/ServletSupprimerMonCompte.java"method="post">
      	<input type="submit" class="btn btn-primary" name="Supprimer" value="Supprimer mon compte">  
      </form>
 </body>
