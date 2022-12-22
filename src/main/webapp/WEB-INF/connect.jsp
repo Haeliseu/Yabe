@@ -50,8 +50,9 @@
 						<br>
 						<div class="col-md-3"></div>
 						<div class="col-md-6">
+						<a href="<%=request.getContextPath()%>/ServletRegister">
 							<input class="btn btn-primary" type="submit" name="formconnexion"
-								value="Créer un compte" />
+								value="Créer un compte" /></a>
 						</div>
 					</div>
 				</div>
