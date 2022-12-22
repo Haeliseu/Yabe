@@ -21,8 +21,9 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			"INSERT INTO encheres "
 			+ "(no_utilisateur, no_article, date_enchere, montant_enchere) "
 			+ "VALUES "
-			+ "(?, ?, ?, ?);";
-	private static final String SQL_MAX_ENCHERE = "SELECT MAX(montant_enchere) as montant_enchere, no_utilisateur FROM encheres WHERE no_article = ? GROUP BY no_utilisateur;";
+			+ "(?, ?, getdate(), ?);";
+	private static final String SQL_MAX_ENCHERE = "SELECT MAX(montant_enchere) as montant_enchere FROM encheres WHERE no_article = ? ;";
+	private static final String SQL_ID_MAX_ENCHERE = "SELECT no_utilisateur FROM encheres WHERE no_article = ? AND montant_enchere = ? ;";
 	
 	// METHODS
 	public List<Enchere> listeEncheresByArticle(ArticleVendu article) {
@@ -53,7 +54,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 		return encheres;
 	}
 
-	public void nouvelleEnchere(UserAccount userAccount, ArticleVendu article, LocalDate dateEnchere, int montantEnchere) {
+	public void nouvelleEnchere(UserAccount userAccount, ArticleVendu article, int montantEnchere) {
 		
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			
@@ -61,8 +62,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			
 			pstmt.setInt(1, userAccount.getNoUtilisateur());
 			pstmt.setInt(2, article.getIdArticle());
-			pstmt.setDate(3, Date.valueOf(dateEnchere));
-			pstmt.setInt(4, montantEnchere);
+			pstmt.setInt(3, montantEnchere);
 			
 			pstmt.executeUpdate();
 			
@@ -82,11 +82,21 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			pstmt.setInt(1, article.getIdArticle());
 			ResultSet rs = pstmt.executeQuery();
 			
+			if(rs.next() ) {
+				
+				maxEnchere = new Enchere(rs.getInt("montant_enchere"));
+			}
+			
+			pstmt = cnx.prepareStatement(SQL_ID_MAX_ENCHERE);
+			pstmt.setInt(1, article.getIdArticle());
+			pstmt.setInt(2, maxEnchere.getMontantEnchere());
+			rs = pstmt.executeQuery();
 			
 			if(rs.next() ) {
 				userAccount = new UserAccount(rs.getInt("no_utilisateur"));
-				maxEnchere = new Enchere(userAccount, rs.getInt("montant_enchere"));
 			}
+			
+			maxEnchere.setUserAccount(userAccount);
 			
 		}catch(SQLException e) {
 			e.printStackTrace();

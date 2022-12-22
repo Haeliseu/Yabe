@@ -11,7 +11,7 @@ public interface EncheresDAO {
 	
 	List<Enchere> listeEncheresByArticle(ArticleVendu article);
 	
-	void nouvelleEnchere(UserAccount userAccount, ArticleVendu article, LocalDate dateEnchere, int montantEnchere);
+	void nouvelleEnchere(UserAccount userAccount, ArticleVendu article, int montantEnchere);
 	
 	Enchere maxEnchereByArticle(ArticleVendu article);
 	

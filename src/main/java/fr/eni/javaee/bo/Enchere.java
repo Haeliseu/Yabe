@@ -12,6 +12,10 @@ public class Enchere {
 	//Constructors
 	private Enchere() {}
 	
+	public Enchere(int montantEnchere) {
+		this.setMontantEnchere(montantEnchere);
+	}
+	
 	public Enchere(UserAccount userAccount, int montantEnchere) {
 		this.setUserAccount(userAccount);
 		this.setMontantEnchere(montantEnchere);

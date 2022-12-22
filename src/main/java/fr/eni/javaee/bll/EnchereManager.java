@@ -36,7 +36,7 @@ public class EnchereManager {
 		return encheres;
 	}
 	
-	public void nouvelleEnchere(UserAccount userAccount, ArticleVendu article, LocalDate dateEnchere, int montantEnchere) throws SQLException {
+	public void nouvelleEnchere(UserAccount userAccount, ArticleVendu article, int montantEnchere) throws SQLException {
 		BusinessException be = new BusinessException();
 		int nbErreurs = 0;
 		Enchere maxEnchere = null;
@@ -85,7 +85,7 @@ public class EnchereManager {
 			DAOFactory.getUserAccountDAO().updateCredit((credit - montantEnchere), userAccount);
 			
 			// EXECUTION DE L AJOUT DE LA NOUVELLE ENCHERE
-			DAOFactory.getEncheresDAO().nouvelleEnchere(userAccount, article, dateEnchere, montantEnchere);
+			DAOFactory.getEncheresDAO().nouvelleEnchere(userAccount, article, montantEnchere);
 		}
 	}
 	

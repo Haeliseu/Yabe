@@ -204,7 +204,7 @@
 								href="<%=request.getContextPath()%>/ServletAfficherUneVente?noArticle=<%=article.getIdArticle()%>">
 								<%=article.getNomArticle()%></a></h5>
 							<p class="card-text">
-								Prix :
+								Prix actuel :
 								<%=article.getPrix()%></p>
 							<p class="card-text">
 								Fin de l'enchère :

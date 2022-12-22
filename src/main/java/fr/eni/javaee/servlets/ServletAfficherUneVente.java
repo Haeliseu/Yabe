@@ -62,13 +62,11 @@ public class ServletAfficherUneVente extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		UserAccount userAccount = (UserAccount) session.getAttribute("useraccount");
-		System.out.println(userAccount.getNoUtilisateur());
 		ArticleVendu article = new ArticleVendu(Integer.parseInt(request.getParameter("idArticle")));
-		System.out.println(article.getIdArticle());
 		int montantEnchere = Integer.valueOf(request.getParameter("montantEnchere"));
-		System.out.println(montantEnchere);
+
 		try {
-			EnchereManager.getInstance().nouvelleEnchere(userAccount, article, LocalDate.now(), montantEnchere);
+			EnchereManager.getInstance().nouvelleEnchere(userAccount, article, montantEnchere);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

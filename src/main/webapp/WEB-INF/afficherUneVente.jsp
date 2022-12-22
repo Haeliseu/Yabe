@@ -73,8 +73,11 @@
 	<div class="container">
 		<div class="row">
 		<form method="POST" action="<%=request.getContextPath()%>/ServletAfficherUneVente?idArticle=<%=articleRech.getIdArticle() %>">
-		<label for="montantEnchere">Ma proposition : </label>
+		
 		<%if(enchere!=null){ %>
+		
+			<p>Valeur de l'enchère précédente : <%=(enchere.getMontantEnchere())%></p>
+			<label for="montantEnchere">Ma proposition : </label>
 			<input type="number" name="montantEnchere" id="montantEnchere" value="<%=(enchere.getMontantEnchere()+1)%>">
 		<%}else{ %>
 		<input type="number" name="montantEnchere" id="montantEnchere">
