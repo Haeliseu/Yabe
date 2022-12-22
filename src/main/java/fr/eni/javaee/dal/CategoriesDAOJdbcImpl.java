@@ -24,7 +24,7 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 		Categorie categorie = null;
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_CAT_RECH);
-			pstmt.setInt(1, categorieR.getIdCategorie());
+			pstmt.setString(1, categorieR.getLibelle());
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
 				categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));

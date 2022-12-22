@@ -42,8 +42,10 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			if(!rs.getString("nom_article").isBlank()) {
 				
 				UserAccount userAccount = UserAccountManager.getInstance().selectUser(rs.getInt("vendeur"));
+				System.out.println("Numero user : "+userAccount.getNoUtilisateur());
 				
 				Categorie categorie = new Categorie(rs.getString("libelle"));
+				System.out.println("Categorie : "+ categorie.getLibelle());
 				
 				articleTr= new ArticleVendu(rs.getString("nom_article"), rs.getString("description"), 
 											categorie,rs.getInt("prix_initial"), 

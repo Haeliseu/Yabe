@@ -32,29 +32,29 @@ public class ServletAfficherUneVente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int idArticle = Integer.valueOf(request.getParameter("noArticle"));
-				
 		ArticleVendu article = new ArticleVendu(idArticle);
+		ArticleVendu articleRech = null;
 		Enchere enchere = null;
 		UserAccount userAccount = null;
 		Categorie categorie = null;
 		
 			try {
-				article = ArticleVenduManager.getInstance().afficherArticle(article);
-				categorie = CategorieManager.getInstance().rechCategorie(article.getCategorie());
-				System.out.println(article.getUserAccount().getNoUtilisateur());
-				userAccount = UserAccountManager.getInstance().selectUser(article.getUserAccount().getNoUtilisateur());
-				enchere = EnchereManager.getInstance().maxEnchereByArticle(article);
+				articleRech = ArticleVenduManager.getInstance().afficherArticle(article);
+				categorie = CategorieManager.getInstance().rechCategorie(articleRech.getCategorie());
+				
+				System.out.println(articleRech.getUserAccount().getNoUtilisateur());
+				userAccount = UserAccountManager.getInstance().selectUser(articleRech.getUserAccount().getNoUtilisateur());
+				
+				enchere = EnchereManager.getInstance().maxEnchereByArticle(articleRech);
+				
 			} catch (BusinessException | SQLException e) {
 				e.printStackTrace();
 			}
 			
-			request.setAttribute("article", article);
+			request.setAttribute("articleRech", articleRech);
 			request.setAttribute("userAccount", userAccount);
 			request.setAttribute("categorie", categorie);
 			request.setAttribute("enchere", enchere);
-			
-			HttpSession session = request.getSession(false);
-			request.setAttribute("session", session);
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/afficherUneVente.jsp");
 			rd.forward(request, response);

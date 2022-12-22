@@ -61,6 +61,7 @@ public class UserAccountDAOJdbcImpl implements UserAccountDAO {
 				String codePostal = rs.getString("code_postal");
 				String ville = rs.getString("ville");
 				userAccount = new UserAccount(pseudo, nom, prenom, email, telephone, rue, codePostal, ville);
+				userAccount.setNoUtilisateur(noUtilisateur);
 			}
 
 		} catch (SQLException e) {
