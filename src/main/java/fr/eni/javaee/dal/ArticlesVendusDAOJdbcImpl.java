@@ -303,7 +303,6 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			Statement pstmt = cnx.createStatement();
 
 			// récupération du résultat et intégration des données dans une liste
-			System.out.println(sbQuery.toString());
 			ResultSet rs = pstmt.executeQuery(sbQuery.toString());
 
 			UserAccount userAccount = null;
