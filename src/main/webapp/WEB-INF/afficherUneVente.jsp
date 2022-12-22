@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@page import="fr.eni.javaee.bo.Categorie"%>
 <%@page import="fr.eni.javaee.bo.UserAccount"%>
 <%@page import="fr.eni.javaee.bo.Enchere"%>
@@ -20,7 +21,7 @@
 
 		<ul class="list-group">
 
-			<% ArticleVendu article = (ArticleVendu) request.getAttribute("article");
+			<% ArticleVendu articleRech = (ArticleVendu) request.getAttribute("articleRech");
 			UserAccount userAccount = (UserAccount) request.getAttribute("userAccount");
 			Enchere enchere = (Enchere) request.getAttribute("enchere");
 			Categorie categorie = (Categorie) request.getAttribute("categorie");%>
@@ -29,25 +30,25 @@
 			<label name="idVendeur" disabled hidden>${requestScope.userAccount.noUtilisateur }</label>
 
 			<li class="list-group-item">Nom
-				: ${requestScope.article.nomArticle }</li>
+				: ${requestScope.articleRech.nomArticle }</li>
 			<li class="list-group-item">Description
-				: ${requestScope.article.description }</li>
+				: ${requestScope.articleRech.description }</li>
 			<li class="list-group-item">Catégorie
 				: ${requestScope.categorie.libelle }</li>
 			<li class="list-group-item">Mise à prix
-				: ${requestScope.article.prix }</li>
+				: ${requestScope.articleRech.prix }</li>
 			<li class="list-group-item">Début de l'enchère
-				: ${requestScope.article.dateDebutEncheres }</li>
+				: ${requestScope.articleRech.dateDebutEncheres }</li>
 			<li class="list-group-item">Fin de l'enchère
-				: ${requestScope.article.dateFinEncheres }</li>
+				: ${requestScope.articleRech.dateFinEncheres }</li>
 
 			<li class="list-group-item">Retrait :
 				<ul class="list-group">
-					<li class="list-group-item">Rue : ${requestScope.article.rue }</li>
+					<li class="list-group-item">Rue : ${requestScope.articleRech.rue }</li>
 					<li class="list-group-item">Code postal
-						: ${requestScope.article.codePostal }</li>
+						: ${requestScope.articleRech.codePostal }</li>
 					<li class="list-group-item">Ville
-						: ${requestScope.article.ville }</li>
+						: ${requestScope.articleRech.ville }</li>
 				</ul>
 			</li>
 		</ul>
@@ -67,14 +68,18 @@
 		</div>
 	</div>
 	<%
-	} else if (session != null && enchere.getUserAccount().getNoUtilisateur()!= Integer.valueOf(session.getId())){
+	} else if (session != null && articleRech.getDateFinEncheres().isAfter(LocalDate.now())){
 	%>
 	<div class="container">
 		<div class="row">
 		<label for="montantEnchere">Ma proposition : </label>
+		<%if(enchere!=null){ %>
 			<input type="number" name="montantEnchere" id="montantEnchere" value="<%=(enchere.getMontantEnchere()+1)%>">
+		<%}else{ %>
+		<input type="number" name="montantEnchere" id="montantEnchere">
+		<%} %>
 			<a class="btn btn-primary col" style="margin: 1em;"
-				href="<%=request.getContextPath()%>/%>">Enchérir</a>
+				href="<%=request.getContextPath()%>/ServletEncherir">Enchérir</a>
 		</div>
 	</div>
 	<%

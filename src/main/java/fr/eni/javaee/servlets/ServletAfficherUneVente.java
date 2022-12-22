@@ -41,10 +41,7 @@ public class ServletAfficherUneVente extends HttpServlet {
 			try {
 				articleRech = ArticleVenduManager.getInstance().afficherArticle(article);
 				categorie = CategorieManager.getInstance().rechCategorie(articleRech.getCategorie());
-				
-				System.out.println(articleRech.getUserAccount().getNoUtilisateur());
 				userAccount = UserAccountManager.getInstance().selectUser(articleRech.getUserAccount().getNoUtilisateur());
-				
 				enchere = EnchereManager.getInstance().maxEnchereByArticle(articleRech);
 				
 			} catch (BusinessException | SQLException e) {

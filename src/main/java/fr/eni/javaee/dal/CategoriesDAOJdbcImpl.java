@@ -16,7 +16,7 @@ public class CategoriesDAOJdbcImpl implements CategoriesDAO {
 	private static final String SQL_CAT_AJOUT="INSERT INTO categories (libelle) VALUES (?) ;";
 	private static final String SQL_CAT_SUPP="DELETE FROM categories WHERE libelle = ? ;";
 	private static final String SQL_CAT_LIST="SELECT * FROM categories ;";
-	private static final String SQL_CAT_RECH="SELECT * FROM categories WHERE no_categorie = ? ;";
+	private static final String SQL_CAT_RECH="SELECT * FROM categories WHERE libelle = ? ;";
 	
 	// METHODS
 	

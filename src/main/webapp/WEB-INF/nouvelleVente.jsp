@@ -1,3 +1,4 @@
+<%@page import="fr.eni.javaee.bo.Categorie"%>
 <%@page import="java.util.List"%>
 <%@page import="fr.eni.javaee.messages.LecteurMessage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -44,8 +45,15 @@
 								class="form-select" aria-label="Default select example"
 								name="categorie" id="categorie">
 								<option selected>Toutes</option>
-								<option value="1">Catégorie 1</option>
-								<option value="2">Catégorie 2</option>
+								<%
+								List<Categorie> categories = (List<Categorie>) request.getAttribute("listeCategories");
+								if (categories != null) {
+									for(Categorie cat : categories) {
+								%>
+								<option value="'<%=cat.getIdCategorie() %>'"><%=cat.getLibelle() %></option>
+								<%
+								}}
+								%>
 							</select>
 					</div>
 
@@ -112,17 +120,15 @@
 					
 					<br>
 					
-					<div class="row">
-						<input type="submit" name="enregistrer" value="Enregistrer"> 
-					</div>
+						<input class="btn btn-primary col" type="submit" name="enregistrer" value="Enregistrer la saisie" style="margin-bottom:1em;">
+						
 				</form>
 				<div class="row">
-					<input type="submit"  name="annuler" value="Annuler"> 
-					<input type="submit"  name="annulerVente" value="Annuler la vente">
+					<a href="<%=request.getContextPath()%>/ServletAccueil"><input class="btn btn-primary col" name="annuler" value="Annuler" style="margin-bottom:1em;"></a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 
 

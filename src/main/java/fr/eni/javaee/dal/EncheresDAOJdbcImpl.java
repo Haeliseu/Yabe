@@ -83,8 +83,7 @@ public class EncheresDAOJdbcImpl implements EncheresDAO {
 			ResultSet rs = pstmt.executeQuery();
 			
 			
-			if(rs.next() && rs.getInt("montant_enchere") > 0 ) {
-				rs.next();
+			if(rs.next() ) {
 				userAccount = new UserAccount(rs.getInt("no_utilisateur"));
 				maxEnchere = new Enchere(userAccount, rs.getInt("montant_enchere"));
 			}
