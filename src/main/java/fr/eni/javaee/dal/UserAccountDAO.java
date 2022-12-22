@@ -20,6 +20,8 @@ public interface UserAccountDAO {
 		
 		public boolean verify(UserAccount userAccount) throws BusinessException;
 		
+		public boolean connect(UserAccount userAccount) throws BusinessException;
+		
 		public void newMdp(String mot_de_passe,String pseudo, String email) throws SQLException;
 
 		UserAccount updateUser(String pseudo, String nom, String prenom, String email, String telephone, String rue,
