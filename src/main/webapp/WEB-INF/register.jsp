@@ -12,7 +12,7 @@
 <header>
 <jsp:include page="header.jsp" />
 </header>
-<form action="" method="post" style="background-color: lightgray; padding:15px; border-radius:5px; box-shadow: 10px 5px 5px gray;">
+<form action="/ServletRegister" method="post" style="background-color: lightgray; padding:15px; border-radius:5px; box-shadow: 10px 5px 5px gray;">
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6">
@@ -103,7 +103,7 @@
 	%>
 	</div>
 
-<div class="fixed-bottom"><jsp:include page="footer.jsp" /></div>
+<jsp:include page="footer.jsp" />
 	
 </body>
 </html>

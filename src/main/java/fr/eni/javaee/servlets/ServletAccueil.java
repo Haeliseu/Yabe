@@ -71,7 +71,7 @@ public class ServletAccueil extends HttpServlet {
 		motsClefs = (String) request.getParameter("motsClefs");
 		
 		if (!request.getParameter("categorie").equals("Toutes")) {
-			categorie = new Categorie(request.getParameter("categorie"));	
+			categorie = new Categorie(request.getParameter("categorie"));
 		}
 		
 		

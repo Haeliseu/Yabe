@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.javaee.BusinessException;
 import fr.eni.javaee.bll.ArticleVenduManager;
+import fr.eni.javaee.bll.CategorieManager;
 import fr.eni.javaee.bll.UserAccountManager;
 import fr.eni.javaee.bo.Categorie;
 import fr.eni.javaee.bo.UserAccount;
@@ -32,9 +34,19 @@ public class ServletNouvelleVente extends HttpServlet {
 		UserAccount uA = (UserAccount) session.getAttribute("useraccount");
 		idUser = uA.getNoUtilisateur();
 		
+		List<Categorie> categories = null;
+		
 		UserAccount uARech;
 		uARech = UserAccountManager.getInstance().selectUser(idUser);
-				
+		
+		try {
+			categories = CategorieManager.getInstance().listCategorie();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("listeCategories", categories);
 		request.setAttribute("Rue", uARech.getRue());
 		request.setAttribute("CP", uARech.getCode_postal());
 		request.setAttribute("Ville", uARech.getVille());
@@ -76,7 +88,7 @@ public class ServletNouvelleVente extends HttpServlet {
 			}
 		
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/ServletAccueil");
 		rd.forward(request, response);
 	}
 

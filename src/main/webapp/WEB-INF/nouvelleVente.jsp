@@ -44,13 +44,12 @@
 							<label for="categorie">Catégorie : </label> <select
 								class="form-select" aria-label="Default select example"
 								name="categorie" id="categorie">
-								<option selected>Toutes</option>
 								<%
 								List<Categorie> categories = (List<Categorie>) request.getAttribute("listeCategories");
 								if (categories != null) {
 									for(Categorie cat : categories) {
 								%>
-								<option value="'<%=cat.getIdCategorie() %>'"><%=cat.getLibelle() %></option>
+								<option value="<%=cat.getIdCategorie() %>"><%=cat.getLibelle() %></option>
 								<%
 								}}
 								%>

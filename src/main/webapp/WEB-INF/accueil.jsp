@@ -91,7 +91,7 @@
 							if (categories != null) {
 								for(Categorie cat : categories) {
 							%>
-							<option value="'<%=cat.getIdCategorie() %>'"><%=cat.getLibelle() %></option>
+							<option value="<%=cat.getIdCategorie() %>"><%=cat.getLibelle() %></option>
 							<%
 							}}
 							%>

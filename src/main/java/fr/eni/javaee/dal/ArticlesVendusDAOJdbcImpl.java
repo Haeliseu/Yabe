@@ -131,7 +131,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 	private static final String SQL_AND = " AND ";
 
 	private static final String SQL_MOT_CLEF = " nom_article LIKE ";
-	private static final String SQL_CATEGORIE = " libelle = ";
+	private static final String SQL_CATEGORIE = " articles_vendus.no_categorie = ";
 	private static final String SQL_ACHATS_ENCHERES_OUVERTES = " date_debut_encheres < getdate() AND date_fin_encheres >= getdate() ";
 	private static final String SQL_ACHATS_MES_ENCHERES_EN_COURS = " articles_vendus.no_article IN (SELECT no_article FROM encheres WHERE ENCHERES.no_utilisateur = ";
 	private static final String SQL_ACHATS_MES_ENCHERES_REMPORTEES = " date_fin_encheres < getdate() AND articles_vendus.no_article IN (SELECT no_article FROM encheres WHERE ENCHERES.no_utilisateur = ";
@@ -242,11 +242,11 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			sbQuery.append(SQL_MOT_CLEF + "'%" + motsClefs + "%' ");
 			compteurConditions++;
 
-			if (categorie != null) {
+			if (categorie != null && !(categorie.getIdCategorie()==0)) {
 				if (compteurConditions > 0) {
 					sbQuery.append(SQL_AND);
 				}
-				sbQuery.append(SQL_CATEGORIE + categorie);
+				sbQuery.append(SQL_CATEGORIE + categorie.getIdCategorie());
 				compteurConditions++;
 			}
 
@@ -303,6 +303,7 @@ public class ArticlesVendusDAOJdbcImpl implements ArticlesVendusDAO {
 			Statement pstmt = cnx.createStatement();
 
 			// récupération du résultat et intégration des données dans une liste
+			System.out.println(sbQuery.toString());
 			ResultSet rs = pstmt.executeQuery(sbQuery.toString());
 
 			UserAccount userAccount = null;
